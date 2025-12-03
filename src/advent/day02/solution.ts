@@ -28,13 +28,8 @@ export const part2 = (input: string) => {
     const [a, b] = line.split('-').map(Number)
     for (let i = a; i <= b; i++) {
       const s = i.toString()
-      for (let j = 1; j <= s.length / 2; j++) {
-        if (s.length % j !== 0) continue
-        const s2 = s.slice(0, j).repeat(s.length / j)
-        if (s !== s2) continue
-        ct += i
-        break
-      }
+      const ix = (s + s).indexOf(s, 1)
+      if (ix < s.length) ct += i
     }
     return ct
   }, 0)

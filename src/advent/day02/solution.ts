@@ -16,8 +16,11 @@ export const part1 = (input = '') => {
         continue
       }
       const head = s.slice(0, s.length / 2)
-      const tail = s.slice(s.length / 2)
-      if (head === tail) ct += i
+      const nextMatch = Number(head + head)
+      if (nextMatch > b) break
+      if (nextMatch >= a) ct += nextMatch
+      const nextHead = String(Number(head) + 1)
+      i = Number(nextHead + nextHead) - 1
     }
     return ct
   }, 0)

@@ -12,24 +12,15 @@ export const part1 = (input = '') => {
 
 export const part2 = (input: string, k = 12) => {
   return input.split('\n').reduce((ct, line) => {
-    let left = k
-    const solve = (str = line, digit = '9'): string => {
-      if (digit === '-1' || left === 0) return ''
-      const parts = str.split(digit)
-      const nextDigit = String(Number(digit) - 1)
-      if (parts.length === 1) return solve(str, nextDigit)
-      if (parts.length > left) {
-        const res = digit.repeat(left)
-        left = 0
-        return res
+    const curr: string[] = []
+    let canDrop = line.length - k
+    line.split('').forEach((ch) => {
+      while (canDrop > 0 && curr.length > 0 && curr[curr.length - 1] < ch) {
+        curr.pop()
+        canDrop--
       }
-
-      left -= parts.length - 1
-      return parts.reduceRight((res, part, ix) => {
-        const head = ix > 0 ? digit : ''
-        return head + solve(part, nextDigit) + res
-      }, '')
-    }
-    return ct + Number(solve())
+      curr.push(ch)
+    })
+    return ct + Number(curr.slice(0, k).join(''))
   }, 0)
 }

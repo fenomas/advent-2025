@@ -29,15 +29,18 @@ export const part1 = (input = '') => {
   return ct
 }
 
+//
+//
+
 export const part2 = (input: string) => {
   const dat = input.split('\n').map((line) => line.split('').map((ch) => ({ ch, nabs: 0 })))
   const offs = [-1, 0, 1]
 
-  let atLocs = [{ x: 0, y: 0 }].slice(0, 0)
+  const locs = [[0, 0]].slice(0, 0)
   dat.forEach((row, y) => {
     row.forEach((obj, x) => {
       if (obj.ch !== '@') return
-      atLocs.push({ x, y })
+      locs.push([x, y])
       offs.forEach((dy) => {
         if (!dat[y + dy]) return
         offs.forEach((dx) => {
@@ -49,24 +52,22 @@ export const part2 = (input: string) => {
   })
 
   let ct = 0
-  let done = false
-  while (!done) {
-    done = true
-    atLocs = atLocs.filter(({ x, y }) => {
-      const obj = dat[y][x]
-      if (obj.nabs >= 4) return true
-      obj.ch = '.'
-      ct++
-      done = false
-      offs.forEach((dy) => {
-        if (!dat[y + dy]) return
-        offs.forEach((dx) => {
-          if (dx === 0 && dy === 0) return
-          const nobj = dat[y + dy][x + dx]
-          if (nobj?.ch === '@') nobj.nabs--
-        })
+  while (locs.length > 0) {
+    const [x, y] = locs.pop() || [-1, -1]
+    const obj = dat[y][x]
+    if (obj.ch !== '@') continue
+    if (obj.nabs >= 4) continue
+    obj.ch = '.'
+    ct++
+    offs.forEach((dy) => {
+      if (!dat[y + dy]) return
+      offs.forEach((dx) => {
+        if (dx === 0 && dy === 0) return
+        const nobj = dat[y + dy][x + dx]
+        if (nobj?.ch !== '@') return
+        nobj.nabs--
+        if (nobj.nabs < 4) locs.push([x + dx, y + dy])
       })
-      return false
     })
   }
   return ct

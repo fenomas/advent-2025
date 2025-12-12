@@ -1,22 +1,24 @@
-(function(){const n=document.createElement("link").relList;if(n&&n.supports&&n.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))s(o);new MutationObserver(o=>{for(const e of o)if(e.type==="childList")for(const r of e.addedNodes)r.tagName==="LINK"&&r.rel==="modulepreload"&&s(r)}).observe(document,{childList:!0,subtree:!0});function R(o){const e={};return o.integrity&&(e.integrity=o.integrity),o.referrerPolicy&&(e.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?e.credentials="include":o.crossOrigin==="anonymous"?e.credentials="omit":e.credentials="same-origin",e}function s(o){if(o.ep)return;o.ep=!0;const e=R(o);fetch(o.href,e)}})();const w2=!1,S2=(L,n)=>L===n,J={equals:S2};let t2=r2;const v=1,N=2,e2={owned:null,cleanups:null,context:null,owner:null};var _=null;let V=null,$2=null,f=null,p=null,m=null,B=0;function O2(L,n){const R=f,s=_,o=L.length===0,e=n===void 0?s:n,r=o?e2:{owned:null,cleanups:null,context:e?e.context:null,owner:e},t=o?L:()=>L(()=>F(()=>T(r)));_=r,f=null;try{return C(t,!0)}finally{f=R,_=s}}function y(L,n){n=n?Object.assign({},J,n):J;const R={value:L,observers:null,observerSlots:null,comparator:n.equals||void 0},s=o=>(typeof o=="function"&&(o=o(R.value)),s2(R,o));return[M2.bind(R),s]}function O(L,n,R){const s=o2(L,n,!1,v);U(s)}function E2(L,n,R){t2=T2;const s=o2(L,n,!1,v);s.user=!0,m?m.push(s):U(s)}function F(L){if(f===null)return L();const n=f;f=null;try{return L()}finally{f=n}}function M2(){if(this.sources&&this.state)if(this.state===v)U(this);else{const L=p;p=null,C(()=>I(this),!1),p=L}if(f){const L=this.observers?this.observers.length:0;f.sources?(f.sources.push(this),f.sourceSlots.push(L)):(f.sources=[this],f.sourceSlots=[L]),this.observers?(this.observers.push(f),this.observerSlots.push(f.sources.length-1)):(this.observers=[f],this.observerSlots=[f.sources.length-1])}return this.value}function s2(L,n,R){let s=L.value;return(!L.comparator||!L.comparator(s,n))&&(L.value=n,L.observers&&L.observers.length&&C(()=>{for(let o=0;o<L.observers.length;o+=1){const e=L.observers[o],r=V&&V.running;r&&V.disposed.has(e),(r?!e.tState:!e.state)&&(e.pure?p.push(e):m.push(e),e.observers&&i2(e)),r||(e.state=v)}if(p.length>1e6)throw p=[],new Error},!1)),n}function U(L){if(!L.fn)return;T(L);const n=B;j2(L,L.value,n)}function j2(L,n,R){let s;const o=_,e=f;f=_=L;try{s=L.fn(n)}catch(r){return L.pure&&(L.state=v,L.owned&&L.owned.forEach(T),L.owned=null),L.updatedAt=R+1,l2(r)}finally{f=e,_=o}(!L.updatedAt||L.updatedAt<=R)&&(L.updatedAt!=null&&"observers"in L?s2(L,s):L.value=s,L.updatedAt=R)}function o2(L,n,R,s=v,o){const e={fn:L,state:s,updatedAt:null,owned:null,sources:null,sourceSlots:null,cleanups:null,value:n,owner:_,context:_?_.context:null,pure:R};return _===null||_!==e2&&(_.owned?_.owned.push(e):_.owned=[e]),e}function P(L){if(L.state===0)return;if(L.state===N)return I(L);if(L.suspense&&F(L.suspense.inFallback))return L.suspense.effects.push(L);const n=[L];for(;(L=L.owner)&&(!L.updatedAt||L.updatedAt<B);)L.state&&n.push(L);for(let R=n.length-1;R>=0;R--)if(L=n[R],L.state===v)U(L);else if(L.state===N){const s=p;p=null,C(()=>I(L,n[0]),!1),p=s}}function C(L,n){if(p)return L();let R=!1;n||(p=[]),m?R=!0:m=[],B++;try{const s=L();return x2(R),s}catch(s){R||(m=null),p=null,l2(s)}}function x2(L){if(p&&(r2(p),p=null),L)return;const n=m;m=null,n.length&&C(()=>t2(n),!1)}function r2(L){for(let n=0;n<L.length;n++)P(L[n])}function T2(L){let n,R=0;for(n=0;n<L.length;n++){const s=L[n];s.user?L[R++]=s:P(s)}for(n=0;n<R;n++)P(L[n])}function I(L,n){L.state=0;for(let R=0;R<L.sources.length;R+=1){const s=L.sources[R];if(s.sources){const o=s.state;o===v?s!==n&&(!s.updatedAt||s.updatedAt<B)&&P(s):o===N&&I(s,n)}}}function i2(L){for(let n=0;n<L.observers.length;n+=1){const R=L.observers[n];R.state||(R.state=N,R.pure?p.push(R):m.push(R),R.observers&&i2(R))}}function T(L){let n;if(L.sources)for(;L.sources.length;){const R=L.sources.pop(),s=L.sourceSlots.pop(),o=R.observers;if(o&&o.length){const e=o.pop(),r=R.observerSlots.pop();s<o.length&&(e.sourceSlots[r]=s,o[s]=e,R.observerSlots[s]=r)}}if(L.tOwned){for(n=L.tOwned.length-1;n>=0;n--)T(L.tOwned[n]);delete L.tOwned}if(L.owned){for(n=L.owned.length-1;n>=0;n--)T(L.owned[n]);L.owned=null}if(L.cleanups){for(n=L.cleanups.length-1;n>=0;n--)L.cleanups[n]();L.cleanups=null}L.state=0}function C2(L){return L instanceof Error?L:new Error(typeof L=="string"?L:"Unknown error",{cause:L})}function l2(L,n=_){throw C2(L)}function b(L,n){return F(()=>L(n||{}))}function A2(L,n,R){let s=R.length,o=n.length,e=s,r=0,t=0,i=n[o-1].nextSibling,l=null;for(;r<o||t<e;){if(n[r]===R[t]){r++,t++;continue}for(;n[o-1]===R[e-1];)o--,e--;if(o===r){const a=e<s?t?R[t-1].nextSibling:R[e-t]:i;for(;t<e;)L.insertBefore(R[t++],a)}else if(e===t)for(;r<o;)(!l||!l.has(n[r]))&&n[r].remove(),r++;else if(n[r]===R[e-1]&&R[t]===n[o-1]){const a=n[--o].nextSibling;L.insertBefore(R[t++],n[r++].nextSibling),L.insertBefore(R[--e],a),n[o]=R[e]}else{if(!l){l=new Map;let c=t;for(;c<e;)l.set(R[c],c++)}const a=l.get(n[r]);if(a!=null)if(t<a&&a<e){let c=r,u=1,d;for(;++c<o&&c<e&&!((d=l.get(n[c]))==null||d!==a+u);)u++;if(u>a-t){const g=n[r];for(;t<a;)L.insertBefore(R[t++],g)}else L.replaceChild(R[t++],n[r++])}else r++;else n[r++].remove()}}}const Y="_$DX_DELEGATE";function N2(L,n,R,s={}){let o;return O2(e=>{o=e,n===document?L():h(n,L(),n.firstChild?null:void 0,R)},s.owner),()=>{o(),n.textContent=""}}function E(L,n,R,s){let o;const e=()=>{const t=document.createElement("template");return t.innerHTML=L,t.content.firstChild},r=()=>(o||(o=e())).cloneNode(!0);return r.cloneNode=r,r}function a2(L,n=window.document){const R=n[Y]||(n[Y]=new Set);for(let s=0,o=L.length;s<o;s++){const e=L[s];R.has(e)||(R.add(e),n.addEventListener(e,z2))}}function P2(L,n,R){R==null?L.removeAttribute(n):L.setAttribute(n,R)}function I2(L,n,R,s){Array.isArray(R)?(L[`$$${n}`]=R[0],L[`$$${n}Data`]=R[1]):L[`$$${n}`]=R}function k2(L,n,R={}){const s=Object.keys(n||{}),o=Object.keys(R);let e,r;for(e=0,r=o.length;e<r;e++){const t=o[e];!t||t==="undefined"||n[t]||(Z(L,t,!1),delete R[t])}for(e=0,r=s.length;e<r;e++){const t=s[e],i=!!n[t];!t||t==="undefined"||R[t]===i||!i||(Z(L,t,!0),R[t]=i)}return R}function h(L,n,R,s){if(R!==void 0&&!s&&(s=[]),typeof n!="function")return k(L,n,s,R);O(o=>k(L,n(),o,R),s)}function Z(L,n,R){const s=n.trim().split(/\s+/);for(let o=0,e=s.length;o<e;o++)L.classList.toggle(s[o],R)}function z2(L){let n=L.target;const R=`$$${L.type}`,s=L.target,o=L.currentTarget,e=i=>Object.defineProperty(L,"target",{configurable:!0,value:i}),r=()=>{const i=n[R];if(i&&!n.disabled){const l=n[`${R}Data`];if(l!==void 0?i.call(n,l,L):i.call(n,L),L.cancelBubble)return}return n.host&&typeof n.host!="string"&&!n.host._$host&&n.contains(L.target)&&e(n.host),!0},t=()=>{for(;r()&&(n=n._$host||n.parentNode||n.host););};if(Object.defineProperty(L,"currentTarget",{configurable:!0,get(){return n||document}}),L.composedPath){const i=L.composedPath();e(i[0]);for(let l=0;l<i.length-2&&(n=i[l],!!r());l++){if(n._$host){n=n._$host,t();break}if(n.parentNode===o)break}}else t();e(s)}function k(L,n,R,s,o){for(;typeof R=="function";)R=R();if(n===R)return R;const e=typeof n,r=s!==void 0;if(L=r&&R[0]&&R[0].parentNode||L,e==="string"||e==="number"){if(e==="number"&&(n=n.toString(),n===R))return R;if(r){let t=R[0];t&&t.nodeType===3?t.data!==n&&(t.data=n):t=document.createTextNode(n),R=M(L,R,s,t)}else R!==""&&typeof R=="string"?R=L.firstChild.data=n:R=L.textContent=n}else if(n==null||e==="boolean")R=M(L,R,s);else{if(e==="function")return O(()=>{let t=n();for(;typeof t=="function";)t=t();R=k(L,t,R,s)}),()=>R;if(Array.isArray(n)){const t=[],i=R&&Array.isArray(R);if(H(t,n,R,o))return O(()=>R=k(L,t,R,s,!0)),()=>R;if(t.length===0){if(R=M(L,R,s),r)return R}else i?R.length===0?n2(L,t,s):A2(L,R,t):(R&&M(L),n2(L,t));R=t}else if(n.nodeType){if(Array.isArray(R)){if(r)return R=M(L,R,s,n);M(L,R,null,n)}else R==null||R===""||!L.firstChild?L.appendChild(n):L.replaceChild(n,L.firstChild);R=n}}return R}function H(L,n,R,s){let o=!1;for(let e=0,r=n.length;e<r;e++){let t=n[e],i=R&&R[L.length],l;if(!(t==null||t===!0||t===!1))if((l=typeof t)=="object"&&t.nodeType)L.push(t);else if(Array.isArray(t))o=H(L,t,i)||o;else if(l==="function")if(s){for(;typeof t=="function";)t=t();o=H(L,Array.isArray(t)?t:[t],Array.isArray(i)?i:[i])||o}else L.push(t),o=!0;else{const a=String(t);i&&i.nodeType===3&&i.data===a?L.push(i):L.push(document.createTextNode(a))}}return o}function n2(L,n,R=null){for(let s=0,o=n.length;s<o;s++)L.insertBefore(n[s],R)}function M(L,n,R,s){if(R===void 0)return L.textContent="";const o=s||document.createTextNode("");if(n.length){let e=!1;for(let r=n.length-1;r>=0;r--){const t=n[r];if(o!==t){const i=t.parentNode===L;!e&&!r?i?L.replaceChild(o,t):L.insertBefore(o,R):i&&t.remove()}else e=!0}}else L.insertBefore(o,R);return[o]}const D2=[["1034","6166"],["3","6"]],B2=(L="")=>{let n=50;return L.split(`
-`).reduce((R,s)=>{const o=s[0]==="R"?1:-1,e=parseInt(s.slice(1),10);return n+=o*e,n%100===0&&R++,R},0)},U2=L=>{const n=(s=0,o=1)=>(s%o+o)%o;let R=50;return L.split(`
-`).reduce((s,o)=>{const e=o[0]==="R"?1:-1,r=parseInt(o.slice(1),10),t=R+e*r;return e>0?s+=Math.floor(t/100):(s-=Math.floor(t/100),n(R,100)===0&&s--,n(t,100)===0&&s++),R=n(t,100),s},0)},q2=Object.freeze(Object.defineProperty({__proto__:null,answers:D2,part1:B2,part2:U2},Symbol.toStringTag,{value:"Module"})),G2=[["12599655151","20942028255"],["1227775554","4174379265"]],V2=(L="")=>L.split(",").reduce((n,R)=>{const[s,o]=R.split("-").map(Number);for(let e=s;e<=o;e++){const r=e.toString();if(r.length%2!==0){e=10**r.length-1;continue}const t=r.slice(0,r.length/2),i=Number(t+t);if(i>o)break;i>=s&&(n+=i);const l=String(Number(t)+1);e=Number(l+l)-1}return n},0),K2=L=>L.split(",").reduce((n,R)=>{const[s,o]=R.split("-").map(Number);for(let e=s;e<=o;e++){const r=e.toString(),t=r.length;if(t<2)continue;const l=Array.from(Array(t-1),(a,c)=>c+1).filter(a=>t%a===0).flatMap(a=>{const c=r.slice(0,a),u=String(Number(c)+1);return[c.repeat(t/a),u.repeat(t/a)]}).map(Number).filter(a=>a>=e&&a<=o);if(l.length===0)break;e=Math.min(...l),n+=e}return n},0),H2=Object.freeze(Object.defineProperty({__proto__:null,answers:G2,part1:V2,part2:K2},Symbol.toStringTag,{value:"Module"})),F2=[["16973","168027167146027"],["357","3121910778619"]],W2=(L="")=>c2(L,2),c2=(L,n=12)=>L.split(`
-`).reduce((R,s)=>{const o=[];let e=s.length-n;return s.split("").forEach(r=>{for(;e>0&&o.length>0&&o[o.length-1]<r;)o.pop(),e--;o.push(r)}),R+Number(o.slice(0,n).join(""))},0),Q2=Object.freeze(Object.defineProperty({__proto__:null,answers:F2,part1:W2,part2:c2},Symbol.toStringTag,{value:"Module"})),X2=[["1351","8345"],["13","43"]],J2=(L="")=>{const n=L.split(`
-`).map(o=>o.split("")),R=[-1,0,1];let s=0;return n.forEach((o,e)=>{o.forEach((r,t)=>{if(r!=="@")return;let i=0;R.forEach(l=>{n[e+l]&&R.forEach(a=>{if(a===0&&l===0)return;n[e+l][t+a]==="@"&&i++})}),i<4&&s++})}),s},Y2=L=>{const n=L.split(`
-`).map(e=>e.split("").map(r=>({ch:r,nabs:0}))),R=[-1,0,1],s=[[0,0]].slice(0,0);n.forEach((e,r)=>{e.forEach((t,i)=>{t.ch==="@"&&(s.push([i,r]),R.forEach(l=>{n[r+l]&&R.forEach(a=>{a===0&&l===0||n[r+l][i+a]?.ch==="@"&&t.nabs++})}))})});let o=0;for(;s.length>0;){const[e,r]=s.pop()||[-1,-1],t=n[r][e];t.ch==="@"&&(t.nabs>=4||(t.ch=".",o++,R.forEach(i=>{n[r+i]&&R.forEach(l=>{if(l===0&&i===0)return;const a=n[r+i][e+l];a?.ch==="@"&&(a.nabs--,a.nabs<4&&s.push([e+l,r+i]))})})))}return o},Z2=Object.freeze(Object.defineProperty({__proto__:null,answers:X2,part1:J2,part2:Y2},Symbol.toStringTag,{value:"Module"})),n3=[["640","365804144481581"],["3","14"]],L3=(L="")=>{const[n,R]=L.split(`
-
-`).map(e=>e.split(`
-`)),s=n.map(e=>e.split("-").map(Number));return R.map(Number).reduce((e,r)=>{const t=s.some(([i,l])=>r>=i&&r<=l);return e+(t?1:0)},0)},R3=(L="")=>{const[n]=L.split(`
+(function(){const n=document.createElement("link").relList;if(n&&n.supports&&n.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))t(o);new MutationObserver(o=>{for(const s of o)if(s.type==="childList")for(const r of s.addedNodes)r.tagName==="LINK"&&r.rel==="modulepreload"&&t(r)}).observe(document,{childList:!0,subtree:!0});function R(o){const s={};return o.integrity&&(s.integrity=o.integrity),o.referrerPolicy&&(s.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?s.credentials="include":o.crossOrigin==="anonymous"?s.credentials="omit":s.credentials="same-origin",s}function t(o){if(o.ep)return;o.ep=!0;const s=R(o);fetch(o.href,s)}})();const j2=!1,_2=(L,n)=>L===n,Y={equals:_2};let e2=i2;const w=1,C=2,s2={owned:null,cleanups:null,context:null,owner:null};var m=null;let V=null,z2=null,p=null,d=null,h=null,B=0;function k2(L,n){const R=p,t=m,o=L.length===0,s=n===void 0?t:n,r=o?s2:{owned:null,cleanups:null,context:s?s.context:null,owner:s},e=o?L:()=>L(()=>W(()=>E(r)));m=r,p=null;try{return M(e,!0)}finally{p=R,m=t}}function v(L,n){n=n?Object.assign({},Y,n):Y;const R={value:L,observers:null,observerSlots:null,comparator:n.equals||void 0},t=o=>(typeof o=="function"&&(o=o(R.value)),o2(R,o));return[S2.bind(R),t]}function z(L,n,R){const t=r2(L,n,!1,w);U(t)}function q2(L,n,R){e2=E2;const t=r2(L,n,!1,w);t.user=!0,h?h.push(t):U(t)}function W(L){if(p===null)return L();const n=p;p=null;try{return L()}finally{p=n}}function S2(){if(this.sources&&this.state)if(this.state===w)U(this);else{const L=d;d=null,M(()=>N(this),!1),d=L}if(p){const L=this.observers?this.observers.length:0;p.sources?(p.sources.push(this),p.sourceSlots.push(L)):(p.sources=[this],p.sourceSlots=[L]),this.observers?(this.observers.push(p),this.observerSlots.push(p.sources.length-1)):(this.observers=[p],this.observerSlots=[p.sources.length-1])}return this.value}function o2(L,n,R){let t=L.value;return(!L.comparator||!L.comparator(t,n))&&(L.value=n,L.observers&&L.observers.length&&M(()=>{for(let o=0;o<L.observers.length;o+=1){const s=L.observers[o],r=V&&V.running;r&&V.disposed.has(s),(r?!s.tState:!s.state)&&(s.pure?d.push(s):h.push(s),s.observers&&l2(s)),r||(s.state=w)}if(d.length>1e6)throw d=[],new Error},!1)),n}function U(L){if(!L.fn)return;E(L);const n=B;$2(L,L.value,n)}function $2(L,n,R){let t;const o=m,s=p;p=m=L;try{t=L.fn(n)}catch(r){return L.pure&&(L.state=w,L.owned&&L.owned.forEach(E),L.owned=null),L.updatedAt=R+1,a2(r)}finally{p=s,m=o}(!L.updatedAt||L.updatedAt<=R)&&(L.updatedAt!=null&&"observers"in L?o2(L,t):L.value=t,L.updatedAt=R)}function r2(L,n,R,t=w,o){const s={fn:L,state:t,updatedAt:null,owned:null,sources:null,sourceSlots:null,cleanups:null,value:n,owner:m,context:m?m.context:null,pure:R};return m===null||m!==s2&&(m.owned?m.owned.push(s):m.owned=[s]),s}function A(L){if(L.state===0)return;if(L.state===C)return N(L);if(L.suspense&&W(L.suspense.inFallback))return L.suspense.effects.push(L);const n=[L];for(;(L=L.owner)&&(!L.updatedAt||L.updatedAt<B);)L.state&&n.push(L);for(let R=n.length-1;R>=0;R--)if(L=n[R],L.state===w)U(L);else if(L.state===C){const t=d;d=null,M(()=>N(L,n[0]),!1),d=t}}function M(L,n){if(d)return L();let R=!1;n||(d=[]),h?R=!0:h=[],B++;try{const t=L();return O2(R),t}catch(t){R||(h=null),d=null,a2(t)}}function O2(L){if(d&&(i2(d),d=null),L)return;const n=h;h=null,n.length&&M(()=>e2(n),!1)}function i2(L){for(let n=0;n<L.length;n++)A(L[n])}function E2(L){let n,R=0;for(n=0;n<L.length;n++){const t=L[n];t.user?L[R++]=t:A(t)}for(n=0;n<R;n++)A(L[n])}function N(L,n){L.state=0;for(let R=0;R<L.sources.length;R+=1){const t=L.sources[R];if(t.sources){const o=t.state;o===w?t!==n&&(!t.updatedAt||t.updatedAt<B)&&A(t):o===C&&N(t,n)}}}function l2(L){for(let n=0;n<L.observers.length;n+=1){const R=L.observers[n];R.state||(R.state=C,R.pure?d.push(R):h.push(R),R.observers&&l2(R))}}function E(L){let n;if(L.sources)for(;L.sources.length;){const R=L.sources.pop(),t=L.sourceSlots.pop(),o=R.observers;if(o&&o.length){const s=o.pop(),r=R.observerSlots.pop();t<o.length&&(s.sourceSlots[r]=t,o[t]=s,R.observerSlots[t]=r)}}if(L.tOwned){for(n=L.tOwned.length-1;n>=0;n--)E(L.tOwned[n]);delete L.tOwned}if(L.owned){for(n=L.owned.length-1;n>=0;n--)E(L.owned[n]);L.owned=null}if(L.cleanups){for(n=L.cleanups.length-1;n>=0;n--)L.cleanups[n]();L.cleanups=null}L.state=0}function M2(L){return L instanceof Error?L:new Error(typeof L=="string"?L:"Unknown error",{cause:L})}function a2(L,n=m){throw M2(L)}function b(L,n){return W(()=>L(n||{}))}function T2(L,n,R){let t=R.length,o=n.length,s=t,r=0,e=0,i=n[o-1].nextSibling,l=null;for(;r<o||e<s;){if(n[r]===R[e]){r++,e++;continue}for(;n[o-1]===R[s-1];)o--,s--;if(o===r){const a=s<t?e?R[e-1].nextSibling:R[s-e]:i;for(;e<s;)L.insertBefore(R[e++],a)}else if(s===e)for(;r<o;)(!l||!l.has(n[r]))&&n[r].remove(),r++;else if(n[r]===R[s-1]&&R[e]===n[o-1]){const a=n[--o].nextSibling;L.insertBefore(R[e++],n[r++].nextSibling),L.insertBefore(R[--s],a),n[o]=R[s]}else{if(!l){l=new Map;let c=e;for(;c<s;)l.set(R[c],c++)}const a=l.get(n[r]);if(a!=null)if(e<a&&a<s){let c=r,u=1,f;for(;++c<o&&c<s&&!((f=l.get(n[c]))==null||f!==a+u);)u++;if(u>a-e){const g=n[r];for(;e<a;)L.insertBefore(R[e++],g)}else L.replaceChild(R[e++],n[r++])}else r++;else n[r++].remove()}}}const Z="_$DX_DELEGATE";function C2(L,n,R,t={}){let o;return k2(s=>{o=s,n===document?L():y(n,L(),n.firstChild?null:void 0,R)},t.owner),()=>{o(),n.textContent=""}}function k(L,n,R,t){let o;const s=()=>{const e=document.createElement("template");return e.innerHTML=L,e.content.firstChild},r=()=>(o||(o=s())).cloneNode(!0);return r.cloneNode=r,r}function c2(L,n=window.document){const R=n[Z]||(n[Z]=new Set);for(let t=0,o=L.length;t<o;t++){const s=L[t];R.has(s)||(R.add(s),n.addEventListener(s,I2))}}function A2(L,n,R){R==null?L.removeAttribute(n):L.setAttribute(n,R)}function N2(L,n,R,t){Array.isArray(R)?(L[`$$${n}`]=R[0],L[`$$${n}Data`]=R[1]):L[`$$${n}`]=R}function P2(L,n,R={}){const t=Object.keys(n||{}),o=Object.keys(R);let s,r;for(s=0,r=o.length;s<r;s++){const e=o[s];!e||e==="undefined"||n[e]||(n2(L,e,!1),delete R[e])}for(s=0,r=t.length;s<r;s++){const e=t[s],i=!!n[e];!e||e==="undefined"||R[e]===i||!i||(n2(L,e,!0),R[e]=i)}return R}function y(L,n,R,t){if(R!==void 0&&!t&&(t=[]),typeof n!="function")return P(L,n,t,R);z(o=>P(L,n(),o,R),t)}function n2(L,n,R){const t=n.trim().split(/\s+/);for(let o=0,s=t.length;o<s;o++)L.classList.toggle(t[o],R)}function I2(L){let n=L.target;const R=`$$${L.type}`,t=L.target,o=L.currentTarget,s=i=>Object.defineProperty(L,"target",{configurable:!0,value:i}),r=()=>{const i=n[R];if(i&&!n.disabled){const l=n[`${R}Data`];if(l!==void 0?i.call(n,l,L):i.call(n,L),L.cancelBubble)return}return n.host&&typeof n.host!="string"&&!n.host._$host&&n.contains(L.target)&&s(n.host),!0},e=()=>{for(;r()&&(n=n._$host||n.parentNode||n.host););};if(Object.defineProperty(L,"currentTarget",{configurable:!0,get(){return n||document}}),L.composedPath){const i=L.composedPath();s(i[0]);for(let l=0;l<i.length-2&&(n=i[l],!!r());l++){if(n._$host){n=n._$host,e();break}if(n.parentNode===o)break}}else e();s(t)}function P(L,n,R,t,o){for(;typeof R=="function";)R=R();if(n===R)return R;const s=typeof n,r=t!==void 0;if(L=r&&R[0]&&R[0].parentNode||L,s==="string"||s==="number"){if(s==="number"&&(n=n.toString(),n===R))return R;if(r){let e=R[0];e&&e.nodeType===3?e.data!==n&&(e.data=n):e=document.createTextNode(n),R=q(L,R,t,e)}else R!==""&&typeof R=="string"?R=L.firstChild.data=n:R=L.textContent=n}else if(n==null||s==="boolean")R=q(L,R,t);else{if(s==="function")return z(()=>{let e=n();for(;typeof e=="function";)e=e();R=P(L,e,R,t)}),()=>R;if(Array.isArray(n)){const e=[],i=R&&Array.isArray(R);if(F(e,n,R,o))return z(()=>R=P(L,e,R,t,!0)),()=>R;if(e.length===0){if(R=q(L,R,t),r)return R}else i?R.length===0?L2(L,e,t):T2(L,R,e):(R&&q(L),L2(L,e));R=e}else if(n.nodeType){if(Array.isArray(R)){if(r)return R=q(L,R,t,n);q(L,R,null,n)}else R==null||R===""||!L.firstChild?L.appendChild(n):L.replaceChild(n,L.firstChild);R=n}}return R}function F(L,n,R,t){let o=!1;for(let s=0,r=n.length;s<r;s++){let e=n[s],i=R&&R[L.length],l;if(!(e==null||e===!0||e===!1))if((l=typeof e)=="object"&&e.nodeType)L.push(e);else if(Array.isArray(e))o=F(L,e,i)||o;else if(l==="function")if(t){for(;typeof e=="function";)e=e();o=F(L,Array.isArray(e)?e:[e],Array.isArray(i)?i:[i])||o}else L.push(e),o=!0;else{const a=String(e);i&&i.nodeType===3&&i.data===a?L.push(i):L.push(document.createTextNode(a))}}return o}function L2(L,n,R=null){for(let t=0,o=n.length;t<o;t++)L.insertBefore(n[t],R)}function q(L,n,R,t){if(R===void 0)return L.textContent="";const o=t||document.createTextNode("");if(n.length){let s=!1;for(let r=n.length-1;r>=0;r--){const e=n[r];if(o!==e){const i=e.parentNode===L;!s&&!r?i?L.replaceChild(o,e):L.insertBefore(o,R):i&&e.remove()}else s=!0}}else L.insertBefore(o,R);return[o]}const D2=[["1034","6166"],["3","6"]],B2=(L="")=>{let n=50;return L.split(`
+`).reduce((R,t)=>{const o=t[0]==="R"?1:-1,s=parseInt(t.slice(1),10);return n+=o*s,n%100===0&&R++,R},0)},U2=L=>{const n=(t=0,o=1)=>(t%o+o)%o;let R=50;return L.split(`
+`).reduce((t,o)=>{const s=o[0]==="R"?1:-1,r=parseInt(o.slice(1),10),e=R+s*r;return s>0?t+=Math.floor(e/100):(t-=Math.floor(e/100),n(R,100)===0&&t--,n(e,100)===0&&t++),R=n(e,100),t},0)},G2=Object.freeze(Object.defineProperty({__proto__:null,answers:D2,part1:B2,part2:U2},Symbol.toStringTag,{value:"Module"})),K2=[["12599655151","20942028255"],["1227775554","4174379265"]],V2=(L="")=>L.split(",").reduce((n,R)=>{const[t,o]=R.split("-").map(Number);for(let s=t;s<=o;s++){const r=s.toString();if(r.length%2!==0){s=10**r.length-1;continue}const e=r.slice(0,r.length/2),i=Number(e+e);if(i>o)break;i>=t&&(n+=i);const l=String(Number(e)+1);s=Number(l+l)-1}return n},0),H2=L=>L.split(",").reduce((n,R)=>{const[t,o]=R.split("-").map(Number);for(let s=t;s<=o;s++){const r=s.toString(),e=r.length;if(e<2)continue;const l=Array.from(Array(e-1),(a,c)=>c+1).filter(a=>e%a===0).flatMap(a=>{const c=r.slice(0,a),u=String(Number(c)+1);return[c.repeat(e/a),u.repeat(e/a)]}).map(Number).filter(a=>a>=s&&a<=o);if(l.length===0)break;s=Math.min(...l),n+=s}return n},0),F2=Object.freeze(Object.defineProperty({__proto__:null,answers:K2,part1:V2,part2:H2},Symbol.toStringTag,{value:"Module"})),W2=[["16973","168027167146027"],["357","3121910778619"]],Q2=(L="")=>u2(L,2),u2=(L,n=12)=>L.split(`
+`).reduce((R,t)=>{const o=[];let s=t.length-n;return t.split("").forEach(r=>{for(;s>0&&o.length>0&&o[o.length-1]<r;)o.pop(),s--;o.push(r)}),R+Number(o.slice(0,n).join(""))},0),X2=Object.freeze(Object.defineProperty({__proto__:null,answers:W2,part1:Q2,part2:u2},Symbol.toStringTag,{value:"Module"})),J2=[["1351","8345"],["13","43"]],Y2=(L="")=>{const n=L.split(`
+`).map(o=>o.split("")),R=[-1,0,1];let t=0;return n.forEach((o,s)=>{o.forEach((r,e)=>{if(r!=="@")return;let i=0;R.forEach(l=>{n[s+l]&&R.forEach(a=>{if(a===0&&l===0)return;n[s+l][e+a]==="@"&&i++})}),i<4&&t++})}),t},Z2=L=>{const n=L.split(`
+`).map(s=>s.split("").map(r=>({ch:r,nabs:0}))),R=[-1,0,1],t=[[0,0]].slice(0,0);n.forEach((s,r)=>{s.forEach((e,i)=>{e.ch==="@"&&(t.push([i,r]),R.forEach(l=>{n[r+l]&&R.forEach(a=>{a===0&&l===0||n[r+l][i+a]?.ch==="@"&&e.nabs++})}))})});let o=0;for(;t.length>0;){const[s,r]=t.pop()||[-1,-1],e=n[r][s];e.ch==="@"&&(e.nabs>=4||(e.ch=".",o++,R.forEach(i=>{n[r+i]&&R.forEach(l=>{if(l===0&&i===0)return;const a=n[r+i][s+l];a?.ch==="@"&&(a.nabs--,a.nabs<4&&t.push([s+l,r+i]))})})))}return o},n3=Object.freeze(Object.defineProperty({__proto__:null,answers:J2,part1:Y2,part2:Z2},Symbol.toStringTag,{value:"Module"})),L3=[["640","365804144481581"],["3","14"]],R3=(L="")=>{const[n,R]=L.split(`
 
 `).map(s=>s.split(`
-`)),R=n.map(s=>s.split("-").map(Number));for(;;){let s=!1;for(let o=0;o<R.length;o++)for(let e=o+1;e<R.length;e++){const[r,t]=R[o],[i,l]=R[e];t>=i&&l>=r&&(R[o]=[Math.min(r,i),Math.max(t,l)],R.splice(e,1),s=!0)}if(!s)break}return R.reduce((s,[o,e])=>s+(e-o+1),0)},t3=Object.freeze(Object.defineProperty({__proto__:null,answers:n3,part1:L3,part2:R3},Symbol.toStringTag,{value:"Module"})),e3=[["4648618073226","7329921182115"],["4277556","3263827"]],s3=(L="")=>{const n=L.split(`
-`).map(e=>e.trim().split(/\s+/)),R=n.pop()||["*"],s=n.map(e=>e.map(Number)),o=R.map(e=>e==="*"?1:0);return R.forEach((e,r)=>{s.forEach((t,i)=>{o[r]=e==="*"?o[r]*s[i][r]:o[r]+s[i][r]})}),o.reduce((e,r)=>e+r,0)},o3=(L="")=>{const n=L.split(`
-`),R=(n.pop()||"").trim().split(/\s+/),s=n.map(t=>t.split("")),e=s[0].map((t,i)=>s.map((l,a)=>s[a][i])).map(t=>t.join("").trim());let r=0;for(;R.length;){const t=R.pop()||"";let i=t==="*"?1:0;for(;;){const l=e.pop();if(!l)break;i=t==="*"?i*Number(l):i+Number(l)}r+=i}return r},r3=Object.freeze(Object.defineProperty({__proto__:null,answers:e3,part1:s3,part2:o3},Symbol.toStringTag,{value:"Module"})),i3=[["1518","25489586715621"],["21","40"]],l3=(L="")=>u2(L,!0),u2=(L="",n=!1)=>{const R=L.split(`
-`).map(r=>r.split("")).filter(r=>r.find(t=>t!=="."));let s=R[0].map(r=>r==="S"?1:0),o=s.slice(),e=0;return R.forEach((r,t)=>{t!==0&&(o=s.slice(),r.forEach((i,l)=>{s[l]&&i==="^"&&(e++,l>0&&(o[l-1]+=s[l]),l<r.length-1&&(o[l+1]+=s[l]),o[l]=0)}),s=o)}),n?e:s.reduce((r,t)=>r+t,0)},a3=Object.freeze(Object.defineProperty({__proto__:null,answers:i3,part1:l3,part2:u2},Symbol.toStringTag,{value:"Module"})),c3=[["32103","8133642976"],["40","25272"]],u3=(L="")=>{const n=L.split(`
-`).map(r=>r.split(",").map(Number)),s=n.length<100?10:1e3;n.sort((r,t)=>r[0]-t[0]);const o=f2((r,t)=>t[0]-r[0]);for(let r=0;r<n.length;r++){const[t,i,l]=n[r],a=Math.min(n.length,r+n.length/2);for(let c=r+1;c<a;c++){const[u,d,g]=n[c],[w,S,$]=[t-u,i-d,l-g],X=w*w+S*S+$*$;if(o.heap.length>=s){if(X>o.heap[0][0])continue;o.shift()}o.add([X,r,c])}}const e=[];for(let r=0;r<s;r++){const[t,i,l]=o.shift(),a=e.find(u=>u.has(i)),c=e.find(u=>u.has(l));if(a&&c){if(a===c)continue;for(const u of c)a.add(u);e.splice(e.indexOf(c),1)}else a?a.add(l):c?c.add(i):e.push(new Set([i,l]))}return e.sort((r,t)=>t.size-r.size),e.slice(0,3).reduce((r,t)=>r*t.size,1)},f3=(L="")=>{const n=L.split(`
-`).map(e=>e.split(",").map(Number)),R=8e3;n.sort((e,r)=>e[0]-r[0]);const s=f2((e,r)=>r[0]-e[0]);for(let e=0;e<n.length;e++){const[r,t,i]=n[e],l=Math.min(n.length,e+n.length/2);for(let a=e+1;a<l;a++){const[c,u,d]=n[a],[g,w,S]=[r-c,t-u,i-d],$=g*g+w*w+S*S;if(s.heap.length>=R){if($>s.heap[0][0])continue;s.shift()}s.add([$,e,a])}}s.heap.sort((e,r)=>e[0]-r[0]);const o=[];for(let e=0;e<R;e++){const[r,t,i]=s.heap[e],l=o.find(c=>c.has(t)),a=o.find(c=>c.has(i));if(l&&a){if(l===a)continue;for(const c of a)l.add(c);o.splice(o.indexOf(a),1)}else l?l.add(i):a?a.add(t):o.push(new Set([t,i]));if(o.length===1&&o[0].size===n.length)return n[t][0]*n[i][0]}return-1},f2=L=>{const n=[],R=t=>{if(t===0)return;const i=t-1>>1;L(n[i],n[t])<=0||(r(n,t,i),R(i))},s=t=>{const i=t*2+1,l=i+1;let a=t;i<n.length&&L(n[i],n[a])<0&&(a=i),l<n.length&&L(n[l],n[a])<0&&(a=l),a!==t&&(r(n,t,a),s(a))},o=t=>{n.push(t),R(n.length-1)},e=()=>{const t=n[0];return n[0]=n[n.length-1],n.length--,s(0),t},r=(t,i,l)=>{const a=t[i];t[i]=t[l],t[l]=a};return{add:o,shift:e,heap:n}},p3=Object.freeze(Object.defineProperty({__proto__:null,answers:c3,part1:u3,part2:f3},Symbol.toStringTag,{value:"Module"})),d3=[["4750176210","1574684850"],["50","24"]],_3=(L="")=>{const n=L.split(`
-`).map(s=>s.split(",").map(Number));let R=0;for(let s=0;s<n.length;s++){const[o,e]=n[s];for(let r=s+1;r<n.length;r++){const[t,i]=n[r],l=Math.abs(o-t),a=Math.abs(e-i),c=(l+1)*(a+1);c>R&&(R=c)}}return R},h3=L=>{const n=L.split(`
-`).map(t=>t.split(",").map(Number)),R=[],s=[];n.forEach(([t,i],l)=>{const[a,c]=n[(l+1)%n.length];i===c&&R.push([i,Math.min(t,a),Math.max(t,a)]),t===a&&s.push([t,Math.min(i,c),Math.max(i,c)])}),R.sort((t,i)=>t[0]-i[0]),s.sort((t,i)=>t[0]-i[0]);const o=(t=0,i=0,l=0,a=0)=>{for(let c=0;c<s.length;c++){const[u,d,g]=s[c];if(!(u<=t)){if(u>=i)break;if(l<g&&a>d)return!0}}for(let c=0;c<R.length;c++){const[u,d,g]=R[c];if(!(u<=l)){if(u>=a)break;if(t<g&&i>d)return!0}}return!1},e=(t=0,i=0)=>{const l=[0,0];for(let a=0;a<s.length;a++){const[c,u,d]=s[a];t!==c&&(i<=u||i>=d||(l[t<c?0:1]+=1))}return l.every(a=>a%2===1)};let r=0;for(let t=0;t<n.length;t++){const[i,l]=n[t];for(let a=t+1;a<n.length;a++){const[c,u]=n[a],d=(Math.abs(i-c)+1)*(Math.abs(l-u)+1);if(d<=r)continue;const g=Math.min(i,c),w=Math.max(i,c),S=Math.min(l,u),$=Math.max(l,u);o(g,w,S,$)||e(i+c>>1,l+u>>1)&&(r=d)}}return r},g3=Object.freeze(Object.defineProperty({__proto__:null,answers:d3,part1:_3,part2:h3},Symbol.toStringTag,{value:"Module"})),b3=Object.freeze(Object.defineProperty({__proto__:null},Symbol.toStringTag,{value:"Module"})),m3=Object.freeze(Object.defineProperty({__proto__:null},Symbol.toStringTag,{value:"Module"})),y3=Object.freeze(Object.defineProperty({__proto__:null},Symbol.toStringTag,{value:"Module"})),v3=`L68
+`)),t=n.map(s=>s.split("-").map(Number));return R.map(Number).reduce((s,r)=>{const e=t.some(([i,l])=>r>=i&&r<=l);return s+(e?1:0)},0)},t3=(L="")=>{const[n]=L.split(`
+
+`).map(t=>t.split(`
+`)),R=n.map(t=>t.split("-").map(Number));for(;;){let t=!1;for(let o=0;o<R.length;o++)for(let s=o+1;s<R.length;s++){const[r,e]=R[o],[i,l]=R[s];e>=i&&l>=r&&(R[o]=[Math.min(r,i),Math.max(e,l)],R.splice(s,1),t=!0)}if(!t)break}return R.reduce((t,[o,s])=>t+(s-o+1),0)},e3=Object.freeze(Object.defineProperty({__proto__:null,answers:L3,part1:R3,part2:t3},Symbol.toStringTag,{value:"Module"})),s3=[["4648618073226","7329921182115"],["4277556","3263827"]],o3=(L="")=>{const n=L.split(`
+`).map(s=>s.trim().split(/\s+/)),R=n.pop()||["*"],t=n.map(s=>s.map(Number)),o=R.map(s=>s==="*"?1:0);return R.forEach((s,r)=>{t.forEach((e,i)=>{o[r]=s==="*"?o[r]*t[i][r]:o[r]+t[i][r]})}),o.reduce((s,r)=>s+r,0)},r3=(L="")=>{const n=L.split(`
+`),R=(n.pop()||"").trim().split(/\s+/),t=n.map(e=>e.split("")),s=t[0].map((e,i)=>t.map((l,a)=>t[a][i])).map(e=>e.join("").trim());let r=0;for(;R.length;){const e=R.pop()||"";let i=e==="*"?1:0;for(;;){const l=s.pop();if(!l)break;i=e==="*"?i*Number(l):i+Number(l)}r+=i}return r},i3=Object.freeze(Object.defineProperty({__proto__:null,answers:s3,part1:o3,part2:r3},Symbol.toStringTag,{value:"Module"})),l3=[["1518","25489586715621"],["21","40"]],a3=(L="")=>f2(L,!0),f2=(L="",n=!1)=>{const R=L.split(`
+`).map(r=>r.split("")).filter(r=>r.find(e=>e!=="."));let t=R[0].map(r=>r==="S"?1:0),o=t.slice(),s=0;return R.forEach((r,e)=>{e!==0&&(o=t.slice(),r.forEach((i,l)=>{t[l]&&i==="^"&&(s++,l>0&&(o[l-1]+=t[l]),l<r.length-1&&(o[l+1]+=t[l]),o[l]=0)}),t=o)}),n?s:t.reduce((r,e)=>r+e,0)},c3=Object.freeze(Object.defineProperty({__proto__:null,answers:l3,part1:a3,part2:f2},Symbol.toStringTag,{value:"Module"})),u3=[["32103","8133642976"],["40","25272"]],f3=(L="")=>{const n=L.split(`
+`).map(r=>r.split(",").map(Number)),t=n.length<100?10:1e3;n.sort((r,e)=>r[0]-e[0]);const o=p2((r,e)=>e[0]-r[0]);for(let r=0;r<n.length;r++){const[e,i,l]=n[r],a=Math.min(n.length,r+n.length/2);for(let c=r+1;c<a;c++){const[u,f,g]=n[c],[x,j,_]=[e-u,i-f,l-g],J=x*x+j*j+_*_;if(o.heap.length>=t){if(J>o.heap[0][0])continue;o.shift()}o.add([J,r,c])}}const s=[];for(let r=0;r<t;r++){const[e,i,l]=o.shift(),a=s.find(u=>u.has(i)),c=s.find(u=>u.has(l));if(a&&c){if(a===c)continue;for(const u of c)a.add(u);s.splice(s.indexOf(c),1)}else a?a.add(l):c?c.add(i):s.push(new Set([i,l]))}return s.sort((r,e)=>e.size-r.size),s.slice(0,3).reduce((r,e)=>r*e.size,1)},p3=(L="")=>{const n=L.split(`
+`).map(s=>s.split(",").map(Number)),R=8e3;n.sort((s,r)=>s[0]-r[0]);const t=p2((s,r)=>r[0]-s[0]);for(let s=0;s<n.length;s++){const[r,e,i]=n[s],l=Math.min(n.length,s+n.length/2);for(let a=s+1;a<l;a++){const[c,u,f]=n[a],[g,x,j]=[r-c,e-u,i-f],_=g*g+x*x+j*j;if(t.heap.length>=R){if(_>t.heap[0][0])continue;t.shift()}t.add([_,s,a])}}t.heap.sort((s,r)=>s[0]-r[0]);const o=[];for(let s=0;s<R;s++){const[r,e,i]=t.heap[s],l=o.find(c=>c.has(e)),a=o.find(c=>c.has(i));if(l&&a){if(l===a)continue;for(const c of a)l.add(c);o.splice(o.indexOf(a),1)}else l?l.add(i):a?a.add(e):o.push(new Set([e,i]));if(o.length===1&&o[0].size===n.length)return n[e][0]*n[i][0]}return-1},p2=L=>{const n=[],R=e=>{if(e===0)return;const i=e-1>>1;L(n[i],n[e])<=0||(r(n,e,i),R(i))},t=e=>{const i=e*2+1,l=i+1;let a=e;i<n.length&&L(n[i],n[a])<0&&(a=i),l<n.length&&L(n[l],n[a])<0&&(a=l),a!==e&&(r(n,e,a),t(a))},o=e=>{n.push(e),R(n.length-1)},s=()=>{const e=n[0];return n[0]=n[n.length-1],n.length--,t(0),e},r=(e,i,l)=>{const a=e[i];e[i]=e[l],e[l]=a};return{add:o,shift:s,heap:n}},d3=Object.freeze(Object.defineProperty({__proto__:null,answers:u3,part1:f3,part2:p3},Symbol.toStringTag,{value:"Module"})),g3=[["4750176210","1574684850"],["50","24"]],m3=(L="")=>{const n=L.split(`
+`).map(t=>t.split(",").map(Number));let R=0;for(let t=0;t<n.length;t++){const[o,s]=n[t];for(let r=t+1;r<n.length;r++){const[e,i]=n[r],l=Math.abs(o-e),a=Math.abs(s-i),c=(l+1)*(a+1);c>R&&(R=c)}}return R},y3=L=>{const n=L.split(`
+`).map(e=>e.split(",").map(Number)),R=[],t=[];n.forEach(([e,i],l)=>{const[a,c]=n[(l+1)%n.length];i===c&&R.push([i,Math.min(e,a),Math.max(e,a)]),e===a&&t.push([e,Math.min(i,c),Math.max(i,c)])}),R.sort((e,i)=>e[0]-i[0]),t.sort((e,i)=>e[0]-i[0]);const o=(e=0,i=0,l=0,a=0)=>{for(let c=0;c<t.length;c++){const[u,f,g]=t[c];if(!(u<=e)){if(u>=i)break;if(l<g&&a>f)return!0}}for(let c=0;c<R.length;c++){const[u,f,g]=R[c];if(!(u<=l)){if(u>=a)break;if(e<g&&i>f)return!0}}return!1},s=(e=0,i=0)=>{const l=[0,0];for(let a=0;a<t.length;a++){const[c,u,f]=t[a];e!==c&&(i<=u||i>=f||(l[e<c?0:1]+=1))}return l.every(a=>a%2===1)};let r=0;for(let e=0;e<n.length;e++){const[i,l]=n[e];for(let a=e+1;a<n.length;a++){const[c,u]=n[a],f=(Math.abs(i-c)+1)*(Math.abs(l-u)+1);if(f<=r)continue;const g=Math.min(i,c),x=Math.max(i,c),j=Math.min(l,u),_=Math.max(l,u);o(g,x,j,_)||s(i+c>>1,l+u>>1)&&(r=f)}}return r},b3=Object.freeze(Object.defineProperty({__proto__:null,answers:g3,part1:m3,part2:y3},Symbol.toStringTag,{value:"Module"})),h3=[["488","?"],["7","33"]],v3=(L="")=>{const n=L.split(`
+`).map(t=>{const o=t.split("[")[1].split("]")[0],s=t.split("(").map(r=>r.split(")")[0]).slice(1).map(r=>r.split(",").map(Number));return{target:o,buts:s}}),R=(t,o)=>{const s=".".repeat(t.length);if(t===s)return 0;const r=new Set(s);let e=[s],i=0;for(;e.length;){i++;const l=[];for(;e.length;){const a=e.pop()?.split("")||["."];for(const c of o){const u=a.slice();c.forEach(g=>{u[g]=u[g]==="."?"#":"."});const f=u.join("");if(f===t)return i;r.has(f)||(r.add(f),l.push(f))}}e=l}return-1};return n.reduce((t,{target:o,buts:s})=>t+R(o,s),0)},w3=(L="")=>-1,x3=Object.freeze(Object.defineProperty({__proto__:null,answers:h3,part1:v3,part2:w3},Symbol.toStringTag,{value:"Module"})),j3=[["500","287039700129600"],["5","-1"],["-1","2"]],O=(L="",n="you",R="out")=>{const t={};if(L.split(`
+`).forEach(r=>{const[e,i]=r.split(": ");t[e]||(t[e]={name:e,next:[],prev:[],data:{}});for(const l of i.split(" "))t[l]||(t[l]={name:l,next:[],prev:[],data:{}}),t[e].next.push(t[l]),t[l].prev.push(t[e])}),!t[n]||!t[R])return-1;const o=(r,e,i)=>{Object.values(t).forEach(a=>a.data.visited=!1);const l=[t[r]];for(;l.length;){const a=l.shift()||"";if(!a||a.data.visited)continue;a.data.visited=!0,i(a);const c=e===1?a.next:a.prev;l.push(...c)}};Object.values(t).forEach(r=>r.data.ct=0),o(n,1,r=>r.data.ct+=1),o(R,-1,r=>r.data.ct+=1),t[R].data.paths=1;const s=(r,e)=>e.data.ct<2?r:(e.data.paths>0||(e.data.paths=e.next.reduce(s,0)),r+e.data.paths);return s(0,t[n])},_3=(L,n="svr",R="out")=>{const t=["fft","dac"];let o=O(L,...t);return o===-1&&(t.reverse(),o=O(L,...t)),O(L,n,t[0])*o*O(L,t[1],R)},z3=Object.freeze(Object.defineProperty({__proto__:null,answers:j3,part1:O,part2:_3},Symbol.toStringTag,{value:"Module"})),k3=Object.freeze(Object.defineProperty({__proto__:null},Symbol.toStringTag,{value:"Module"})),q3=`L68
 L30
 R48
 L5
@@ -25,7 +27,7 @@ L55
 L1
 L99
 R14
-L82`,w3=`R9
+L82`,S3=`R9
 L8
 L26
 R45
@@ -4210,12 +4212,12 @@ R49
 L12
 L20
 L25
-R16`,S3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
+R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 1698522-1698528,446443-446449,38593856-38593862,565653-565659,
-824824821-824824827,2121212118-2121212124`,$3="3335355312-3335478020,62597156-62638027,94888325-95016472,4653-6357,54-79,1-19,314-423,472-650,217886-298699,58843645-58909745,2799-3721,150748-178674,9084373-9176707,1744-2691,17039821-17193560,2140045-2264792,743-1030,6666577818-6666739950,22946-32222,58933-81008,714665437-714803123,9972438-10023331,120068-142180,101-120,726684-913526,7575737649-7575766026,8200-11903,81-96,540949-687222,35704-54213,991404-1009392,335082-425865,196-268,3278941-3383621,915593-991111,32-47,431725-452205",O3=`987654321111111
+824824821-824824827,2121212118-2121212124`,O3="3335355312-3335478020,62597156-62638027,94888325-95016472,4653-6357,54-79,1-19,314-423,472-650,217886-298699,58843645-58909745,2799-3721,150748-178674,9084373-9176707,1744-2691,17039821-17193560,2140045-2264792,743-1030,6666577818-6666739950,22946-32222,58933-81008,714665437-714803123,9972438-10023331,120068-142180,101-120,726684-913526,7575737649-7575766026,8200-11903,81-96,540949-687222,35704-54213,991404-1009392,335082-425865,196-268,3278941-3383621,915593-991111,32-47,431725-452205",E3=`987654321111111
 811111111111119
 234234234234278
-818181911112111`,E3=`2412122322321222252222221622332222221521261431723112634211232223232132154222214222211332229222231222
+818181911112111`,M3=`2412122322321222252222221622332222221521261431723112634211232223232132154222214222211332229222231222
 2465412223443523142221321262346323634242443342334242423242224362522642253213243122355223222254312232
 3332242442321436631424453283363222444423355334373183244397472932323244521266474444834444476564344644
 5533778667855399367659688956396486549458366658763989334992855699859653338632354754294593558359588565
@@ -4414,7 +4416,7 @@ R16`,S3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 4235224232323232123333423222242122322212222423133224223322112222222222222433223222231333342122112224
 8417424333342443624824422362314223134336413224433144262533233559248235249334362332333442333242522562
 5443335343234432453532334333333443434242514335441344423544443453434444344255444341442234743244242342
-2221235222332215222222222212722222334222723221322222522222122222423212222222122124353332123442222223`,M3=`..@@.@@@@.
+2221235222332215222222222212722222334222723221322222522222122222423212222222122124353332123442222223`,T3=`..@@.@@@@.
 @@@.@.@.@@
 @@@@@.@.@@
 @.@@@@..@.
@@ -4423,7 +4425,7 @@ R16`,S3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 .@.@.@.@@@
 @.@@@.@@@@
 .@@@@@@@@.
-@.@.@@@.@.`,j3=`@@@@@@@@.@.@@@@.@@@@@@@@..@..@@@@.@.@.@..@@.@@@@@.@@.@@@@@@@@.....@.@.@..@@@.@@@@@@@.@@......@.@@@@...@.@@.@.@...@@@.@....@.@@@@..@@@.@@
+@.@.@@@.@.`,C3=`@@@@@@@@.@.@@@@.@@@@@@@@..@..@@@@.@.@.@..@@.@@@@@.@@.@@@@@@@@.....@.@.@..@@@.@@@@@@@.@@......@.@@@@...@.@@.@.@...@@@.@....@.@@@@..@@@.@@
 @..@.@@@@@@@.@@@.@@@@@@.@@@@@@.@...@....@.@.@.@....@@@...@..@..@@@..@@@@@@@@@@.@..@.@..@.@.@@@.@.@@@.@@.@@@...@@.@@@.@@@@.@@.@.@@@@.@@.@
 @.@@.@.@..@@@..@.@@@@@.@.@@.@@.@.@@...@.@.@.@@@@.@@@.@@@@@@@@@@@@.@@..@@.@@@@@@@..@@.@.@@@.@@..@@@@@@@.@@@.@..@@@@@@.@@@@..@@.@.@@..@@.@
 @@..@@@@@..@@@@@..@@@.@@.@@.@@@@@@@.@@.@@.@@..@.@@.@..@.@@...@@@@@@@@.@@@.@@@.@@@@@@.@@@.@..@..@..@.@@.@.@@@@.@@@.....@@..@@...@@@.@@.@@
@@ -4558,7 +4560,7 @@ R16`,S3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 @@@.@@@@@@@@@@.@@.@@..@...@.@..@.@...@@.@..@@@@@..@.@@.@@@@@@@@...@@@@.@.@.@@@..@@.@...@@.@@@@.@@@@@@@@@..@..@.@.@.@.@@.@..@@...@.@.@...
 .@@@@@@@..@.@..@@@.@@@@@..@@.@@.@@@.@@@@@@@.@@@@@@@@..@@@@.@@.@@.@.@@..@@@@.@@@@.@@@@@..@@@@@@@...@@@@.@@.@@@@.@@@..@@@@@@..@@@@..@..@@@
 .@..@@@@@@.@....@@.@@@@@..@@@@..@@.@.@@@@...@@@@@@.@@@.@.@..@@@@.@@@@@...@@@@@@.@..@.@@.@.@@.@...@..@@@@@.@@@@@@.@@..@..@@@@@@@@@..@.@.@
-@@@@@@@@@@@@.....@..@@@@@.@..@@.@.@.@.@@@.@.@@..@..@@.@@@@..@.@@@@@..@@@@@@..@.@@.@@.@@@@@@@@.@....@.@@@@@.@...@.@@@.@.@.@.@@@@@..@@@@@@`,x3=`3-5
+@@@@@@@@@@@@.....@..@@@@@.@..@@.@.@.@.@@@.@.@@..@..@@.@@@@..@.@@@@@..@@@@@@..@.@@.@@.@@@@@@@@.@....@.@@@@@.@...@.@@@.@.@.@.@@@@@..@@@@@@`,A3=`3-5
 10-14
 16-20
 12-18
@@ -4568,7 +4570,7 @@ R16`,S3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 8
 11
 17
-32`,T3=`101012613040912-105113606231378
+32`,N3=`101012613040912-105113606231378
 112873707283-2588072976190
 143005819408722-145401547845947
 384013134608808-390143577258709
@@ -5768,14 +5770,14 @@ R16`,S3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 100513845410474
 433971256957957
 311407025087900
-421796250398427`,C3=`123 328  51 64 
+421796250398427`,P3=`123 328  51 64 
  45 64  387 23 
   6 98  215 314
-*   +   *   +  `,A3=`919 534 157 2  79 97 34  8932 5   51  6 289  18 939 34  187 51  9   23 66   6  14 68  6 2111 284 629 179 322 4  43 6232 852  468 498 84 88   29 133 189 9   8    7 7  37     8 6   8    3178 572  46 29 94  799 3   592 8   682  65 154 64  4  124 52 91 343 517 42 32 748 13 7   465 878 92 93 74  49 82  97 9562 96 845 857 67 26 76 5729 88 891 612 27 519  37 1359 4   95 9295 43 145 711 127  569 246 87 617 79 46  6 88 57 91 34 51 936 946   9 611 89  4 526 32 72 96  82 324 36 72 11 6462 168 225 75  6 288 75 247  1  9 16 6   523 43 78  3 23 72  9  27   34 757 62  98 32 9151 48  6 28 5432 36 56   83  25  2  1 193 5     9 2     39 93 6968 81 73 3185 5  28 4343 72 886 9   3544 96 3    4 31 416 928 14  18  3 7616 439 816 238 94 28 96 978 6  39  32 29 91 5  691 436 354 84   66  776 773 6  76 2137 312   6 37 1298 76   2 69 68 24 688 62 51 81  26  8546 89  77 93 68 928 9738 541 355 9379 46 88   3191  8 16 84  32   31 431 39 284  9 46 283 9942 54 84   429 887 435 37 86 95 58 51   17   38 591 19   4 16 464 289 345 512 32  353 683 13    55 12   93 358 43 41  28 7   67 35 9985 4144 819  11 751 6547 675  12 5331  8 484  94 97 35 948 127 12 758 4   68 447 891 329 563  99 4662   9 12 72 544  4 99  793 4   489   8   32 3  81  29 4   88 813 363 157 84  2757 949 8493 8586 38  22 37 976 55 253 896 22 9632 6  413 82   1 23 7   6 312 23   674 954 943 393 27 2  97 749  6 17 73 21 51  872  71 231 174 25  489 64 98 25  9  1 8    455   4 142  228 8  18 63 5  71  19 7  151 12  86 11 6     2 1  93  39 15  3    525 58  2  64 6  12 966 179 8  53 325 64 2  17 8329 633 77 8    44    7 298 89 74  1 127 913  6 92 46  18  63 794 647 31 4    2 779 4271 499 653  5 97 312 4  5383 32 28 18 19 62 9  95 2   33 4266 936   2 9  934 689  25 412 51 97 1435 434  59   91 698 97   479 71   34 7     4 968 4461 86 55 948 518 181 3    7 41 248 9742 1   38 2139 713 512 671 4   31 119 4  45   47 31 334 27 3844  39 27 16  44 663 41 25  1 989 512 55   24 17  68 219 181  92 76  96 438 863 747 12 95 67 26 73   21  33 37 733 723 56   8932 382 786 61 9927 2   63 6    37 82 85 894 431 755   29 4  47 722  96 323 7   57 318 77 59 52  7465 76  28 16 9  328 97  735 38 45 829 6  792 9  29   23 584  654 3984 5   13 6   931 7363  13   1 4   7 254    1 743 59  916  6 632  586    3 15 63 324 76 347 22 358 751 21 6156 55 248 64  7128  3 7177 754 822 4752 348 278 1692 8872 79 8459 77 89 359 7  216 592  475 16  728   1 567 722 45   9   5 7687 265 931 35 7235 52 46  24 242  559  76 698 4  71  4 83   7 915 8635 538 737 281 258 4116 294 51  54 99 163 158 423 68 412  81 79  38 1973 3799 12 14   8 12 78  64 85 86 468 69 35  79 171 5296   3   5  172  9  6 823 39 2824 93 242 94  3 792  625  71  5 96     1 138 4    568 51 98 35   5 423 3657   83 11   5  921 54 448   9 98 643  2 747 91 54 63 385 4632 4   62  53 47  9 727 4118 596 89 58  28 64 5919 73 2   32 297 2  94 42 38 98 775 81 28  766 41 495 345 5    6491 45 727 471 6276 51   415 81 8817 92   8 466 65 54  2  976   3 1657  3 16 1  19 98  3 5598 63 393   8 551 686 93 47  7 229 915 1649 468  9  194 74 32 6431   36 397 58   472 474  1 84 83 67 8   75 589 558 98 38 49  54 248 17 99 27 88   3255 27 95 69  3337 3968 48   72 931 184 517 57 957 3   7 89 43  39   38 39  1   32  78 3  812 516 76 724 12 97 455  12 314 27 436 878 369 8  1741 5  36   21 18 69 77 1861  94 23 55 7632 2233 54 39 8  1964 13  41 729 442 5263  88 68 396 24 912 162 74  342 91   85 1496 47 32   6 77  45  7 4  445 5  589   3 53 79 669 54 48  5  58  181 9582 49   88  4 592 2  923 13 84   65 428  6 5611 139 85 79  3 87  85  75 444 942  2  1   19  2 66 56  5 4379 51 6792   15  568  7  5 33 83 72  4238 14 744 4367 619 255 6618 452 249 84 24 1    395 5   9  75 65 91  1  6 4   2629 2   549 34 85 3421 19 819 888 76 99 965 444 7545 61 1    23 166 73
+*   +   *   +  `,I3=`919 534 157 2  79 97 34  8932 5   51  6 289  18 939 34  187 51  9   23 66   6  14 68  6 2111 284 629 179 322 4  43 6232 852  468 498 84 88   29 133 189 9   8    7 7  37     8 6   8    3178 572  46 29 94  799 3   592 8   682  65 154 64  4  124 52 91 343 517 42 32 748 13 7   465 878 92 93 74  49 82  97 9562 96 845 857 67 26 76 5729 88 891 612 27 519  37 1359 4   95 9295 43 145 711 127  569 246 87 617 79 46  6 88 57 91 34 51 936 946   9 611 89  4 526 32 72 96  82 324 36 72 11 6462 168 225 75  6 288 75 247  1  9 16 6   523 43 78  3 23 72  9  27   34 757 62  98 32 9151 48  6 28 5432 36 56   83  25  2  1 193 5     9 2     39 93 6968 81 73 3185 5  28 4343 72 886 9   3544 96 3    4 31 416 928 14  18  3 7616 439 816 238 94 28 96 978 6  39  32 29 91 5  691 436 354 84   66  776 773 6  76 2137 312   6 37 1298 76   2 69 68 24 688 62 51 81  26  8546 89  77 93 68 928 9738 541 355 9379 46 88   3191  8 16 84  32   31 431 39 284  9 46 283 9942 54 84   429 887 435 37 86 95 58 51   17   38 591 19   4 16 464 289 345 512 32  353 683 13    55 12   93 358 43 41  28 7   67 35 9985 4144 819  11 751 6547 675  12 5331  8 484  94 97 35 948 127 12 758 4   68 447 891 329 563  99 4662   9 12 72 544  4 99  793 4   489   8   32 3  81  29 4   88 813 363 157 84  2757 949 8493 8586 38  22 37 976 55 253 896 22 9632 6  413 82   1 23 7   6 312 23   674 954 943 393 27 2  97 749  6 17 73 21 51  872  71 231 174 25  489 64 98 25  9  1 8    455   4 142  228 8  18 63 5  71  19 7  151 12  86 11 6     2 1  93  39 15  3    525 58  2  64 6  12 966 179 8  53 325 64 2  17 8329 633 77 8    44    7 298 89 74  1 127 913  6 92 46  18  63 794 647 31 4    2 779 4271 499 653  5 97 312 4  5383 32 28 18 19 62 9  95 2   33 4266 936   2 9  934 689  25 412 51 97 1435 434  59   91 698 97   479 71   34 7     4 968 4461 86 55 948 518 181 3    7 41 248 9742 1   38 2139 713 512 671 4   31 119 4  45   47 31 334 27 3844  39 27 16  44 663 41 25  1 989 512 55   24 17  68 219 181  92 76  96 438 863 747 12 95 67 26 73   21  33 37 733 723 56   8932 382 786 61 9927 2   63 6    37 82 85 894 431 755   29 4  47 722  96 323 7   57 318 77 59 52  7465 76  28 16 9  328 97  735 38 45 829 6  792 9  29   23 584  654 3984 5   13 6   931 7363  13   1 4   7 254    1 743 59  916  6 632  586    3 15 63 324 76 347 22 358 751 21 6156 55 248 64  7128  3 7177 754 822 4752 348 278 1692 8872 79 8459 77 89 359 7  216 592  475 16  728   1 567 722 45   9   5 7687 265 931 35 7235 52 46  24 242  559  76 698 4  71  4 83   7 915 8635 538 737 281 258 4116 294 51  54 99 163 158 423 68 412  81 79  38 1973 3799 12 14   8 12 78  64 85 86 468 69 35  79 171 5296   3   5  172  9  6 823 39 2824 93 242 94  3 792  625  71  5 96     1 138 4    568 51 98 35   5 423 3657   83 11   5  921 54 448   9 98 643  2 747 91 54 63 385 4632 4   62  53 47  9 727 4118 596 89 58  28 64 5919 73 2   32 297 2  94 42 38 98 775 81 28  766 41 495 345 5    6491 45 727 471 6276 51   415 81 8817 92   8 466 65 54  2  976   3 1657  3 16 1  19 98  3 5598 63 393   8 551 686 93 47  7 229 915 1649 468  9  194 74 32 6431   36 397 58   472 474  1 84 83 67 8   75 589 558 98 38 49  54 248 17 99 27 88   3255 27 95 69  3337 3968 48   72 931 184 517 57 957 3   7 89 43  39   38 39  1   32  78 3  812 516 76 724 12 97 455  12 314 27 436 878 369 8  1741 5  36   21 18 69 77 1861  94 23 55 7632 2233 54 39 8  1964 13  41 729 442 5263  88 68 396 24 912 162 74  342 91   85 1496 47 32   6 77  45  7 4  445 5  589   3 53 79 669 54 48  5  58  181 9582 49   88  4 592 2  923 13 84   65 428  6 5611 139 85 79  3 87  85  75 444 942  2  1   19  2 66 56  5 4379 51 6792   15  568  7  5 33 83 72  4238 14 744 4367 619 255 6618 452 249 84 24 1    395 5   9  75 65 91  1  6 4   2629 2   549 34 85 3421 19 819 888 76 99 965 444 7545 61 1    23 166 73
  81 324 95  3  14 48 98  6635 447 19 78 446 336 86  62  379 42  145 65 33  99 214 47 38 6297 524 991 928 911 1  69  157 5436 385 133 81 329 181 969 699 35 36  278 6  16   253 5   9744 1247 324 214 12 842 395 26  381 4   492  52 693 661 7  935 18 5  614 969 62 85 718 27 4   178 533 69 17 38  32 58 649  397 27 244 529 21 69 96 5123 41 539 235 74 343  95 2155 34  79 5875 29 288  51 319 6489 974 22 152 94 85 64 57 33 28 15  1 996 2214  8 572 68  2  22 77 21 576 94 955 67 42 91  483 463 988 47 74 287  1 496 74  3  2 77   97 32 96  4 58 824 42 587  75 863 75 696 23 1856 92  7 79 1374 32 2233 21  47  9 53 663 77  478 95  4979 31 4668 27 17  894 31 86  957 19 712 77  7664 25 83 224 19  92 531 323 85 45 6292 953 45  419  9 18 51 314 3  11  83 62 99 7  978 279 367 1   913  591 161 1  82 9621 874   8 47 2923 99  83 41 48 15 173 36 94 844 827 5554 25  26 24 58 178 688  595 773 6295 54 636  7284 57 86 23  9248 92 969 62 586 99 99 853 7744 71 317  624 559 353  5 76 55 34 56  487   54 823 43 346  8 985 638 459 233 49 9936 134 61   243 1673 61 636 88 75 966 87  23 25 519  5888 717 788 129 5965 1534 31 5824  5 465  81 54 16 365 411 79 478 36  82 137 556 55  397 111 7688  35 57 91 322 26 87  173 12  695 533 5279 7  68  95 566 98 272 759 253 934 3731 614 2267 8175 12 615 79  82 63 582 521 27 9847 1  345 88  31 37 15  7 754 5824  12 198 446 273 75 49 62 883 15 88 83 51 95  436  23 934 812 58  345 91 63 32  6  1 45   471   1 727  212 91 95 76 6  37 819 4  857 55 936 66 57    1 11 25  92 889 46   948 84  29 76 15 69 433 847 85 31 652 83 84 54 4519 722 64 89 8592   78 122 79  1  2 272 29  51 26 26  44  17 276 439 75 3    3 381  814 422 664  5 32 362 91 7855 25 68 13 61  2 81 51 45 189 8449 627  61 1  835 195 344 623 98 92 8141 423  93  379 328 7367 873 6662 54 793  85 318 2211 49 25 891 962 834 1   83 52 399  679 42  34 9819 638 429 154 38  18 757 3  97  433 15 983 99 1499  27 42 89  92 191 62 41  7 422 854 83  434 923 73 652 862 151 532 47 357 999 343 18 69 74 98 13 8576 659 94 736 748 5585 3551 389 434 97 9324 6    8 54   61 88 77 29  822 362  647 48 99 178 137 513 87  17 518 43 33 69  8958 34  71 93 2  119 75  49  48 12 878 78 846 99 63   78 991  445 9138 666 33 395 149 8957 396 725 55  2 854   43 932 426 33  44 163  453  817 33 87 39  56 158 64 141 895 13 4469 74 932 97  3943 45 3174 171 578 9314 191  22 1342 3992 31 2253 23 57 441 11 984 711 2457 46  879  45 221 21  52  23   3 5147 941 399 19 4395 93 47 352 165 1946  71 548 32 16 89 76  51 211 3715  84 943 374 281 1627 394 49  97 91 52   44 118 12 541 152 64  13 1524 6293 64 41  64 99 49 147 54 84 748 16 97  85 572 1142   2 537 4252 45  8 663 28 4474 73 854 48 82 177 9631 876  4 1944 252 735 92  8753 11 63 59 739 138 1553   35 27   8  419 37 971  32 68  53  7 356 66 67 17 676 2622 99  28  13 98 88 412 4822 652 27 81  11 27 3282 83 96  41 987 17 19 73 56 75 189 61 18 5849 87 252 191 798  5888 98 419 776 4532 75   497 84 4185 55 747 359 69 388 71 757  78  412  4 79 5  88 57  9 1524 59 126  79 389 179 87 15  2 92  999 7914 583  7  971 55 79 1783  271 564 9178 796 164  1 77 16 74 69  21 893 859 14 55 656 97 336 8  36 42 72   1255 88 39 62  2957 32   341 283 274 159 254 63 891 79 86 86 75  79 4367 278 86  96 549 5  785 383 6  117 87 66 195  63  32 51 351 958 736 6  4632 1  475  6  79 86 51 3381  85 51 39  139 5468 71 18 1  5972 291 99 615 223  592 246 79 768 21  85 645 772 153 243  48 6567 63 89 638 34 938 76 9  843 3  6422 25 15 83 991 53 483 4  31  838 9515 5563 67 33 574 92 822 91 12   16  37 59 7772 764 74 65  5 65  23  71 522 436 84 88 2977 84 17 36  8 6675 52 1823  988 1353  4  3 82 54 185 7948 71 297 8799 698 923 1543 758 294 19 85 323  356 54  63 38 28 14  7  5 128 1733 855  11 85 24 294  21 116 817 67 96 877 997 2433  3 49   61 335 83
   9 71  44  45 64 39 758  934 927 4  47 783 165 35  32 1187 362 166 85 36 466 753 66 28 1562  66 848 63   22 44 48   56 2262 652 95  41 476 359 542 779 91 17  139 52 881 5568 11  7389 9574 415 966 92 213 956 72  976 926 565  19 491 398 55 967 27 3  863 3   46 15 24  41 99  392 48  52 66 269 86 52 418  755 36 778 987 13 72 26 15   62 767  25 85  31 169 6832 663 74 661  54 27   24 582 2672 997 18 399 18 48 73 33 66 84 64  8 392 1922 54   1 43 36  25 87 22 922 64 354 5  58 85  966 479 69  14 86 433  3 312 49 75  5 16    4 73 14 41 47 137 51 855 729 982 62 456 48 4249 65 15 26  591 16 8236 62 865 34 47 117 67  344 954 9292 26 3764 57 95   38 27 14  795 52 252 178 484  39 12 651 81  86 55  277 63 34  554 199 16  447  9 58 23 68  2  889 27 97 51 3  849 182  51 6   866 8972 326 83 51 829  697 941  4 872  93 546  7 66 74 781 16 19 815 141 2519 11  66 41 68 482 989   15 672  516 27 7225    2 93 43 691 9189 66  71 69 112 97 64 22  5852 44 5163 989 331 549  4 75 56 83 721 228  185 472 94 332  8 646   1   5 784 1  3969 95  2716 223 2659 96 634 95 96 412 34 616 88 311   626 714 878 447 9475 1421 19 421  42  62 342 89 52 828 76   8 11  462 96  56 414 83  742 711 4695  98 62 89 899 38 889 594 415  31 255 4766 6  27  41 967 9  429 546  27 954 2142 128 2246 428  64 564 44  39 6    4  38 45 7244 6  198 352 62 95 89  2 42  5581   8 28   34 265 67 44 74 524 15  8 24 71 44 5122 492 938 358 853 494 31 83 42 46  3 293  331   1 717  816 56  6 79 9  37 553 39 756 78 547 79 597  39 57 78 983 114 677 6843 57  92 76 26 21 23  358 53 55 73  74 58 44 1465 897 99 78 3738 8923 829  1  3 63  98 9   43 69 87  87 377 196 568 67 951 59   4  678 544 455 44 88 286 13 1529 4  26 31 48  9 21 63 61 916  767 957 521 61 24  73  747 858 17 74 4816 333  67  718 856 4921 866 7589 49 296 792 36    65 94 65  25 943 713 2   53 37 442  845 545 64 2387 883 363 829 512 92 932 82 83 5935 46 165 65 6491 573 32 619  9 452 45 32 84 726 334 45  313 297 33 964 346 223 299 48  66  74 328 63 44 19 43 58 6394 852 71 52  219 2677 7773 679 72   6 4767 338  9 115  35 23 67 55  376  94 3858 27 82 226 211 961 85  87 376 97 47 679  326 487 17 1  3  488 719 84  58 63 76  47 24  94 6258 38 8714 457  656 169 31 813 58  538  272 949 37 37 331 9961 839 324 72  84  83 7488 3925 72 79 44  45  28 14 66  252 1  659  83 945 776 5389 62 45   456  19 9778 515  76 9661 2295 21 972  24 6  382 42 37  623 9958 86  68   31 359 72  16 289 255 6974 78  64   5 7993 25 58 672 158 7496 745 565 93 81 38 12 839 471 2324  91 422 772  24 187  715 26 852 5  28   72 186 5  525 819 537 6  533  557  29 7   34 86 36 473 34 35 948 43 51 792 561 6544  22 118 7161 66  2 845 85 1648 54 116 19 82 467 8636 842 78 7578 773 347 252 2917 63 49 86 117 191 3936 9617 6   43 4791 23 268 463 71  71 29 388 91 39 78 737 594  732 38  72 43 83  89  637 255 92 435 26 22 2826 14 226 69 21  15 16 82 64 51  87 59 53 8114 68 74  518 1867 9384 66 336 689 336  512  759 75 4725 79 695 277 42 396 71 888 679   37 96 86 57 69 13  8 9949 13   7  32 78  394 2  84 77 2   72  6764 1416 47 854 17 59 5924 8762 352 1546 94  221  8 81 33 67 24  53 54  294 68 59 256 81 868 5  89 57 1818 5435  4 54 456  647 58   188 872 829 793 795 92  22 11 19 55 75 637 9952 799 151 69 571 64 98  29  1  938 79 48 796 551  52 15 697 923 956 42 2753 45 9925 2  46 28 18 1432  42  4 58   82 5948 83 18 32  944 741 6  927 541  237 754 67 631 29  15 376 398  16 9149  2 3888 34 17 892 55 916 22 22 893 48 8989 15 3  99 189 68 368 91 29 5537 7982 3745 24 82 983 53 478 92 42  586  36 38 319  121 36  2 14 95  97  25 49  882 74 39 7198 66  9 94  6 9834 35   44 9164 4896  1 48 18 29 423 4926 34 38  3781 719 947 14   868 825 69 84 3713 78  12  42 97 13 84 77 74 171 1388 936  34 3  93 469  7  893 727 54 38 335 483 122   3 741  43  15 66
   2 51  48  39 91 71 574   77 138 5  98  56 664 1   62 7586 353 311  6 93 727 391 78 58 4149   2 3   6     7 88 37   92 7664  63 99  39 717 537 653 231 38 93 2387 42 874 3248 238 5641 85    76 437 75 161 676 353 5   374 154 656  99 834 67 717 4  2    2 5    4 85 46   9 441 597 22  6   5 671 58 52 791   43  3   4 349 45 79 52 9    29 24   86  6   2 874  484 766 17 59    7 43    6 894 7524  47 69 969 54 67 16 7  74 7  71  5 24  5126 49   6 85 62   9 75 37 273 29 36  4  29 95   94 544 5   56 27   5  2 41  77 47  6 429   9  5 61 68 9  766 91 695 577 895 73 181 44  598 41 27 43    3 1  5675 33 555 18 15 745 821 384 642 7927  4 4943 23 44    1 32  5   68 57 8   739 1    68 15 241 74   2 8   835 82 26   27  11 8   43   6  3 64 36  77 954 61  7 34 13  71 69   15 2  3254 4877 21  54 89 78   94  193  8 59   33 329  2 72 65 87  15  2 685 729 5    716 75 27 88   7 615    3 992    7  4 3225    5 54 57 559 4319 81   4 13 1   38 37 7   4618 24 8855 265  14 416  5 95 7  63 229 889 7483 799 62 311  4 378   5   5  55 5  7126 6   3666 962 8123 1   96 16 3  698 56 447  9 861    82 54  268 26   965 4913 19 1    21  27 646 92 72 342 45   4 35  734 75  87 9   61   49 716 393  114 37 85 293 59 682 238 522  63 198 8836 18 51 432 413 9  635 361  81 451 26    27   76 22   71 776 77   4 9    7   8  3  138 55 61  229 17 28 41 45 19  4922   4 64   22 15  9  81  5 9   33  5 82 74 47 9153 475 161  13 211 734 26 52 8  67 94 3278 2   119 91  1751 86  2 64 51 45 843 91  73 1  422 31 515 521 46 28 653 212 423 5451 581 98  1 17 67 15  71  93 98 4   5  53  4   39 165 81 51 6419 8913 962  6  1 94  84 9   19 98  4 688 358 885  37 12 525 18   1    6 249 226 97 34 78  83 386  4   5  8  1  1 43 41 68 586  338 926 312 52 6   24  313 318 95 87 499  88  362 9275 788 8633 62  6751 56 532 657 45    63 46 53  71 59  881 24 674 64   3   78 537 93 88   139   6  95 535 6   64 64 66 7688  3 379 82 2    556 58 479  7 914 22 85 91  45 12  33 7581 966 31 664  84 775 569 11   9   4  15 65  1 34  4 71 4648 956 32 79    3 3934 6494  15 7    9  261 664  3 131 798 16 53 5    31   8 2124 44 23  64 124  16 334 16 557  7 88 856  876 179 57 3  98  64 768 6    1 73 12  74 68  86 7462  7 7348   3  292 222 2  614 79  199  917 243 25 93  98 1124 476 112 6   85   6 2217 1425 23 16 76  95   1 96 81   94 9  4     2 147 939  151 62 97   86   41   78 171   2 3     479 11 411  32 6  882 45 77   31 3514 671 54  513   5 94  57 863 611  799 8   4    3 679  25 63 859 83  7781 444 266 83 16 38 85 341 888   96   9 724 184  73 73   5   5  413 7  58   14 622 4  672 371 143 1  42   8    99 9  363  1 61 464 19  5 644 81 82 153 552 24   211 315 8371 31 73 484 1  3475 36  91 81 31 99  9117 165 93 1923 157  32 767 5523 68 81 5  584 918 185  7689 5  857 6917 27 27  989 51  72 88 888 83 55 25 936 4    862 72 469 26 19   2  555  89  4 795 74 6  7     1 554 78 85  33 78 2  42 36   2 55 94 4381 6  82  739 8794 446  34 248 873 57   2227 384 3   659  3 531 993 31 468 36 835 553    9 78  6 44 63 62 28 8366  6   8 276 63   25 3  9  47 8   89  411  9232 33 133 21 64   64 4973 819 3841 1   271 91 98 78 51 927 46 71  334 92 84 473 58  68 5  89 55 9963   45  7 2  993   81 84   385 119  38  73 86  55  55 78 79 3  82 413 5867 491 237 69 814 27 22  7   3  554 51  3  48 594   9  4  71 78  443 53 352  72 1927 9  16 78 67 761  585  3 12   63 628   2 94 85  468 567 4  27    8   62 671 73  71 59   3 991 149   9 2225  1  851 79 27 578 39 249 93 25  23 42 9836 26 3  36 884 66 543 45 46 1287 25   8142  1 65 64  42 95  68 9  2835   8 77 4      8 28  9 82 758 48 164 5   81  18 55 6349 17  3 54 58   71  3   35 2494 5438 15 72 18 17 399 28   56 56  725  71   53 52   16  121 33 5  5671 3   834 33 2  72 98 56 82 261 4    119   5 4   3 9    2  9   76  31 9  61  12  725   4 878 447   3 11
-+   *   +   *  +  +  +   +    *   *  +  +   *   *   +  +    +   +   +  +  +   +   +  *  +    *   +   +   *   *  +  +    +    *   *   +  +   *   +   *   +  +  +    *  +   +    +   +    +    +   *   +  *   +   *   *   *   *   +   +   *   +  *   *  +  *   *   *  *  *   +  *   +   *   +  +  *   *  *  +   +    *  *   +   *  *  *  +    *  *   *   *  +   *   +    +   *  +    *  *   +   *   +    *   *  *   *  *  *  *  +  +  *  *  *   +    *  +   *  *  +   *  +  *   *  +   +  *  *  +    *   +   +  *  +   +  *   *  +  *  *   *   +  +  +  *  *   *  *   *   *   *  *   *  +    *  *  +  +    +  +    +  +   *  +  *   *   *   *   +    *  +    *  *  +    *  +  +    +  +   +   +    *  +  *   *  +   +   *   *  *  +    *   *   *   +  +  +  +   +  *   *  *  *  +  +   +   +   +  +    +    *   *  +  +    *   *   +  +    *  +   *  *  *  +   +  *  *   +   +    *   +  *  +  *   +    +   *   +    *  +    +    +  +  +   +    +  +   +  *   *  *  +   +    +  +    +   *   *   *  *  +  *  +   +   +    *   +  *   +  +   *   +   *   +  +    *   +    *   +    *  *   *  *  *   +  *   *  +    +    +   *   +   +    +    *  +    +  *   *   *  *  +   *   *  *   *   +  *   *   *   *   *   +    *   +  +  *   *  *   +   *   *   *   +    +  +  *   *   +  +   *   *   *   +    +   +    +    *  +   +  +   +  +   *   +  +    *  *   *   *  +  +  +  +   +    *   +   *   *   *  *  +  +   *  +  *  *  +  +    +   *   *   *   +   +  +  *  *  *  +    *   *   *   +    +  +  *  +  +  +   +  *   +  +   +  *   *   *  *  *   *   *   +    *   *  *  *  *  *   +   *  *  *   *  *  *  +    *   *  *  +    +    *   *  +  *  *   *   *  *  *  +   +   +   *   +  +   *  *   +    +   +   *  *  +   +  +    *  *  *  *  *  +  *  *  +   +    *   +   *  +   +   *   *   *  *  +    +   +   +    *   +    +   +    *  *   *   +   +    *  *  +   *   +   *  *   *  *   +    *   *  +    *   *   +   *   +  +   *  *  +    *  *   +  +    +   *  *   *  *   *  *  *  *   *   *  +    *   *  *   +   +   *   +  *   *   +   *  +  *  *  *  +    +   *  +   +   +    +    +   *   +  +    *   +  *   *   +  *  *   +   +   +    *  +  *   *   *   +   +  +   *  *  +   +    *   *  *  +  +   +   +   *  *  +   +  *   *  +    *  +    *   +    *   *  +   *   +    +   *   *  +  +   +    +   +   +   +  *   +    +    *  +  *   *  +   *  +   +   *  +    *  +   *   +    +  +    +   *   +    *   +   +    +    *  +    *  *  +   *  *   +   +    *   *   *   +   +   *  *   +   +    +   *   *  +    *  *  *   *   +    *   *   +  +  +  *  *   *   +    *   *   *   +   +    *   *  +   +  *   *   *   *  *   +   +   +  +    +    +  +  +   *  *  *   *  +  +   +  *  +   *   +    *   *   +    +  +  +   *  +    *  *   *  +  +   +    *   *  +    *   +   *   +    *  *  +  *   *   +    +    *  +   +    +  *   *   *  *   *  +   +  *  +  +   +    +   *  +   +  *  *   +    *   *  +   +  +  +    *  +   *  +   +  *  +  *  *  *   *  *  +    *  *   *   +    +    +  *   +   +    +    *   *  +    +  +   *   +  *   +  *   +   +    *  *  *  *  +  *  +    +  *   *   +   *   +  *  *  *   +   +    +    *  +   +  +  +    +    *   +    *   +   *  *  +  +  +   *  *   *   *  +  *   *  *   *  *  *  +    +    +  *  +   +    +    *   *   *   *   +   *  *   +  +  +  +  *   +    *   *   *  *   *  *   *   +  *   *  *  +   *   *   *  *   *   *   *  +    *  +    +  +  *  +  +    +   *  *  +    +    +  +  +  +    *   *  +   *   +    *   *  +   *  *   +   *   +   +    *  +    *  +  +   +  *   *  *  *   *  +    *  +  *  *   *  *   *  *  +    +    +    +  +  *   *  +   +  +  +    *   *  +    *   *  *  *  *   *  *   *   +   *  *  +    *  *  *  +  +    +  +    +    +    *  *  *  +  *   +    *  *   +    *   *   +    *   *   +  *  +    +   *   +  +  +  *  +  *  +   +    +   *   +  +  +    +  *   *   +  *  +   *   +    *  *   +   *   * `,N3=`.......S.......
++   *   +   *  +  +  +   +    *   *  +  +   *   *   +  +    +   +   +  +  +   +   +  *  +    *   +   +   *   *  +  +    +    *   *   +  +   *   +   *   +  +  +    *  +   +    +   +    +    +   *   +  *   +   *   *   *   *   +   +   *   +  *   *  +  *   *   *  *  *   +  *   +   *   +  +  *   *  *  +   +    *  *   +   *  *  *  +    *  *   *   *  +   *   +    +   *  +    *  *   +   *   +    *   *  *   *  *  *  *  +  +  *  *  *   +    *  +   *  *  +   *  +  *   *  +   +  *  *  +    *   +   +  *  +   +  *   *  +  *  *   *   +  +  +  *  *   *  *   *   *   *  *   *  +    *  *  +  +    +  +    +  +   *  +  *   *   *   *   +    *  +    *  *  +    *  +  +    +  +   +   +    *  +  *   *  +   +   *   *  *  +    *   *   *   +  +  +  +   +  *   *  *  *  +  +   +   +   +  +    +    *   *  +  +    *   *   +  +    *  +   *  *  *  +   +  *  *   +   +    *   +  *  +  *   +    +   *   +    *  +    +    +  +  +   +    +  +   +  *   *  *  +   +    +  +    +   *   *   *  *  +  *  +   +   +    *   +  *   +  +   *   +   *   +  +    *   +    *   +    *  *   *  *  *   +  *   *  +    +    +   *   +   +    +    *  +    +  *   *   *  *  +   *   *  *   *   +  *   *   *   *   *   +    *   +  +  *   *  *   +   *   *   *   +    +  +  *   *   +  +   *   *   *   +    +   +    +    *  +   +  +   +  +   *   +  +    *  *   *   *  +  +  +  +   +    *   +   *   *   *  *  +  +   *  +  *  *  +  +    +   *   *   *   +   +  +  *  *  *  +    *   *   *   +    +  +  *  +  +  +   +  *   +  +   +  *   *   *  *  *   *   *   +    *   *  *  *  *  *   +   *  *  *   *  *  *  +    *   *  *  +    +    *   *  +  *  *   *   *  *  *  +   +   +   *   +  +   *  *   +    +   +   *  *  +   +  +    *  *  *  *  *  +  *  *  +   +    *   +   *  +   +   *   *   *  *  +    +   +   +    *   +    +   +    *  *   *   +   +    *  *  +   *   +   *  *   *  *   +    *   *  +    *   *   +   *   +  +   *  *  +    *  *   +  +    +   *  *   *  *   *  *  *  *   *   *  +    *   *  *   +   +   *   +  *   *   +   *  +  *  *  *  +    +   *  +   +   +    +    +   *   +  +    *   +  *   *   +  *  *   +   +   +    *  +  *   *   *   +   +  +   *  *  +   +    *   *  *  +  +   +   +   *  *  +   +  *   *  +    *  +    *   +    *   *  +   *   +    +   *   *  +  +   +    +   +   +   +  *   +    +    *  +  *   *  +   *  +   +   *  +    *  +   *   +    +  +    +   *   +    *   +   +    +    *  +    *  *  +   *  *   +   +    *   *   *   +   +   *  *   +   +    +   *   *  +    *  *  *   *   +    *   *   +  +  +  *  *   *   +    *   *   *   +   +    *   *  +   +  *   *   *   *  *   +   +   +  +    +    +  +  +   *  *  *   *  +  +   +  *  +   *   +    *   *   +    +  +  +   *  +    *  *   *  +  +   +    *   *  +    *   +   *   +    *  *  +  *   *   +    +    *  +   +    +  *   *   *  *   *  +   +  *  +  +   +    +   *  +   +  *  *   +    *   *  +   +  +  +    *  +   *  +   +  *  +  *  *  *   *  *  +    *  *   *   +    +    +  *   +   +    +    *   *  +    +  +   *   +  *   +  *   +   +    *  *  *  *  +  *  +    +  *   *   +   *   +  *  *  *   +   +    +    *  +   +  +  +    +    *   +    *   +   *  *  +  +  +   *  *   *   *  +  *   *  *   *  *  *  +    +    +  *  +   +    +    *   *   *   *   +   *  *   +  +  +  +  *   +    *   *   *  *   *  *   *   +  *   *  *  +   *   *   *  *   *   *   *  +    *  +    +  +  *  +  +    +   *  *  +    +    +  +  +  +    *   *  +   *   +    *   *  +   *  *   +   *   +   +    *  +    *  +  +   +  *   *  *  *   *  +    *  +  *  *   *  *   *  *  +    +    +    +  +  *   *  +   +  +  +    *   *  +    *   *  *  *  *   *  *   *   +   *  *  +    *  *  *  +  +    +  +    +    +    *  *  *  +  *   +    *  *   +    *   *   +    *   *   +  *  +    +   *   +  +  +  *  +  *  +   +    +   *   +  +  +    +  *   *   +  *  +   *   +    *  *   +   *   * `,D3=`.......S.......
 ...............
 .......^.......
 ...............
@@ -5790,7 +5792,7 @@ R16`,S3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 ..^...^.....^..
 ...............
 .^.^.^.^.^...^.
-...............`,P3=`......................................................................S......................................................................
+...............`,B3=`......................................................................S......................................................................
 .............................................................................................................................................
 ......................................................................^......................................................................
 .............................................................................................................................................
@@ -5931,7 +5933,7 @@ R16`,S3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 ..^.......^.......^.^.^...^.^.^.^.^.^.......^...^.^...^.^...^.^.^...^.^.....^...^.^.^.^.^...^...^...^.^.^.^.........^.^...^.^.^.^.^.^...^.^..
 .............................................................................................................................................
 .^.^.^.^.^.^.^.^.........^.........^...^.^.^.^...^...^.....^.......^...^.........^.^.^.^.^.^.^.^.^.^...^.^.^.^.......^.^.^...^.^.^.^.^.^...^.
-.............................................................................................................................................`,I3=`162,817,812
+.............................................................................................................................................`,U3=`162,817,812
 57,618,57
 906,360,560
 592,479,940
@@ -5950,7 +5952,7 @@ R16`,S3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 941,993,340
 862,61,35
 984,92,344
-425,690,689`,k3=`76200,69285,28154
+425,690,689`,G3=`76200,69285,28154
 80994,76238,75528
 87714,42939,90758
 39904,26096,27477
@@ -6949,14 +6951,14 @@ R16`,S3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 28764,96890,2104
 69630,68629,72754
 20013,94303,454
-27109,71211,1089`,z3=`7,1
+27109,71211,1089`,K3=`7,1
 11,1
 11,7
 9,7
 9,5
 2,5
 2,3
-7,3`,D3=`97889,50122
+7,3`,V3=`97889,50122
 97889,51343
 98146,51343
 98146,52576
@@ -7451,6 +7453,816 @@ R16`,S3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 98359,47671
 98359,48896
 98432,48896
-98432,50122`,B3="",U3="",q3="",G3="",V3="",K3="",H3=Object.assign({"../advent/day01/solution.ts":q2,"../advent/day02/solution.ts":H2,"../advent/day03/solution.ts":Q2,"../advent/day04/solution.ts":Z2,"../advent/day05/solution.ts":t3,"../advent/day06/solution.ts":r3,"../advent/day07/solution.ts":a3,"../advent/day08/solution.ts":p3,"../advent/day09/solution.ts":g3,"../advent/day10/solution.ts":b3,"../advent/day11/solution.ts":m3,"../advent/day12/solution.ts":y3}),F3=Object.assign({"../advent/day01/input-test.md":v3,"../advent/day01/input.md":w3,"../advent/day02/input-test.md":S3,"../advent/day02/input.md":$3,"../advent/day03/input-test.md":O3,"../advent/day03/input.md":E3,"../advent/day04/input-test.md":M3,"../advent/day04/input.md":j3,"../advent/day05/input-test.md":x3,"../advent/day05/input.md":T3,"../advent/day06/input-test.md":C3,"../advent/day06/input.md":A3,"../advent/day07/input-test.md":N3,"../advent/day07/input.md":P3,"../advent/day08/input-test.md":I3,"../advent/day08/input.md":k3,"../advent/day09/input-test.md":z3,"../advent/day09/input.md":D3,"../advent/day10/input-test.md":B3,"../advent/day10/input.md":U3,"../advent/day11/input-test.md":q3,"../advent/day11/input.md":G3,"../advent/day12/input-test.md":V3,"../advent/day12/input.md":K3}),W3=Object.freeze(Object.defineProperty({__proto__:null,inputMods:F3,solutionMods:H3},Symbol.toStringTag,{value:"Module"})),p2=L=>parseInt(L.split("day")[1]||"1",10),Q3=(L,n)=>{const R=(L.match(/input-?(.+)\.md$/)||[])[1]||"Real";return{day:p2(L),name:R,raw:n}},X3=(L,n)=>{const R=!!(n.part1||n.part2),s=n.part1||(()=>"-"),o=n.part2||(()=>"-"),e=n.answers||[["",""]];return{day:p2(L),part1:s,part2:o,answers:e,hasSolution:R}},[W,J3]=y([]),[j,Y3]=y([]),[q,d2]=y(1),[z,_2]=y(0),[h2,g2]=y(""),[Z3,n4]=y({value:"",time:0,knownGood:!1}),[L4,R4]=y({value:"",time:0,knownGood:!1}),[b2,D]=y(!1),[m2,t4]=y(!0),K=()=>W().filter(L=>L.day===q()),y2=()=>j().find(L=>L.day===q()),x=(L,n="",R=0,s=!1)=>{L===1&&n4({value:n,time:R,knownGood:s}),L===2&&R4({value:n,time:R,knownGood:s})},Q=()=>[x(1),x(2)],e4=()=>{E2(()=>{if(z()>=K().length)return _2(K().length-1);const L=K()[z()],n=y2();if(!L||!n)return Q();g2(L.raw)})},A=async()=>{const L=y2(),n=h2();if(!L||!n)return Q();const R=L.answers[z()]||["",""];x(1),x(2),setTimeout(L2,0,1,L.part1,n,R[0]),await s4(10),setTimeout(L2,5,2,L.part2,n,R[1])},s4=L=>new Promise(n=>setTimeout(n,L)),L2=async(L,n,R,s)=>{if(b2())return;D(!0);const{output:o,dt:e}=await v2(n,R,m2());x(L,o,e,o===s),D(!1)},v2=async(L,n,R)=>{const s=performance.now();return{output:(()=>{if(!R)return String(L(n));try{return String(L(n))}catch(e){return`Error: ${e}`}})(),dt:performance.now()-s}},o4=async()=>{if(b2())return;D(!0),Q();const L=[],n=["",""],R=[0,0],s=[!0,!0];for(let o=0;o<j().length;o++){const e=j()[o],r=W().filter(t=>t.day===o+1)[0].raw;for(let t=0;t<2;t++){const{output:i,dt:l}=await v2(t===0?e.part1:e.part2,r,!0);L.push({dt:l,name:`Day ${e.day} part ${t+1}`}),R[t]+=l;const a=i===e.answers[0][t];s[t]&&=a,n[t]+=a?"★":"-",o===j().length-1&&(n[t]+=" done!"),x(t+1,n[t],R[t],s[t]),await new Promise(c=>setTimeout(c,0))}}L.sort((o,e)=>o.dt-e.dt),console.table(L.map(({name:o,dt:e})=>({name:o,ms:Math.round(e*10)/10}))),D(!1)},r4=L=>{J3(Object.keys(L.inputMods).map(n=>Q3(n,L.inputMods[n])).sort((n,R)=>n.name.localeCompare(R.name))),Y3(Object.keys(L.solutionMods).map(n=>X3(n,L.solutionMods[n])).filter(n=>n.hasSolution).sort((n,R)=>n.day-R.day)),A()};r4(W3);d2(j().at(-1)?.day||1);setTimeout(A,0);var i4=E("<button type=button>");const G=L=>{const n=()=>({...L.classes,button:!0,toggled:L.isToggled});return(()=>{var R=i4();return I2(R,"click",L.onClick),h(R,()=>L.label),O(s=>k2(R,n(),s)),R})()};a2(["click"]);var l4=E("<div class=catch-area>Catch errors");const a4=()=>(()=>{var L=l4();return L.firstChild,h(L,b(G,{label:"x",classes:{"input-toggle":!0,"catch-button":!0},get isToggled(){return m2()},onClick:()=>t4(n=>!n)}),null),L})(),c4=()=>j().map(L=>b(G,{get label(){return L.day.toString().padStart(2,"0")},get isToggled(){return L.day===q()},onClick:()=>{d2(L.day),A()}}));var u4=E("<textarea rows=14>");const f4=L=>(()=>{var n=u4();return n.$$input=R=>{L.onUpdate(R.target.value),A()},O(()=>n.value=L.value),n})(),p4=()=>b(f4,{get value(){return h2()},onUpdate:g2});a2(["input"]);var d4=E("<div class=label style=align-self:flex-start><h4>Input:</h4><br>");const _4=()=>{const L=()=>W().filter(n=>n.day===q()).map((n,R)=>({label:n.name,isToggled:R===z(),onClick:()=>{_2(R),A()},classes:{"input-toggle":!0}}));return(()=>{var n=d4(),R=n.firstChild;return R.nextSibling,h(n,()=>L().map(s=>b(G,s)),null),n})()};var h4=E("<div class=label><h4>Part <!>:</h4><div class=time>(<!>ms)"),g4=E("<textarea class=output disabled>");const b4=(L="")=>{const n=L.split(`
-`).length;return Math.min(n,Math.max(n,1,10))},R2=({part:L=1})=>{const n=L===1?Z3:L4;return[(()=>{var R=h4(),s=R.firstChild,o=s.firstChild,e=o.nextSibling;e.nextSibling;var r=s.nextSibling,t=r.firstChild,i=t.nextSibling;return i.nextSibling,h(s,L,e),h(r,()=>n().time.toFixed(0),i),R})(),(()=>{var R=g4();return O(s=>{var o=!!n().knownGood,e=b4(n().value);return o!==s.e&&R.classList.toggle("correct-answer",s.e=o),e!==s.t&&P2(R,"rows",s.t=e),s},{e:void 0,t:void 0}),O(()=>R.value=n().value),R})()]},m4=()=>b(G,{label:"Run all",classes:{"input-toggle":!1,"run-all-button":!0},isToggled:!1,onClick:()=>o4()});var y4=E("<main><header><h2>Advent 2025</h2></header><article class=layout><div class=label><h4>Days:</h4></div><div><br></div><div>");const v4=()=>(e4(),(()=>{var L=y4(),n=L.firstChild,R=n.nextSibling,s=R.firstChild,o=s.nextSibling,e=o.firstChild,r=o.nextSibling;return h(o,b(c4,{}),e),h(o,b(m4,{}),null),h(R,b(R2,{part:1}),r),h(R,b(R2,{part:2}),r),h(R,b(_4,{}),r),h(R,b(p4,{}),r),h(R,b(a4,{}),null),L})()),w4=document.getElementById("root");N2(v4,w4);
-//# sourceMappingURL=index-Br7K9ggF.js.map
+98432,50122`,H3=`[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
+[...#.] (0,2,3,4) (2,3) (0,4) (0,1,2) (1,2,3,4) {7,5,12,7,2}
+[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}`,F3=`[...#...] (0,2,3,6) (0,1,4,6) (1,3,4,5) (1,2,4,6) (0,2,3,4,5) (2,3,6) (1,2) (2,3,4,5,6) {37,24,84,71,44,32,71}
+[...##.] (0,3,4) (0,1,2,5) (0,1,3,4,5) (3,4) {53,34,17,42,42,34}
+[###.] (1,3) (0,1,2) {4,13,4,9}
+[.#.....] (0,1,6) (0,2,4) (1,3,4,6) (0,1,3,5) (4,5) {219,37,194,30,211,23,19}
+[...##] (1,2) (0,2,3) (0,3) (1,3) (2,3,4) {10,20,23,37,14}
+[#.##] (1,3) (2) (0,1,2) (2,3) {16,26,38,24}
+[#...] (1,3) (0,1) (0,3) (1) (2,3) {2,13,11,15}
+[.###.#.] (0,3,6) (0,1,2,5,6) (1,2,3,4,5) (0,1,2,3,4,5) (0,1,4,5) (0,4,6) {76,41,23,27,48,41,50}
+[#...#..###] (2,3,5,6,7,8,9) (0,4,6,7,8,9) (1,7,8) (0,1,2,8) (0,1,2,3,4,5,6,9) (0,2,3,4,5,7) (1,6,8) (1,6,9) {56,71,48,29,37,29,50,54,76,31}
+[####...] (0,1,2,3,4,6) (1,2,4) (1,3,5) (0,2,5) (4,6) (0,1,4,5,6) (3,5,6) (3) (0,1,2,5) {32,56,31,49,53,50,48}
+[#...#.##] (0,4,6,7) (0,3,5,6) (0,1,3,4) (0,1,2,5,6,7) (0,1,2,5,7) (0,2,3,4,5,6) {202,164,169,27,19,189,185,175}
+[##....#.#] (2,3,8) (3,4,7) (1) (1,2,3,5,6,8) (5,8) (0,1,5,6,8) (4,6,7,8) (0,3,4,5,7,8) {15,17,16,20,15,21,27,15,45}
+[##.#] (0,1,2) (0,1) (1,3) (2,3) (0,2) {176,12,167,3}
+[....#....#] (0,3,6) (1,3,4) (3,4,5,9) (0,1,3,5,6,7,8,9) (1,2,3,4,6,8,9) (1,2,3,4,6,7,8,9) (2,5) (4,5,6,7) {19,29,5,35,36,44,41,38,19,23}
+[####.##] (2,4) (0,1,6) (0,1,2,3,6) (1,2,4) (0,2,4,5,6) {36,207,217,13,204,13,36}
+[#.#..##.] (0,1,2,3,4,5) (0,1,6,7) (5,7) (2,3,5,7) (2) (0,1,4) (2,3,4) (4,5) (0,2,3,4,5,7) {62,44,46,37,54,48,19,45}
+[#.#.#.] (0,2,4) (1,3,4,5) (2) (1,2,3,4,5) {2,21,31,21,23,21}
+[#...##..#] (0,3,4,7,8) (0,1,2,3,4,5,7) (2,3,4,6,7,8) (4,6,7) (6,7) (0,1,2,3,4,5,8) (2,4,5,6,7) (1,2,4,5,6) {46,38,60,60,78,46,48,75,41}
+[..##.##] (2,4) (3,4) (2,4,5) (2,3,5,6) (0,1,2,3,6) (0,1,6) {32,32,57,38,49,24,37}
+[####.####.] (0,1,2,3,5,6,7,8) (0,1,3,4,6,8) (1,3) (0,1,3,4,5,6,7) (0,2,3,4,5,8) (0,3,4,5) (2,7) (1,3,4,7,8,9) (0,1,2,4,6,9) (0,1,2,4,5,6,7,8,9) {48,51,33,56,55,42,32,53,36,25}
+[#.....] (0,1,2,4,5) (0,1,3,4) (1,2,3) (3,4,5) (0,3,4) (0,2,4,5) {56,38,35,48,73,47}
+[#.###] (0,1,2) (0,1,3) (0,2,3) (0,2,3,4) (2,3,4) {24,14,24,24,16}
+[#.##.#..##] (1,2,6,7,8) (0,1,2,4,5,6,8,9) (0,1,2,3,5,6,7,8,9) (0,1,2,3,6,7,8,9) (0,2,4,8) (0,1,2,3,4,5,6,7,9) (2,3,4,7,8) (0,3,4,5,7,8) {94,71,110,75,83,57,71,84,112,62}
+[###..####] (2,3) (3,4,5,7,8) (3,4) (1,4) (2,3,4,5,6,7,8) (2,3,4,6,7,8) (0,1,3,5,7) (0,3,5,6,7) (1,3,5,6,7,8) (0,1,2,4,5,7,8) (1,2,5,8) {44,61,49,85,75,93,48,89,72}
+[.#..#.] (0,2) (5) (0,2,3,5) (2,4,5) (1,4,5) (1,4) (0,2,3) (1,2,5) {25,167,41,18,161,196}
+[#.##...] (0,4,5,6) (0,1,2,3,4,5) (3,5) (0,2,3,5,6) (0,3,4,5) (0,1) (2,3,4,5,6) (3,4,6) (0,4,6) {68,22,57,101,79,92,63}
+[.###....#] (2) (0,3,7,8) (0,7,8) (1,8) (2,6,8) (0,3,5,6) (0,1,2,4,7) {151,19,28,36,14,20,34,131,136}
+[######.] (1,3,5) (2,3,4,6) (2,4,5,6) (1,5,6) (0,1,3,5,6) (3,4) (0,1,5) (3,4,5) (0,1,2,3,5) {29,58,119,29,119,169,131}
+[#.###.###] (1,3,5) (0,2,3,4,6,8) (0,2,3,4,5,6) (1,3,4,6,7,8) (1,2,4,5,6,7) (0,1,4,6,7) (0,3,4,5,7,8) (2,5) (1,2,3,4,6,7,8) (0,2,3,4,6,7,8) (3,5) {53,44,74,90,86,78,69,59,52}
+[..#.#.#] (0,1,3,4,5,6) (1,2,4) (0,3,4) (1,6) (1,3,4,6) {31,59,13,44,57,18,46}
+[...#..] (2,3,4,5) (1,2,4) (0,4) (1,2,3,4,5) (1,4) (2) (1,3,5) (0,4,5) {35,28,33,17,76,33}
+[...##...##] (0,1,2,3,4,6,7,8,9) (2,3,4,5) (0,1,2,4,5,6,7,8) (0,3,5,6,7,8,9) (3,8,9) (0,2,3,4,9) (1,3,4,5,6,7,8,9) (0,1,5,6,7,8,9) (0,2,3,5,6,7) (5,8) (4,7) (0,1,7,8) {241,49,53,252,65,240,238,246,264,251}
+[.##..#] (0,2,3,5) (0) (0,1,3) (1,2,4) (1,3) (0,1,2,4) {32,23,12,15,10,2}
+[#####....#] (0,1,4,5,6,7,9) (1,2,3,9) (0,2,3,4,5,6,7,9) (2,4,5,6,8,9) (1,3,5,8) (0,2,3,4,6,7,8,9) (2,3,4,6,8,9) (2,3,8,9) (0,1,2,4,6,7,8,9) (3,5,8,9) (1,2,3,4,5,7,8,9) {39,52,92,86,82,78,73,48,110,114}
+[######.##.] (2,3,4,5,6,7,8,9) (2,3,4,6,8) (7,8) (7) (3,7,9) (0,1,2,3,5,7,8) (6,7) (0,1,3,5,7,9) (2,4,5,6,9) (7,9) (0,1,2,4,6) (0,2,3,4,7,8) {32,13,71,65,69,47,69,88,54,62}
+[.###......] (1,2,3) (1,2,5,7,9) (1,4,8,9) (2,3,4,5) (0,2,4,5,8) (2,4,8) (0,1,4,6,7,8) (0,6,9) {19,33,37,14,44,8,16,3,41,36}
+[.#..#] (1,3) (0) (1,2,3,4) (3,4) (1,2,3) {11,26,22,42,33}
+[.##..#] (2,3) (0,1,3,4) (1,3,4) (1,2,5) {20,33,9,24,24,9}
+[##..##.] (1,5,6) (0,1,2,3) (0,5,6) (0,1,2,4) (2,3,4,5,6) (0,2,4,5) {19,19,20,19,12,33,32}
+[.####] (1,3) (0,1,3) (1,4) (1,3,4) (1,2,3,4) (0,3,4) (0,2,4) {22,50,20,39,49}
+[.#.#####] (1,5,6,7) (0,1,2,3,4,5) (1,2,5) (2,3) (2,3,4,5,6) (0,1,2,3,5,7) (0,2,3,4,5,7) (0,1,3,4,5) {58,68,63,82,57,92,34,44}
+[..###.####] (0,1,3,7,9) (1,2,4,7,8) (0,1,2,5,7) (1,3,4,5,7,8,9) (0,1,5,6,7,8,9) (0,1,3,4,6,8,9) (1,8) (3,4,9) (0,1,4,5,6) (2,4,7) (2,3,5,6,7,8,9) (0,1,2,4,5,6,9) {27,44,21,21,34,36,30,28,30,32}
+[.#.##.#..] (1,5,7,8) (0,2) (0,3,7,8) (0,1,2,4,5,6,7,8) (0,1,3,4,5,6,7) (4,5,8) (0,5,7) {46,33,31,9,33,55,17,48,58}
+[##.######.] (0,1,3,4,5,6,7,8) (1,3,5,6,7) (0,3,4,5,6,7,9) (0,2,3,5,7,9) (0,1,7,8) (0,2,8,9) (2,7,8) (0,1,2,3,5,8,9) (4,5) {177,34,28,176,152,179,160,180,35,158}
+[###..] (1,3,4) (0,4) (4) (0,2,3,4) (1,2) (2) (0,1,3) {32,22,20,19,31}
+[.#.##] (0,1,4) (3,4) (1,2,3) (1,3,4) {173,191,7,25,191}
+[#...###] (0,3,4,5,6) (0,1,3,4,5) (0,1,2,3,5) (1,3) (0,1) (0,2,3,4,6) (1,2,3) (3,4,6) (4) {34,42,16,67,64,23,31}
+[.#.#..#..#] (0,2,3,4,5,7,8,9) (0,2,3,4,6,7,8,9) (1,3,6,9) (0,5,6,8,9) (1,2,3,4,9) (1,4,5,6,7,9) (0,1,2,3,5,7) (0,1,2,9) (0,1,2,3,4,6,7,8) (3,7) (0,1,2,4,5,7,8,9) {91,77,78,80,84,69,81,89,80,108}
+[#....#.] (0,1,2) (1,4,5,6) (1,3,4,5) (2,3,5) (0,3,4,5,6) (0,2,6) (2,3,4,5,6) (1,2,3,4,5,6) {28,30,73,56,43,63,57}
+[...###..#] (1,2,4,7,8) (0,1,4,8) (0,2,3,4,5,6,7,8) (2,3,5,6,7) (1,7) (0,4,5,7) (6,8) (0,4) (0,6) {198,54,44,24,210,25,32,64,54}
+[....####] (1,3,4,5) (1,3,6) (1,4,5,7) (4,5,6,7) (0,1,3,4,5,6,7) (0,1,4,5,6,7) (0,1,2,3,5,6) {35,74,11,41,73,84,61,58}
+[...#.###.] (0,2,3,4,7,8) (2,3,5,6) (0,1,3,4,6,7,8) (0,3,4,5,7) (0,3,4,5,7,8) (0,5) (0,1,2,5,6,7) (0,1,5,6,7,8) (0,2,3,5,6,7,8) {82,41,12,50,41,62,50,70,68}
+[#....###.#] (1,2,4,5,6,7,8,9) (1,2,3,4,7) (4) (6,8,9) (0,2,3,4,6,7,9) (0,1,3,5,6) (0,3,4,5,6,8,9) (0,3,5,6,7,8,9) (2,4,7) (2,4,5,6) (4,8) (1,2,4,6,7,8,9) (2,5) {52,40,64,69,92,62,88,52,67,65}
+[#.#..#.#] (0,2) (0,2,3,4,5,7) (0,4,5,6,7) (3,4,5) (0,1,3,4,5) (0,1,2,4,6,7) (1,4) (1,2,5,7) (3,4,7) (1,3) {63,63,42,53,91,59,25,46}
+[##.###.###] (3,4,7,9) (0,2,3,4,6,7,9) (4,5,7,8,9) (0,4,5,6,7) (0,1,2,3,4,6) (0,1,3,4,5,7,8,9) (0,1,2) (3,4,5,6,7) (0,3,6,7,8,9) (0,2,3,4,5,7,9) (1,7) (0,1,2,3,4,5,7,8) (7,8) {84,63,53,88,96,67,55,104,39,48}
+[.##..##..] (0,1,2,3,4,5,7) (0,5,8) (0,1,2,5,8) (0,1,3,4,7,8) (0,1,2,4,5,6,7) (0,1) (0,1,4,5,6,7,8) (2,3,5,6,7,8) (1,2,4,5,7,8) {171,173,65,59,167,180,138,187,170}
+[.###.#..] (3,5,6,7) (3,5,7) (1,2,3,4,5,7) (0,1,3,4,5,7) (0,1,2) (0,1,3,4,6,7) (0,2,4) (0,3,4,6) {238,28,28,220,226,10,211,26}
+[..##.] (0,1,2,3) (2,3) (1,4) {11,20,21,21,9}
+[.###.#####] (0,4,5,6,7,8,9) (2,3,4,5,8,9) (1,2,4,5) (0,1,2,3,4,6,8,9) (1,2,3,5,6,7,8,9) (0,1,4,5,8,9) (0,2,3,4,5,6,7,9) (3,4,5,9) (1,2,3,4,5,6,7,8) {192,65,72,67,229,220,196,179,213,215}
+[###..#.#] (2,3,5) (1,4) (1,2,5) (0,1,2,4,5,6) (0,4,6) (3,4) (0,1,2,5) (0,2,3,4,6,7) (2,4,6,7) (0,1,2,3,5,7) {73,48,232,50,216,55,206,190}
+[.###..##] (0,1,3,4,5,6,7) (1,2,3,4,6,7) (0,3,4,5) (0,1,4,5,6) (0,2,3,4,6,7) (0,4,6,7) (2,3,6) (0,1,2,3,4,5) (0,7) (4,6) {49,29,39,54,62,33,53,27}
+[####] (1,2) (2,3) (0,1,3) (3) (2) (0,1) {18,20,22,31}
+[.......#] (0,1,3,4,5,7) (5) (0,2,3,4,5,6) (6) (2,3,4,5,7) (0,1,2,3,7) (0,2,4,6,7) (1,6) (0,1,2,4,5,6) {63,39,164,166,165,151,42,170}
+[#.#.] (1,3) (1) (1,2) (0,1,2) (0,3) (3) {25,47,27,25}
+[.###] (0,3) (2,3) (1,2,3) (1,3) {132,23,26,165}
+[..#...] (0,3,4) (2) (1,2,3,5) (0,1,3,4,5) {19,9,17,25,19,9}
+[##.#] (1,2,3) (0,1,3) (0,1,2) {123,138,15,138}
+[..##...#.#] (0,1,3,4,6,8,9) (0,8,9) (0,2,4,5,7,8,9) (0,2,3,7) (2,3,5,8,9) (0,1,2,3,4,6,9) (0,3,4,6,8,9) (1,3,6,7,9) (1,2,3,8) (0,6,7,9) {57,57,53,74,43,19,50,39,53,77}
+[.#.#..#.#] (1,3,4,5,6,7) (1,7) (2,8) (1,3,4,5,7,8) (0,1,2,4,5,6,7) (0,8) (3,5,8) (1,3,5,6) {8,23,4,17,3,19,6,19,21}
+[...######.] (0,2,3,4,6,8,9) (1,3,9) (0,1,2,3,4,5,9) (0,2,4,6,7,9) (3,5) (0,4,5,8) (0,3,5,6,8) (1,2,3,5,6,7,8) {34,3,20,37,24,30,29,8,27,20}
+[.#...] (0,2) (1,3) (2,3) (0,4) (2,4) (3) {19,5,152,10,155}
+[##.##.#...] (2,4,6,7,8,9) (1,3,9) (2,4) (1,3,5,6) (0,2) (0,1,2,4,6,7,9) (1,6,8) (0,1,3,4,5,6,9) (0,2,3,4,5,6,8,9) (0,1,2,7,8) (2) {40,62,63,38,42,26,60,29,42,44}
+[##.###.] (0,3,5,6) (0,1,3,4,5) (0,1,5) (0,3,4,6) (0,1,3,4,6) (0,2,3,5) (4,5) (1,2,5,6) (1,2,4) {50,28,22,34,27,47,21}
+[.#.##..##] (3,5,7) (0,1,3) (1,2,5,6) (0,3,6,7,8) (4,6) (5,8) (3,8) (0,3,4,5) (1,2,3) (0,2,3,4,6,7,8) (8) {26,33,25,65,16,34,6,7,35}
+[.#...#..] (0,3,7) (1,2,6) (0,1,4,5,6,7) (2,5,6) (0,7) (0,2,5) (1,3,4,5,7) {34,52,23,18,33,37,41,45}
+[##..#..#..] (0,1,2,4,5,7,8,9) (3,4,6,9) (0,1,3,5,6,7,8) (0,2,3,4,6,7,8) (1,2,4) (1,3,4,5,6,7,8) (0,1,2,4,5,6) (0,1,5,8,9) (1,3,4,5,6,7,8,9) (0,4,7,9) (0,1,6,7,9) {71,59,35,53,80,48,57,75,63,62}
+[###.#....#] (0,2,7,9) (0,5,6,8) (1,2,4,5,7,8,9) (3,7) (0,7,9) (4,6,8) (2,4,8) (3,5,7) (0,1,2,3,4,5,7) (0,1,3,4,5,8) (1,3,5,6,8,9) (2,8) {59,45,56,52,66,51,25,62,73,34}
+[.###] (2,3) (0,3) (1,2,3) {107,18,36,143}
+[....##] (3,4) (0,5) (0,1,3,5) (2,4) (3,4,5) (4,5) {143,8,16,32,59,173}
+[.##.....] (1,4,5,6,7) (0,4,5,6,7) (1,2,4) (2,5,6) (1,2) (0,1,2,3,6,7) (1,2,3,6,7) (1,3,4,5,6,7) {23,167,69,33,139,144,165,148}
+[...#..#.#.] (1,3,4) (3,6) (0,1,2,3,4,6,7,8,9) (0,1,3,5,6,7,8,9) (1,2,3,4,7) (2) (0,1,4,6,8,9) (0,1,2,3,4,9) (0,1,3,4,5,7,8,9) (0,3,8,9) (0,1,2,3,6,8,9) (1,2,3,4,6,7,8,9) {89,246,209,234,219,28,69,193,88,107}
+[##...#] (1,2,4,5) (1,2,3,4) (0,2,4) (2,4) {15,20,204,17,204,3}
+[##...##...] (0,5,9) (0,1) (6) (4,8) (0,1,5,8) (2,3,5,7,8) (0,1,2,4,5,7,9) (0,2,3,4,7,9) (2,3,4,5,6,7,8,9) (0,2,4,7) (0,1,3,4,5,6) (0,3,4,6,8,9) {74,35,52,41,64,60,22,52,38,60}
+[.#.###] (2,5) (2,3,4) (1,2,3,4) (0,3,5) (1) {9,9,28,34,25,12}
+[.##.#.#] (1,2,3,4) (1,2,4,5) (1,2,6) (0,1,4,6) (2,3,5) (1,2) (1,5,6) {12,48,50,29,36,26,20}
+[..####..#] (0,1,2,4,5,7,8) (0,2,3,4,6,7) (0,1,2,3,4) (0,1,2,4,6,7,8) (0,2,3,5,6,8) (2,6,7,8) (1,4,8) (1,3,4,5,7,8) (0,6,8) (1,2,4,5,8) (0,7) {189,54,61,39,72,17,46,152,56}
+[###.######] (1,2,4,5,7,8) (0,1,2,3,4,6,8,9) (0,1,2,3,4,5,6,9) (1,5,7,9) (2,3,4) (0,1,2,4,5,6,7,8,9) (3,5,6,7) (0,1,2,4,5,7,9) (0,1,3,4,5,8,9) {52,85,78,55,85,91,46,71,44,69}
+[.###..###] (1,2,3,6,7) (2) (1,4,6) (1,2,5,6,8) (0,1,3,5,6,7,8) (1,3,5) (0,3,4,5,7) (0,5) {42,59,23,58,31,51,50,49,17}
+[..#.] (0,1,2) (1,2,3) (0,3) (0) (1,2) (0,2,3) {30,27,34,20}
+[##.#.#] (0,1,2,5) (0,1,4,5) (2,3) (1,3,4,5) {16,140,8,130,138,140}
+[.##.####.#] (2,3,5,7) (0,1,2,6,8) (6) (1,2,4,5,7) (0,2,3,5,6,7,8,9) (1,2,4,5,6,7,9) (0,1,2,5,7,8) (0,3,4,5,6,9) (1,3) (0,1,4,5,7,8) {42,56,53,33,27,63,33,62,41,27}
+[.#..#] (0,1,3,4) (1,2,3) (0,3) {23,29,14,37,15}
+[#####.#.] (1,2,4,6) (0,1,4,5,6) (0,1,2,3,5,6) (0,1,2,6,7) (1,3,6,7) (0,2,4) (0,3,4,5,6) (6) (2,3,4,5,7) {48,56,30,46,58,43,91,24}
+[.#....#] (0,1,5) (1,3,4,5,6) (0,4,6) (1,2,3,4,5) (0,1,2,3,4,6) {32,210,20,208,220,192,218}
+[#.#...##] (0,1,2,3,5,6) (0,2,3,4,5,7) (0,2,4) (0,4,6,7) (1,2,7) (1,4,5) (0,2,6,7) {57,40,52,26,42,37,43,47}
+[.#....###] (3,6,7,8) (1,2,3,4,5,6) (0,5,7) (2,4,5,6) (1,2,3,6) (2,3,4,5,6,7,8) (1,2,4,5,6,8) {17,38,59,40,40,57,60,26,16}
+[#####] (0,1,2,4) (1,3) (2,3) (1,4) (2,3,4) (0,4) {27,33,24,25,32}
+[.###] (0,2,3) (1,2,3) {3,3,6,6}
+[##...#] (0,1,2,4,5) (0,5) (1,4) (0,2,3,5) (5) (0,1,4) (0,1,2) (2,3) {42,40,40,5,25,27}
+[.###] (1,2,3) (0,1,2,3) {15,19,19,19}
+[####.#.] (1,4,5,6) (0,1,2,3,5) (0,1,2,3,5,6) (2) (2,3) {35,44,68,51,9,44,26}
+[#.####.#.] (1,4,5,6,8) (1,2,6,7) (0,2,3,6,7) (0,3,5,6,7,8) (1,4,7,8) (0,1,2,3,4,5,6,8) (1,4,8) {187,46,195,187,36,27,205,183,38}
+[.#.##] (0,2,3,4) (2,3) (1,3,4) (0,1,3) {169,2,183,185,169}
+[#.#.###] (0,2,5) (0,5,6) (1,2,3,4,5) (5) (1,4,6) (0,1,3,5,6) {29,31,12,19,19,56,36}
+[####..#.##] (2,3,4,5,7,8) (0,1,2,3,5,6,7,8,9) (0,1,2,6) (0,4,5,6,9) (0,1,4,6,7,9) (2,7) (0,2,3,4,5,6,8) (0,1,4,6,8,9) {48,44,45,19,44,20,48,34,31,25}
+[.#####.] (1,2,3,5,6) (3,6) (0,1,3,5,6) (1,5) (0,1) (0,2,5) (0,3,4) {43,37,29,55,9,52,46}
+[#...#] (2,4) (0,1,2,3) (1,3,4) (0,4) {16,9,21,9,37}
+[#.###.] (0,5) (0,3,4,5) (0,2) (0,1,2,3,4) (1,2) {65,34,53,36,36,27}
+[.#..#.] (1,3,5) (1,2,3,4) (0,2,3,4,5) (0,1,3,4) (0,1,3) (3,4,5) (0,1,2,5) {45,50,21,45,32,15}
+[..###] (2,3,4) (1,2,4) (0,3,4) (3,4) (0,1,3) {12,25,17,19,22}
+[.###..##] (0,2,5,6) (1,4,5,6) (1,2,3,5,6) (0,4,5,6,7) (1,3,4,6) (1,3,7) (0,4,7) {38,34,22,21,42,37,45,29}
+[####] (1,3) (0,1,2,3) {187,203,187,203}
+[..#..##.] (0,1,2,4,5,6,7) (0,1,2,3,4,5) (4,6) (0,1,6,7) (1,3,5,7) (0,2,3,4,5,7) {37,38,30,38,42,48,29,52}
+[..##] (0,3) (0,2) (1,3) {9,180,8,181}
+[#.###.] (1,4,5) (2,3,4,5) (0,1,2,4) (0,1,2,5) (3,5) (1,3,4) (0,1,3) {46,59,45,48,40,44}
+[#.#...] (0,1,3,4) (0,2) (0,2,3,4) (3,4,5) (1,2,4,5) (1,2,3) (2) {34,28,48,235,217,190}
+[#...###.#] (1,2,4,5,6) (1,2,3,4,5,7,8) (2,3) (0,2,4,6) (0,5,7,8) (0,2,3,6,8) (1,2,4,5) {39,43,81,54,43,62,39,35,55}
+[.###.#.##] (0,1,4,6,7,8) (0,4,6,7,8) (0,1,6,7) (0,3,4,5,8) (1,2,4,6,7,8) (0,1,3,4,5,6,7,8) (0,3,4,5) (1,2,3,5,7,8) (1,3,4,7) (4,7) (1,3,7,8) {40,34,17,42,57,32,27,51,54}
+[#.#...##] (2,3,4,6) (1,2,4,5,6,7) (3,5,7) (0,6) (0,1,2,4,6) (1,3,4,6) (4,5,7) (1,4,5,6) (0,1,4,5,6,7) (0,1,2,3,6,7) {62,70,56,37,84,48,103,48}
+[##..] (0,3) (1,2,3) (1,2) (0,2,3) (2) {20,12,48,32}
+[.#.###] (1,2,4,5) (0,1,3) (0,2,3,4,5) (0,5) (0,3) (1,2,5) (0,1,5) (2,4) {50,45,29,27,18,48}
+[.####] (1,3,4) (0,1,2,4) (0,2,3,4) (2,4) (0,1,2) {49,48,53,35,57}
+[####..###] (0,1,3,4,7,8) (0,4,6,8) (1,7,8) (0,2,3,6) (0,1,3,4,8) (4,5) (2,7) (1,3,4,7,8) (1,5,6,8) (1,2) {39,76,24,56,72,25,13,51,66}
+[##.#.#..] (2,3) (2,3,4) (0,3,5) (0,1,2,5) (0,4,6) (1,2,5,7) {55,30,39,25,20,46,20,11}
+[#..#.#.#.] (0,3,5,6) (1,3,4,6,7,8) (1,2,6,8) (4,5) (0,1,3,4,8) (2,3,5,6,7,8) (0,2,5,6) (0,2,3,4,5,6,7) (0,3,4,5,7) (0,1,2,3,5,7,8) {258,55,58,283,84,265,273,70,68}
+[#....##] (0,4) (0,1,3,5,6) (1,2,3) (0,1,2,3,6) (4,5,6) (0,1,3,4,5) (0,2,3,6) {43,37,21,45,47,42,32}
+[..#...] (1,3,4,5) (0,1,2,3,5) (1,2,3,4) (0,4) {36,29,25,29,29,22}
+[...##..] (0,1,4,5,6) (0,1,3,4,5,6) (0,1,2,3,5) (0,3,4,5) (3,5) (0,1,2,3) (1,3,4,6) {160,58,21,183,155,163,37}
+[##..##..] (2,3,6) (0,1,4,7) (2,4,6,7) (2,4,6) (0,3,6) (1,4,6,7) (0,1,3,4,6,7) (3,4,5,6) (0,3,4,6) {21,24,33,36,48,5,62,38}
+[#.....##] (1,2) (1,4,7) (2,3,4) (0,2,4,5) (1,3) (0,6,7) {7,27,35,19,28,5,2,10}
+[##.....#.] (0,2,3,6,8) (1,3,4,5,7) (0,4,5,6) (1,2,3,4,6,7,8) (0,1,4,5,6,7,8) (1,2,5,8) (0,2,3,4,7) {33,65,38,41,62,57,41,56,50}
+[#...###..] (2,3,4,5,7) (0,1,2,4,7,8) (0,1,2,3,5,6,7) (6,7,8) (4,5,8) (1,3,4,8) (5,8) (0,2) (0,2,3,5,6,7,8) {37,36,48,59,44,79,50,63,80}
+[.##..] (1,3) (3) (0,1,2) (0,4) (0,1,3,4) (1,2) {9,28,12,22,5}
+[###..#.#.#] (1,2,4,6,7,8) (4,6) (0,2,5,6,7,9) (0,1,2,3,5,6,8,9) (0,1,6,8) (0,2) (1,2,6,7) (0,3,5) (1,2,6,7,9) (3,7,9) (0,1,6,7,8) (1,2,3,4,7,8,9) (0,2,3,4,5,7,9) {182,75,172,36,36,140,203,188,59,167}
+[....#..] (0,1,3) (0,4,6) (1,2) (0,2,4) (3,5,6) (1,4,5,6) (0,3) (0,1,3,4) {73,25,18,47,42,12,29}
+[....#....#] (0,1,2,5,6,7,8) (0,1,2,3,4,6,7,8,9) (0,2) (0,1,4,5,6,8,9) (2,3,8,9) (4,9) (1,2,3,5,7,8,9) (2,6,7,8) (5,7,8) (0,1,2,3,4,6,7,9) (1,3,5,7,8,9) {37,49,63,30,20,49,52,67,75,41}
+[..#.##..] (0,2,5,6) (0,4,7) (0,1,2,3,5,7) (6,7) (1,2,4,5) (0,1,2,4,5,7) (0,1,2,4,7) {197,178,198,155,23,185,40,197}
+[###.#] (3,4) (0,2,3,4) (0,2,3) (1,3,4) (1,2,3) (0,1,2) {39,44,54,47,17}
+[....#.#.] (3,6) (1,2,3,4) (2,3,6,7) (2,5,6,7) (0,1,2,3,5,7) (2,3,4) (2,3,5) (0,3,4,5,6,7) (3,4) (1,2,3,6) {17,13,48,86,56,34,44,26}
+[..#.] (0,3) (1,2) (2,3) (1,2,3) {13,17,20,32}
+[..#..] (0,1,2,4) (0,2,3) (2) {4,0,16,4,0}
+[...##.] (3,4) (0,2,5) (1,3) (0,1,4) (0,3,5) (1,4) (1,2) {26,47,16,31,29,17}
+[#.#.#..##] (2,3) (0,2,5,7,8) (0,6) (2,3,4,5,6,8) (1,3,4,5,6,8) (2,4,6,7) (1,8) (0,2) {42,22,58,39,39,43,54,28,45}
+[##.#] (0,1,3) (0,2,3) {10,9,1,10}
+[##....] (2,3) (2,3,4,5) (0,5) (1,2,3) (2,3,4) (0,2,3,5) {22,16,56,56,12,33}
+[.#...#..] (0,2,3,6,7) (0,1,2,3,5,7) (6,7) (0,1,2,3,6,7) (0,1,2,3,5,6) (0,3,4,7) (4,5) (1,4,5,7) (0,1,2,3,5,6,7) {50,36,49,50,14,35,49,57}
+[#.#..#] (2,4) (0,2,5) (2,3,4,5) (1,2,4) (0,2,3,4,5) (1,3,4,5) (2,3) {18,26,65,61,72,56}
+[..##] (1,2) (0,2) (0,3) {22,1,11,12}
+[.###.###..] (0,1,2,3,6,8,9) (0,5,9) (1,2,3,4,5,6,8,9) (0,1,2,4,5,7,8,9) (0,1,2,3,7,8,9) (2,4,7) (1,2,5,6,8) (3,4,5,8,9) (4,7,8,9) {218,225,238,230,43,42,202,36,239,243}
+[.#...#.#.] (4,8) (0,2,3,7,8) (0,1,2,8) (0,2,3,4,5,6,8) (1,2,6) (2,6,7,8) (3,6,8) (0,2,3,4,5,7,8) {25,23,51,35,26,9,47,27,75}
+[..#...###.] (0,1,4,5,6,9) (3,4,6,9) (1,2,3,6,8) (0,2,3,4,5,7,8,9) (1,3,8) (0,2,5,7,8,9) (1,2,3,5) (0,3,4,6,8) (3,5) (3,5,6) (2,7) (9) {37,30,35,65,44,39,60,26,38,40}
+[..##...##.] (0,1,4,8,9) (2,3,7) (2,3,4,5,7) (4,6,7,8) (5,6) (1,5,9) (0,2,3,4,5,6,8,9) (2,5,6,9) (0,6) (1,8) (1,5,8,9) (2,9) (1,3,4,7) {17,38,39,24,32,49,18,24,35,55}
+[###.#] (0,2) (4) (0,2,3) (3,4) (0,1,2,4) (0,1,2) {45,28,45,18,38}
+[.###] (0,2) (1,2,3) {19,195,214,195}
+[##.#] (3) (1,2) (2) (0,2,3) (0) {114,14,120,114}
+[.##...] (1,2,5) (1,3,4) (0,2,4,5) (2) (0,3,5) {11,31,39,21,20,27}
+[.##......] (0,2,4,5,6) (2,3,4,6,8) (0,1,2,3,5,6,7) (0,5,6,7,8) (2,3,4,5,8) (1,4,7) (8) (0,1,3,4,6,7,8) (3) (0,1,2,7) {46,32,56,51,44,47,34,43,52}
+[.###] (0,2) (0,3) (1) (2,3) {12,3,15,15}
+[#.#..##..#] (1,5,7) (0,1,2,3,4,6,7,8,9) (2,9) (0,5,6) (1,4,9) (1,2,5,7,9) (0,2,8,9) (4,9) {23,28,40,3,28,29,18,17,8,65}
+[#..#.###.] (1,2,3) (0,2,3,4,7) (1,3,4,5,6,7,8) (0,2,4,5,6,8) (1,2,3,5,8) (0,2,4,5,6,7,8) (0,2,5,8) (0,1,2,3,4,5,7) (2,3,8) (1,3,6,7) {196,226,235,250,204,219,51,222,70}
+[...#.] (2,3) (0,2,4) (0,2,3) (1,4) (1,2,4) {37,26,61,26,43}
+[..#.#.##.#] (0,3,4,5,6,7,8,9) (0,1,2,5,6,7,8) (0,2,3,4,5,6,7,8,9) (1,2,4,7) (0,8) (5,6) (0,1,2,3,5,6,7,8) (0,1,2,3,4,5,6,7) (0,2,3,4,5,6,8,9) (1,3,6,8) (0,2,3,6,7,9) (1,2) (0,4,5,7,9) {91,200,210,76,78,74,83,76,72,48}
+[..#.] (0) (0,2) (1,2,3) (2) (1) (2,3) {32,11,50,15}
+[#.##.###..] (0,4,5,6,7,8,9) (2,3,4,5,6,7,9) (4,6,8) (0,1,3,4,6,7,8,9) (0,1,2,3,4,7) (1,2,4,8) (1,4) (0,1,2,3,4,5,6,8,9) (1,2,4,7,8) (0,2,3,5,8) (1,4,5,6,7) (1,4,9) {73,109,75,65,139,66,78,83,82,68}
+[.####.#...] (0,3,4,6,7,8) (2,9) (0,1,2,3,4,5,6,8) (1,2,3,4,5,6,8,9) (0,1,2,3,7) (0,2,3,5,8) (0,1,2,3,4,5,6,7,9) (0,1,3,4,6) (0,1,4,6,9) (0,3,4,5,6,7,8,9) {60,44,35,48,45,24,45,33,27,29}
+[.###..#] (0,1,2,3,6) (1,4) (3,6) (0,1,4,5) (1,2,4,5,6) (0,1,6) (1,2,5) (0,1,3,5) {47,80,22,28,41,41,43}
+[.##..] (2,3) (0,1,2,3) (0,3,4) (0,1,2) (2,3,4) (3,4) (4) {50,37,65,71,59}
+[.#..###.] (1,3,4) (0,1,4,5,6) (4,5) (0,1,7) (6) (1,2,3,4) (2,3,5,6) (0,3,4,5,6) {31,28,158,177,46,184,174,10}
+[#..#.#....] (0,3,4) (1,4,5,6,7,8) (1,3,4,5,7,8) (0,5,7,8) (0,1,2,3,5,8,9) (0,3,4,5,6,7,8) (0,2,4,8,9) (0,6) (2,3,5,6,7,8,9) (0,2,3,4,5,7,9) (1,2,4,5,6,7,8,9) {84,45,59,70,73,75,52,57,78,59}
+[#.#..] (1,3,4) (2,4) (0,2) (0,1,4) (2,3) (1,3) (0,4) {17,29,14,28,25}
+[#.#.#.##] (1,4,7) (0,2,5,6) (4,7) (2,3,4,6,7) (1,3,5,6) (0,2,4,6,7) {19,200,38,24,237,17,43,237}
+[..##.##...] (0,1,3,5,6,7,8,9) (0,2,4,5,6,8) (1,3,6,9) (0,1,2,3,4,5,7,8,9) (3,4,5) (2,3,4,5,9) (1,2,4,5,8) (0,2,3,7,9) (1,2,6,7,8,9) (1,2,5,9) (1,3) (1,7) {56,86,93,96,79,106,45,49,60,87}
+[.#.###] (0,5) (0,4,5) (2,3,4,5) (0,1) (0,2) {247,198,18,4,22,39}
+[##.#.] (0,2,3,4) (0,2) (0,1,2,3) (0,1,4) {53,29,33,14,25}
+[#####] (1,3,4) (0,2,3,4) (0,2) {36,15,36,31,31}
+[..###] (0,2,4) (1,2,4) (0,3) {13,5,9,9,9}
+[.#..] (0,2) (1,2,3) (0,3) (1,2) (0,1,3) {29,14,18,21}`,W3=`svr: aaa bbb
+aaa: fft
+fft: ccc
+bbb: tty
+tty: ccc
+ccc: ddd eee
+ddd: hub
+hub: fff
+eee: dac
+dac: fff
+fff: ggg hhh
+ggg: out
+hhh: out`,Q3=`aaa: you hhh
+you: bbb ccc
+bbb: ddd eee
+ccc: ddd eee fff
+ddd: ggg
+eee: out
+fff: out
+ggg: out
+hhh: ccc fff iii
+iii: out`,X3=`etv: dfj
+vzz: sjr
+uyy: vxy
+dkh: plc
+wix: gix rid
+afy: mcc qwm
+gqs: jks
+ajq: rum qsv
+xtm: qdu fmv zle qua
+edv: vtg ooa run
+ptx: out
+lrg: bkn jhm
+sxy: hkq ewj uqo
+azv: oyt fvy
+pyi: gqs kyg qok
+fsu: rty syv cyy
+plb: xuz onj
+rtc: dca iwl
+oik: aib
+wep: oig syd jzk wfj miu
+vtg: aho pmk fyu ncz zay urm idm hir mog get fav yzd tod
+lpa: qrk vtf
+bld: giq tsm
+dap: buc
+mrs: izf mig upb
+jgz: zlm lub
+owr: ldt mmh atk hbl
+xck: aon dxx qil
+amo: xcr mii bjo vih
+qrk: gew plm
+qwm: jts jfm slu
+jef: pln ekw kev gct bdn mbk aok owg oko
+zfc: uof tnc cvp umv
+aok: vsp ipu
+wyi: lva wcy ehz cww
+xlp: wxd uhm
+ent: kdt iyl
+nps: out
+lbf: fct jgv fjv
+xdw: wyi dkh lkl gej
+zen: btr azo
+ocw: ewg dje
+cyr: gtn jft rgu
+opc: lva wcy ehz
+llq: wqs fye
+wqp: hur zve gme bsq
+cyy: kel
+yvq: sqt eyl
+wbn: run ooa vtg
+trr: cvp
+jgn: xdw enq kgm
+dbv: zpe dac prb
+mcv: fta
+kyr: rum qsv gqx
+bqm: enq kgm xdw
+ocx: out
+tzd: pvb
+fcx: dca
+onj: tam krr
+hbf: kgm xdw kel
+tam: enq
+ucu: bxd bpp uhm wxd
+anb: rmq azo btr
+umv: tzd sjn lyt pyi tkr fmn fzq gys lej lue nds pfb vsn tly
+nrk: tzi ovs fie
+fqm: iwl dca
+kxc: mxc buc
+gnf: vmg
+vrt: uof tnc umv cvp
+sth: tcy uyy kyi jni
+zoy: tse vnq
+cvp: lyt pyi tkr tzd sjn tyz dbv jlv pfb lfp vsn lag tly cag gys lej llq lue fzq fmn
+cjd: izf
+dsh: pzd pkp
+zwo: you
+rip: zve bsq gme egx
+lzm: nps tvp
+iyl: fte eyn
+ehf: hpu dmh tyj
+ldt: zsl edv bye
+ceu: aib nyd
+wzs: tnc uof cvp
+isj: you
+she: bzz
+ezy: dxz
+uoy: zlv dje kuz
+ftc: uof
+ruq: run syn vtg
+qil: yju abb cga
+wfj: uof umv cvp
+rfg: uoy
+nix: you dca
+jmk: dsh clr
+mbk: ydl kma
+vxn: cyr
+jlv: dap cso cfg
+kma: gwy yqe sjr
+syv: kel xpi enq
+jur: onj ywl
+xrv: tnc uof umv
+xuz: wjy
+gxq: uxl zpb
+fwo: gxq jic
+wzp: uof tnc
+mmw: pln qbi sod vld fia ekw bdn gct pnu qmb lsh ynt kez gqp mbk nzi owg rna ypn
+iev: aon aro
+fja: out
+pyh: xdw
+bza: ooa run
+pgq: rgo vli
+vsn: kyg gqs qok xyv
+kev: ipu
+wra: ygj qan wix
+owg: rps ixy jtm
+afd: meb smh fxy
+yys: ajq vvu jft gtn
+bsq: jpz kyr
+nwj: bgb fvy bvx oyt
+vih: yni oik tmb
+xzr: ooa syn vtg
+gme: kyr jpz gmr
+ffx: pnu lsh nvi qmb pln wjg fia ypn oko rna nzi
+sjr: kel xpi enq kgm xdw
+sof: xdw kgm kel
+ooa: xmx pmk cfa jmk arx aho ybp ncz fyu urm mog hir zay afd amo ipk gwv tod ssw yzd wdo get
+fek: mkm rys msy rfg
+ygj: gix rid jjq
+qdv: pff vol yys kvu
+mbn: pff yys vol kvu
+nvi: dse uyr drp yib
+abb: jpb zwo rtc oru
+cfg: dtm buc qvu mxc fcx
+heo: csx
+dfj: qwm
+hpu: dga
+xfj: qdu fmv
+kvu: vvu
+qvu: iwl you
+yqe: xpi xdw kel
+ohw: ydf ftc trr ice
+uza: out
+fhr: gew ozc plm yin
+jks: iwl dca
+yci: vli
+bxd: anb sqs zen
+zpg: pwi biy oxs
+lhe: jhm
+zve: gmr
+dxz: you dca iwl
+zlv: yww xzr
+bye: syn run
+lbs: run
+meb: oxh
+gvs: pbf vkz kdl zpm xjc
+ctg: rys mkm rfg
+uzl: gxq ppc ftd
+kyc: aro qil dxx
+tgd: out
+ipu: vtf fhr
+xcf: kax rmq
+rgu: rum
+wcy: mbn vxn exo
+jtm: gqb hns
+msy: ocw
+fta: msq opj pyh
+qqp: pnt
+fhs: sof vnq bqm
+fkr: ooa run syn
+oru: iwl
+zay: ohw uwi ylt
+fbw: gxq ftd
+gkz: efh rjf ehf
+ypn: ksm dse
+smh: mbi
+zod: tjc syv gur
+clr: ekx pzd pkp
+sal: bqm sof tse vnq
+biy: msq
+ydo: mzz lks
+gwy: xpi enq
+iul: wxd bpp uhm dpl
+xtr: vtg syn
+irs: aoy jfc gkz
+npo: ecc plc
+rgo: zoy ozf dlw sal
+hkq: ovs tgd
+rmq: ruq pmf
+bry: fsu vfl
+rbj: tnc
+ydl: hbf yqe nur gwy
+pwi: xod zad
+log: wix ygj
+pet: bry
+ayv: gkz jfc
+mlw: eyn fqb
+fpz: ldt mmh
+dse: mcv
+dac: fsr dxz
+wjy: enq xpi kgm xdw
+ubn: xuz iiu ywl
+qsv: ctg xlp iul sfr owr ucu she jbu rpd his qqe log wra ike qnq
+qip: run syn
+yag: tcy jni kyi uyy
+eyn: hkq uqo
+yco: yvq ehs pds
+ftd: zpb uxl
+hvx: out
+tle: you
+fyu: bte gvs duj
+vkz: rbj
+zsl: vtg
+rsm: izf mig upb
+tyj: vmg
+oig: cvp umv
+sod: rso ydl vzz
+tek: mko dfj
+iiu: wjy tam krr
+gix: kdj xaf wbn
+dtm: dca iwl
+rhp: rkt wkx ent
+com: you
+aho: gvs kpp
+tap: mrs zux rsm
+gew: tid
+ske: qiv
+ivz: vtg syn run
+xjc: vrt rbj xrv ciz
+big: qsv rum
+dzc: kel xdw enq xpi kgm
+vxy: syn vtg run ooa
+yka: kcq
+ojj: xfj
+fhw: run ooa syn
+nns: wkx rkt
+azo: itn pmf
+slu: big qcc
+ozw: tnc umv
+cww: mbn vxn qdv
+rpd: qns xlj bzz
+rjf: lup dmh hpu
+fia: rps dss pet jtm
+fav: kpp gvs
+ice: uof
+sjn: bxq fye
+jhm: vpv
+kcg: jfc
+asr: eyn sxy fte
+oxh: jgz xpc
+wls: nps
+dss: xmj
+npb: out
+giq: pds yvq
+qbi: kma xqv
+ybp: meb
+xod: enq kgm kel
+pmk: xbg uwi ylt ohw
+atk: zsl edv lbs
+bqw: tvp tcs
+zxl: out
+jfm: qcc
+epx: xpi enq kgm kel
+miu: tnc umv
+mig: qsv rum
+ksm: mjd
+kif: out
+ewg: fhw
+aao: gix
+syn: yzd ipk pmk xmx ybp arx afd
+vqs: bkn
+ecx: bkn jhm
+kui: tvp
+xxk: ztv owl
+msq: xpi xdw
+ovs: out
+fte: ewj uqo
+fie: out
+tjr: hnn ymb csx mne
+ciz: cvp umv uof
+vtt: lub zlm
+kbi: khv vli
+idm: xcr bjo mii
+ztv: tjr adc kvg
+bjo: yni lmp
+sqs: kax btr azo
+nds: kyc
+tod: mii
+vli: dlw ozf sal fhs zoy
+jfc: efh
+fzq: xck
+wuz: kyi uyy tcy
+wjg: ipu vsp
+syd: cvp tnc
+bvx: you iwl
+uqo: tss fie
+ecc: zux rsm yrg cjd
+yzd: wse tjg
+lub: uof umv cvp
+wdo: bjo
+kax: itn pmf
+xaf: syn
+tcy: qip fkr ivz euw
+cuq: out
+xej: afy
+ojr: gxq ppc
+xmj: zod
+qnq: wix
+plm: epx jgn dzc yzf
+oko: jur plb ubn
+cpb: lzm wls kui bqw
+aro: abb
+yqa: bvx
+cuw: out
+jzi: ovc jgv fjv fct
+cso: qvu buc
+uxl: cpb cua hpo
+rps: xmj gqb hns bry
+dhu: cpb
+rty: kel enq xdw
+pkp: wzs ozw rdz
+yin: dzc jgn epx
+dmh: ael vmg
+tjg: lks mzz jiw
+arx: ydo wse
+znz: vqs ecx
+gmr: rum qsv
+oka: che lhe
+lfp: kxc cso dap
+tcs: out
+ynm: rum gqx
+lsh: vzz
+yzf: xdw kgm xpi kel
+vee: sai ent
+mxc: iwl
+opj: xdw kgm xpi enq
+rso: hbf sjr yqe nur
+hbl: zsl
+btr: itn ruq
+buc: you dca iwl
+bbd: cuq ptx
+ymb: rin
+fxy: oxh hph mbi
+ssw: cmp tjg wse
+eyl: xzt aih ske
+plc: mrs zux rsm cjd yrg
+lmq: tsm yco
+pmf: vtg ooa
+mkm: uoy ocw
+hir: fxy lmh
+mko: mcc fft
+xzt: jpt qiv npb
+glm: flh lva
+tid: xpi enq xdw
+kvg: hnn
+duj: pbf kdl zpm vkz
+fye: ege meg nwj
+flh: qdv
+fap: biy dwu pwi
+mmh: bye edv
+bxq: ege yqa
+yml: out
+zad: xpi kel
+ozf: vnq
+kbt: yag
+eqz: rfg rys
+evp: rgo khv vli
+vsp: qrk fhr
+uwi: zfc ftc trr
+his: aao ygj
+fvy: iwl
+ncz: ohw uwi agx xbg
+gej: wcy flh
+adc: csx mne ymb hnn
+pzd: rdz ozw wzs
+csx: bbd rin xli
+xyv: fqm
+bjw: rgo
+cmp: mzz lks
+wyc: xfj ghv
+mog: gvs duj
+qok: fqm zob jks nix
+jni: ivz qip
+jbu: qns
+ipk: gvs duj bte
+ooi: cuw zxl vpv
+oxs: xod pyh opj msq
+jpb: you iwl
+hur: jpz
+pyd: out
+xli: ptx yml uza
+kdt: sxy fte
+qpq: ztv kcq
+fqb: nrk
+lyt: pvb cfg cso
+owl: yva heo tjr adc
+qan: rid gix
+lag: bxq
+tse: enq xpi kel
+zux: upb mig
+qet: ywl
+yww: run syn vtg
+enq: dkh lkl wyc jvl rip etv tek twe xej wqp wyi opc gej ojj glm
+gys: dac prb
+cua: fnn kui wls bqw
+yju: oru rtc com jpb
+lva: mbn exo
+qiv: out
+jiw: umv cvp uof
+gqc: big
+yni: aib nyd
+jvl: xfj xtm ghv
+gur: xdw xpi enq kgm kel
+xbg: trr zfc
+jts: big
+fwa: fjv jgv ovc qqp
+hns: zod fsu
+lej: zpe prb ezy
+dga: fja
+ycs: ehs
+zpb: cpb hpo
+jpz: rum qsv
+exo: vol kvu
+kel: twe sjk gej npo xrh glm wyc lkl rip
+ovc: znz pnt
+qcc: rum qsv
+tnc: jlv dbv tyz sjn tzd pyi fzq lue nds llq lej gys cag lag vsn lfp pfb
+pnt: vqs lrg ecx
+upb: gqx
+kdj: syn ooa
+pds: sqt lkn
+jzk: umv uof
+xlj: sth wuz
+gqp: dss
+fmv: gqx rum qsv
+yva: mne csx
+vnq: xdw xpi kgm kel
+izf: gqx rum
+rna: ubn qet
+sfr: mmh ldt hbl
+hph: ozy xpc vtt
+cga: zwo com
+bpp: zen sqs anb xcf
+vol: rgu
+kyg: zob fqm jks nix
+che: ooi bkn
+dpl: sqs anb
+get: xcr
+cfa: clr iua
+vld: ubn jur qet
+qdu: qsv gqx
+afz: sai ent wkx
+bdn: dse uyr drp
+lue: xck rdy
+efh: gnf lup tyj
+gtn: gqx
+pln: pgq
+bte: vkz kdl
+jnv: cua cpb hpo
+ppc: dhu jnv uxl
+lmh: oxh
+mjd: pwi oxs dwu
+egx: jpz
+ekx: wzs rdz
+ydf: umv tnc
+vmg: fja meh
+pvb: fcx buc dtm
+ylt: ydf trr zfc ice
+ujj: wxd uhm bpp bxd dpl
+ktf: wix aao
+vbp: qns kbt bzz xlj
+kgm: wqp opc gej ojj npo glm xrh lkl wyc rip xej
+ghv: qua zle
+run: ncz fyu pmk cfa xmx ybp arx aho jmk tod ssw ipk gwv fav get wdo zay mog hir idm urm amo afd
+yib: zpg mcv mjd
+uof: tly lag vsn lfp lue nds llq gys lej cag fzq fmn tkr pyi sjn tzd dbv jlv
+ixy: hns
+ewj: tss tzi ovs fie
+euw: syn run ooa
+xqv: nur hbf yqe
+fft: slu jts sqf
+wqs: azv meg ege nwj
+kuz: flj xzr xtr yww fhw
+meh: out
+tly: iev xck
+vpv: out
+zpe: isj ava
+wxd: xcf
+cag: xyv gqs qok
+svr: ffx jef mmw
+pff: vvu gtn jft
+gct: lpa ipu
+xia: ztv
+mkk: aoy jfc
+bkn: vpv kif cuw
+agx: ftc ice
+mii: ceu
+lkn: xzt aih ske
+hnn: rin bbd
+czr: bzz xlj
+khv: ozf dlw fhs zoy
+ozy: lub
+mbi: xpc vtt ddt ozy jgz
+lmp: wep
+xrh: ecc plc tap
+yrg: upb
+wwm: hbo yco tsm giq ycs
+zlm: tnc uof
+wse: lks mzz
+tsm: pds
+rid: kdj xaf wbn
+ehs: sqt
+jjq: wbn bza xaf
+sjk: egx bsq gme zve
+gqb: zod fsu
+prb: isj fsr
+jgv: znz oka
+krr: kel xpi enq xdw
+flj: ooa vtg syn
+rdy: aro aon
+uhm: sqs
+nzi: lpa
+ael: meh hvx
+tzi: out
+nyd: wfj miu jzk syd oig
+rin: pyd uza
+vvu: rum qsv
+kpp: zpm xjc vkz
+aon: yju
+aih: jpt
+urm: fxy
+kez: kma xqv
+nur: kel xdw enq
+fmn: ezy zpe
+rkt: kdt iyl asr
+zpm: rbj ciz
+tss: out
+zob: iwl dca you
+pfb: cso cfg pvb dap
+hbo: ehs
+gqx: fpz owr iul wra log qqe eqz rpd ike ujj
+xpi: etv rip jvl lkl wyc dkh xrh tek xej glm npo gej ojj sjk wyi wqp opc
+jft: rum qsv gqx
+pbf: vrt ciz
+tvp: out
+bgb: iwl
+lup: ael vmg dga
+sqt: ske
+lks: umv cvp uof
+pnu: kbi yci evp pgq
+dxx: cga
+oyt: dca iwl
+rum: ujj ike fek eqz qqe his rpd ktf ucu fpz czr owr sfr vbp ctg xlp
+qua: rum
+ozc: jgn
+tjc: kgm
+qns: yag sth
+jpt: out
+gwv: clr dsh
+dca: yka fbw nns jzi irs uzl kcg ojr lmq rhp afz fwo lbf xxk xia wwm bld mkk qpq ayv
+mcc: jts gqc
+iwl: jzi kxt nns fwa uzl irs lmq afz xia xxk lbf vee ayv qpq bld
+ehz: exo vxn mbn
+dlw: tse sof
+itn: syn ooa run
+fjv: znz
+qqe: rys sqo
+zle: gqx rum
+ike: wxd bpp bxd dpl
+kyi: fkr
+vtf: ozc gew
+ava: iwl
+fct: oka znz pnt
+hpo: wls kui bqw fnn
+xmx: dsh iua
+lkl: mko
+vfl: syv rty gur
+wkx: kdt iyl
+rys: mby ocw
+tmb: wep nyd aib
+sqo: uoy ocw
+bzz: wuz
+mby: ewg zlv
+xcr: yni oik ceu tmb lmp
+jic: dhu jnv uxl zpb
+aoy: rjf ehf
+tyz: iev
+mzz: tnc umv cvp
+rdz: uof tnc
+xpc: lub zlm
+uyr: zpg mcv fap
+mne: bbd xli
+kxt: sai
+ekw: pgq evp bjw
+sqf: ynm big
+drp: mjd zpg fap
+meg: tle oyt bvx bgb fvy
+fsr: dca
+dwu: opj zad xod pyh
+ddt: wzp
+tkr: dac prb ezy
+you: nns ojr rhp yka fwa xxk xia wwm kcg
+dje: flj
+kdl: rbj vrt xrv ciz
+fnn: ocx
+kcq: kvg yva tjr adc
+ynt: pet dss rps
+aib: syd jzk miu
+qmb: ubn
+ege: fvy bgb tle
+sai: mlw
+twe: afy mko dfj
+iua: pzd pkp
+ywl: krr tam`,J3="",Y3="",Z3=Object.assign({"../advent/day01/solution.ts":G2,"../advent/day02/solution.ts":F2,"../advent/day03/solution.ts":X2,"../advent/day04/solution.ts":n3,"../advent/day05/solution.ts":e3,"../advent/day06/solution.ts":i3,"../advent/day07/solution.ts":c3,"../advent/day08/solution.ts":d3,"../advent/day09/solution.ts":b3,"../advent/day10/solution.ts":x3,"../advent/day11/solution.ts":z3,"../advent/day12/solution.ts":k3}),n4=Object.assign({"../advent/day01/input-test.md":q3,"../advent/day01/input.md":S3,"../advent/day02/input-test.md":$3,"../advent/day02/input.md":O3,"../advent/day03/input-test.md":E3,"../advent/day03/input.md":M3,"../advent/day04/input-test.md":T3,"../advent/day04/input.md":C3,"../advent/day05/input-test.md":A3,"../advent/day05/input.md":N3,"../advent/day06/input-test.md":P3,"../advent/day06/input.md":I3,"../advent/day07/input-test.md":D3,"../advent/day07/input.md":B3,"../advent/day08/input-test.md":U3,"../advent/day08/input.md":G3,"../advent/day09/input-test.md":K3,"../advent/day09/input.md":V3,"../advent/day10/input-test.md":H3,"../advent/day10/input.md":F3,"../advent/day11/input-test-p2.md":W3,"../advent/day11/input-test.md":Q3,"../advent/day11/input.md":X3,"../advent/day12/input-test.md":J3,"../advent/day12/input.md":Y3}),L4=Object.freeze(Object.defineProperty({__proto__:null,inputMods:n4,solutionMods:Z3},Symbol.toStringTag,{value:"Module"})),d2=L=>parseInt(L.split("day")[1]||"1",10),R4=(L,n)=>{const R=(L.match(/input-?(.+)\.md$/)||[])[1]||"Real";return{day:d2(L),name:R,raw:n}},t4=(L,n)=>{const R=!!(n.part1||n.part2),t=n.part1||(()=>"-"),o=n.part2||(()=>"-"),s=n.answers||[["",""]];return{day:d2(L),part1:t,part2:o,answers:s,hasSolution:R}},[Q,e4]=v([]),[S,s4]=v([]),[G,g2]=v(1),[I,m2]=v(0),[y2,b2]=v(""),[o4,r4]=v({value:"",time:0,knownGood:!1}),[i4,l4]=v({value:"",time:0,knownGood:!1}),[h2,D]=v(!1),[v2,a4]=v(!0),H=()=>Q().filter(L=>L.day===G()),w2=()=>S().find(L=>L.day===G()),$=(L,n="",R=0,t=!1)=>{L===1&&r4({value:n,time:R,knownGood:t}),L===2&&l4({value:n,time:R,knownGood:t})},X=()=>[$(1),$(2)],c4=()=>{q2(()=>{if(I()>=H().length)return m2(H().length-1);const L=H()[I()],n=w2();if(!L||!n)return X();b2(L.raw)})},T=async()=>{const L=w2(),n=y2();if(!L||!n)return X();const R=L.answers[I()]||["",""];$(1),$(2),setTimeout(R2,0,1,L.part1,n,R[0]),await u4(10),setTimeout(R2,5,2,L.part2,n,R[1])},u4=L=>new Promise(n=>setTimeout(n,L)),R2=async(L,n,R,t)=>{if(h2())return;D(!0);const{output:o,dt:s}=await x2(n,R,v2());$(L,o,s,o===t),D(!1)},x2=async(L,n,R)=>{const t=performance.now();return{output:(()=>{if(!R)return String(L(n));try{return String(L(n))}catch(s){return`Error: ${s}`}})(),dt:performance.now()-t}},f4=async()=>{if(h2())return;D(!0),X();const L=[],n=["",""],R=[0,0],t=[!0,!0];for(let o=0;o<S().length;o++){const s=S()[o],r=Q().filter(e=>e.day===o+1)[0].raw;for(let e=0;e<2;e++){const{output:i,dt:l}=await x2(e===0?s.part1:s.part2,r,!0);L.push({dt:l,name:`Day ${s.day} part ${e+1}`}),R[e]+=l;const a=i===s.answers[0][e];t[e]&&=a,n[e]+=a?"★":"-",o===S().length-1&&(n[e]+=" done!"),$(e+1,n[e],R[e],t[e]),await new Promise(c=>setTimeout(c,0))}}L.sort((o,s)=>o.dt-s.dt),console.table(L.map(({name:o,dt:s})=>({name:o,ms:Math.round(s*10)/10}))),D(!1)},p4=L=>{e4(Object.keys(L.inputMods).map(n=>R4(n,L.inputMods[n])).sort((n,R)=>n.name.localeCompare(R.name))),s4(Object.keys(L.solutionMods).map(n=>t4(n,L.solutionMods[n])).filter(n=>n.hasSolution).sort((n,R)=>n.day-R.day)),T()};p4(L4);g2(S().at(-1)?.day||1);setTimeout(T,0);var d4=k("<button type=button>");const K=L=>{const n=()=>({...L.classes,button:!0,toggled:L.isToggled});return(()=>{var R=d4();return N2(R,"click",L.onClick),y(R,()=>L.label),z(t=>P2(R,n(),t)),R})()};c2(["click"]);var g4=k("<div class=catch-area>Catch errors");const m4=()=>(()=>{var L=g4();return L.firstChild,y(L,b(K,{label:"x",classes:{"input-toggle":!0,"catch-button":!0},get isToggled(){return v2()},onClick:()=>a4(n=>!n)}),null),L})(),y4=()=>S().map(L=>b(K,{get label(){return L.day.toString().padStart(2,"0")},get isToggled(){return L.day===G()},onClick:()=>{g2(L.day),T()}}));var b4=k("<textarea rows=14>");const h4=L=>(()=>{var n=b4();return n.$$input=R=>{L.onUpdate(R.target.value),T()},z(()=>n.value=L.value),n})(),v4=()=>b(h4,{get value(){return y2()},onUpdate:b2});c2(["input"]);var w4=k("<div class=label style=align-self:flex-start><h4>Input:</h4><br>");const x4=()=>{const L=()=>Q().filter(n=>n.day===G()).map((n,R)=>({label:n.name,isToggled:R===I(),onClick:()=>{m2(R),T()},classes:{"input-toggle":!0}}));return(()=>{var n=w4(),R=n.firstChild;return R.nextSibling,y(n,()=>L().map(t=>b(K,t)),null),n})()};var j4=k("<div class=label><h4>Part <!>:</h4><div class=time>(<!>ms)"),_4=k("<textarea class=output disabled>");const z4=(L="")=>{const n=L.split(`
+`).length;return Math.min(n,Math.max(n,1,10))},t2=({part:L=1})=>{const n=L===1?o4:i4;return[(()=>{var R=j4(),t=R.firstChild,o=t.firstChild,s=o.nextSibling;s.nextSibling;var r=t.nextSibling,e=r.firstChild,i=e.nextSibling;return i.nextSibling,y(t,L,s),y(r,()=>n().time.toFixed(0),i),R})(),(()=>{var R=_4();return z(t=>{var o=!!n().knownGood,s=z4(n().value);return o!==t.e&&R.classList.toggle("correct-answer",t.e=o),s!==t.t&&A2(R,"rows",t.t=s),t},{e:void 0,t:void 0}),z(()=>R.value=n().value),R})()]},k4=()=>b(K,{label:"Run all",classes:{"input-toggle":!1,"run-all-button":!0},isToggled:!1,onClick:()=>f4()});var q4=k("<main><header><h2>Advent 2025</h2></header><article class=layout><div class=label><h4>Days:</h4></div><div><br></div><div>");const S4=()=>(c4(),(()=>{var L=q4(),n=L.firstChild,R=n.nextSibling,t=R.firstChild,o=t.nextSibling,s=o.firstChild,r=o.nextSibling;return y(o,b(y4,{}),s),y(o,b(k4,{}),null),y(R,b(t2,{part:1}),r),y(R,b(t2,{part:2}),r),y(R,b(x4,{}),r),y(R,b(v4,{}),r),y(R,b(m4,{}),null),L})()),$4=document.getElementById("root");C2(S4,$4);
+//# sourceMappingURL=index-BZmNDK-y.js.map

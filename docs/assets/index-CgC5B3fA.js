@@ -1,24 +1,26 @@
-(function(){const n=document.createElement("link").relList;if(n&&n.supports&&n.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))t(o);new MutationObserver(o=>{for(const s of o)if(s.type==="childList")for(const r of s.addedNodes)r.tagName==="LINK"&&r.rel==="modulepreload"&&t(r)}).observe(document,{childList:!0,subtree:!0});function R(o){const s={};return o.integrity&&(s.integrity=o.integrity),o.referrerPolicy&&(s.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?s.credentials="include":o.crossOrigin==="anonymous"?s.credentials="omit":s.credentials="same-origin",s}function t(o){if(o.ep)return;o.ep=!0;const s=R(o);fetch(o.href,s)}})();const j2=!1,_2=(L,n)=>L===n,Y={equals:_2};let e2=i2;const w=1,C=2,s2={owned:null,cleanups:null,context:null,owner:null};var m=null;let V=null,z2=null,p=null,d=null,h=null,B=0;function k2(L,n){const R=p,t=m,o=L.length===0,s=n===void 0?t:n,r=o?s2:{owned:null,cleanups:null,context:s?s.context:null,owner:s},e=o?L:()=>L(()=>W(()=>E(r)));m=r,p=null;try{return M(e,!0)}finally{p=R,m=t}}function v(L,n){n=n?Object.assign({},Y,n):Y;const R={value:L,observers:null,observerSlots:null,comparator:n.equals||void 0},t=o=>(typeof o=="function"&&(o=o(R.value)),o2(R,o));return[S2.bind(R),t]}function z(L,n,R){const t=r2(L,n,!1,w);U(t)}function q2(L,n,R){e2=E2;const t=r2(L,n,!1,w);t.user=!0,h?h.push(t):U(t)}function W(L){if(p===null)return L();const n=p;p=null;try{return L()}finally{p=n}}function S2(){if(this.sources&&this.state)if(this.state===w)U(this);else{const L=d;d=null,M(()=>N(this),!1),d=L}if(p){const L=this.observers?this.observers.length:0;p.sources?(p.sources.push(this),p.sourceSlots.push(L)):(p.sources=[this],p.sourceSlots=[L]),this.observers?(this.observers.push(p),this.observerSlots.push(p.sources.length-1)):(this.observers=[p],this.observerSlots=[p.sources.length-1])}return this.value}function o2(L,n,R){let t=L.value;return(!L.comparator||!L.comparator(t,n))&&(L.value=n,L.observers&&L.observers.length&&M(()=>{for(let o=0;o<L.observers.length;o+=1){const s=L.observers[o],r=V&&V.running;r&&V.disposed.has(s),(r?!s.tState:!s.state)&&(s.pure?d.push(s):h.push(s),s.observers&&l2(s)),r||(s.state=w)}if(d.length>1e6)throw d=[],new Error},!1)),n}function U(L){if(!L.fn)return;E(L);const n=B;$2(L,L.value,n)}function $2(L,n,R){let t;const o=m,s=p;p=m=L;try{t=L.fn(n)}catch(r){return L.pure&&(L.state=w,L.owned&&L.owned.forEach(E),L.owned=null),L.updatedAt=R+1,a2(r)}finally{p=s,m=o}(!L.updatedAt||L.updatedAt<=R)&&(L.updatedAt!=null&&"observers"in L?o2(L,t):L.value=t,L.updatedAt=R)}function r2(L,n,R,t=w,o){const s={fn:L,state:t,updatedAt:null,owned:null,sources:null,sourceSlots:null,cleanups:null,value:n,owner:m,context:m?m.context:null,pure:R};return m===null||m!==s2&&(m.owned?m.owned.push(s):m.owned=[s]),s}function A(L){if(L.state===0)return;if(L.state===C)return N(L);if(L.suspense&&W(L.suspense.inFallback))return L.suspense.effects.push(L);const n=[L];for(;(L=L.owner)&&(!L.updatedAt||L.updatedAt<B);)L.state&&n.push(L);for(let R=n.length-1;R>=0;R--)if(L=n[R],L.state===w)U(L);else if(L.state===C){const t=d;d=null,M(()=>N(L,n[0]),!1),d=t}}function M(L,n){if(d)return L();let R=!1;n||(d=[]),h?R=!0:h=[],B++;try{const t=L();return O2(R),t}catch(t){R||(h=null),d=null,a2(t)}}function O2(L){if(d&&(i2(d),d=null),L)return;const n=h;h=null,n.length&&M(()=>e2(n),!1)}function i2(L){for(let n=0;n<L.length;n++)A(L[n])}function E2(L){let n,R=0;for(n=0;n<L.length;n++){const t=L[n];t.user?L[R++]=t:A(t)}for(n=0;n<R;n++)A(L[n])}function N(L,n){L.state=0;for(let R=0;R<L.sources.length;R+=1){const t=L.sources[R];if(t.sources){const o=t.state;o===w?t!==n&&(!t.updatedAt||t.updatedAt<B)&&A(t):o===C&&N(t,n)}}}function l2(L){for(let n=0;n<L.observers.length;n+=1){const R=L.observers[n];R.state||(R.state=C,R.pure?d.push(R):h.push(R),R.observers&&l2(R))}}function E(L){let n;if(L.sources)for(;L.sources.length;){const R=L.sources.pop(),t=L.sourceSlots.pop(),o=R.observers;if(o&&o.length){const s=o.pop(),r=R.observerSlots.pop();t<o.length&&(s.sourceSlots[r]=t,o[t]=s,R.observerSlots[t]=r)}}if(L.tOwned){for(n=L.tOwned.length-1;n>=0;n--)E(L.tOwned[n]);delete L.tOwned}if(L.owned){for(n=L.owned.length-1;n>=0;n--)E(L.owned[n]);L.owned=null}if(L.cleanups){for(n=L.cleanups.length-1;n>=0;n--)L.cleanups[n]();L.cleanups=null}L.state=0}function M2(L){return L instanceof Error?L:new Error(typeof L=="string"?L:"Unknown error",{cause:L})}function a2(L,n=m){throw M2(L)}function b(L,n){return W(()=>L(n||{}))}function T2(L,n,R){let t=R.length,o=n.length,s=t,r=0,e=0,i=n[o-1].nextSibling,l=null;for(;r<o||e<s;){if(n[r]===R[e]){r++,e++;continue}for(;n[o-1]===R[s-1];)o--,s--;if(o===r){const a=s<t?e?R[e-1].nextSibling:R[s-e]:i;for(;e<s;)L.insertBefore(R[e++],a)}else if(s===e)for(;r<o;)(!l||!l.has(n[r]))&&n[r].remove(),r++;else if(n[r]===R[s-1]&&R[e]===n[o-1]){const a=n[--o].nextSibling;L.insertBefore(R[e++],n[r++].nextSibling),L.insertBefore(R[--s],a),n[o]=R[s]}else{if(!l){l=new Map;let c=e;for(;c<s;)l.set(R[c],c++)}const a=l.get(n[r]);if(a!=null)if(e<a&&a<s){let c=r,u=1,f;for(;++c<o&&c<s&&!((f=l.get(n[c]))==null||f!==a+u);)u++;if(u>a-e){const g=n[r];for(;e<a;)L.insertBefore(R[e++],g)}else L.replaceChild(R[e++],n[r++])}else r++;else n[r++].remove()}}}const Z="_$DX_DELEGATE";function C2(L,n,R,t={}){let o;return k2(s=>{o=s,n===document?L():y(n,L(),n.firstChild?null:void 0,R)},t.owner),()=>{o(),n.textContent=""}}function k(L,n,R,t){let o;const s=()=>{const e=document.createElement("template");return e.innerHTML=L,e.content.firstChild},r=()=>(o||(o=s())).cloneNode(!0);return r.cloneNode=r,r}function c2(L,n=window.document){const R=n[Z]||(n[Z]=new Set);for(let t=0,o=L.length;t<o;t++){const s=L[t];R.has(s)||(R.add(s),n.addEventListener(s,I2))}}function A2(L,n,R){R==null?L.removeAttribute(n):L.setAttribute(n,R)}function N2(L,n,R,t){Array.isArray(R)?(L[`$$${n}`]=R[0],L[`$$${n}Data`]=R[1]):L[`$$${n}`]=R}function P2(L,n,R={}){const t=Object.keys(n||{}),o=Object.keys(R);let s,r;for(s=0,r=o.length;s<r;s++){const e=o[s];!e||e==="undefined"||n[e]||(n2(L,e,!1),delete R[e])}for(s=0,r=t.length;s<r;s++){const e=t[s],i=!!n[e];!e||e==="undefined"||R[e]===i||!i||(n2(L,e,!0),R[e]=i)}return R}function y(L,n,R,t){if(R!==void 0&&!t&&(t=[]),typeof n!="function")return P(L,n,t,R);z(o=>P(L,n(),o,R),t)}function n2(L,n,R){const t=n.trim().split(/\s+/);for(let o=0,s=t.length;o<s;o++)L.classList.toggle(t[o],R)}function I2(L){let n=L.target;const R=`$$${L.type}`,t=L.target,o=L.currentTarget,s=i=>Object.defineProperty(L,"target",{configurable:!0,value:i}),r=()=>{const i=n[R];if(i&&!n.disabled){const l=n[`${R}Data`];if(l!==void 0?i.call(n,l,L):i.call(n,L),L.cancelBubble)return}return n.host&&typeof n.host!="string"&&!n.host._$host&&n.contains(L.target)&&s(n.host),!0},e=()=>{for(;r()&&(n=n._$host||n.parentNode||n.host););};if(Object.defineProperty(L,"currentTarget",{configurable:!0,get(){return n||document}}),L.composedPath){const i=L.composedPath();s(i[0]);for(let l=0;l<i.length-2&&(n=i[l],!!r());l++){if(n._$host){n=n._$host,e();break}if(n.parentNode===o)break}}else e();s(t)}function P(L,n,R,t,o){for(;typeof R=="function";)R=R();if(n===R)return R;const s=typeof n,r=t!==void 0;if(L=r&&R[0]&&R[0].parentNode||L,s==="string"||s==="number"){if(s==="number"&&(n=n.toString(),n===R))return R;if(r){let e=R[0];e&&e.nodeType===3?e.data!==n&&(e.data=n):e=document.createTextNode(n),R=q(L,R,t,e)}else R!==""&&typeof R=="string"?R=L.firstChild.data=n:R=L.textContent=n}else if(n==null||s==="boolean")R=q(L,R,t);else{if(s==="function")return z(()=>{let e=n();for(;typeof e=="function";)e=e();R=P(L,e,R,t)}),()=>R;if(Array.isArray(n)){const e=[],i=R&&Array.isArray(R);if(F(e,n,R,o))return z(()=>R=P(L,e,R,t,!0)),()=>R;if(e.length===0){if(R=q(L,R,t),r)return R}else i?R.length===0?L2(L,e,t):T2(L,R,e):(R&&q(L),L2(L,e));R=e}else if(n.nodeType){if(Array.isArray(R)){if(r)return R=q(L,R,t,n);q(L,R,null,n)}else R==null||R===""||!L.firstChild?L.appendChild(n):L.replaceChild(n,L.firstChild);R=n}}return R}function F(L,n,R,t){let o=!1;for(let s=0,r=n.length;s<r;s++){let e=n[s],i=R&&R[L.length],l;if(!(e==null||e===!0||e===!1))if((l=typeof e)=="object"&&e.nodeType)L.push(e);else if(Array.isArray(e))o=F(L,e,i)||o;else if(l==="function")if(t){for(;typeof e=="function";)e=e();o=F(L,Array.isArray(e)?e:[e],Array.isArray(i)?i:[i])||o}else L.push(e),o=!0;else{const a=String(e);i&&i.nodeType===3&&i.data===a?L.push(i):L.push(document.createTextNode(a))}}return o}function L2(L,n,R=null){for(let t=0,o=n.length;t<o;t++)L.insertBefore(n[t],R)}function q(L,n,R,t){if(R===void 0)return L.textContent="";const o=t||document.createTextNode("");if(n.length){let s=!1;for(let r=n.length-1;r>=0;r--){const e=n[r];if(o!==e){const i=e.parentNode===L;!s&&!r?i?L.replaceChild(o,e):L.insertBefore(o,R):i&&e.remove()}else s=!0}}else L.insertBefore(o,R);return[o]}const D2=[["1034","6166"],["3","6"]],B2=(L="")=>{let n=50;return L.split(`
-`).reduce((R,t)=>{const o=t[0]==="R"?1:-1,s=parseInt(t.slice(1),10);return n+=o*s,n%100===0&&R++,R},0)},U2=L=>{const n=(t=0,o=1)=>(t%o+o)%o;let R=50;return L.split(`
-`).reduce((t,o)=>{const s=o[0]==="R"?1:-1,r=parseInt(o.slice(1),10),e=R+s*r;return s>0?t+=Math.floor(e/100):(t-=Math.floor(e/100),n(R,100)===0&&t--,n(e,100)===0&&t++),R=n(e,100),t},0)},G2=Object.freeze(Object.defineProperty({__proto__:null,answers:D2,part1:B2,part2:U2},Symbol.toStringTag,{value:"Module"})),K2=[["12599655151","20942028255"],["1227775554","4174379265"]],V2=(L="")=>L.split(",").reduce((n,R)=>{const[t,o]=R.split("-").map(Number);for(let s=t;s<=o;s++){const r=s.toString();if(r.length%2!==0){s=10**r.length-1;continue}const e=r.slice(0,r.length/2),i=Number(e+e);if(i>o)break;i>=t&&(n+=i);const l=String(Number(e)+1);s=Number(l+l)-1}return n},0),H2=L=>L.split(",").reduce((n,R)=>{const[t,o]=R.split("-").map(Number);for(let s=t;s<=o;s++){const r=s.toString(),e=r.length;if(e<2)continue;const l=Array.from(Array(e-1),(a,c)=>c+1).filter(a=>e%a===0).flatMap(a=>{const c=r.slice(0,a),u=String(Number(c)+1);return[c.repeat(e/a),u.repeat(e/a)]}).map(Number).filter(a=>a>=s&&a<=o);if(l.length===0)break;s=Math.min(...l),n+=s}return n},0),F2=Object.freeze(Object.defineProperty({__proto__:null,answers:K2,part1:V2,part2:H2},Symbol.toStringTag,{value:"Module"})),W2=[["16973","168027167146027"],["357","3121910778619"]],Q2=(L="")=>u2(L,2),u2=(L,n=12)=>L.split(`
-`).reduce((R,t)=>{const o=[];let s=t.length-n;return t.split("").forEach(r=>{for(;s>0&&o.length>0&&o[o.length-1]<r;)o.pop(),s--;o.push(r)}),R+Number(o.slice(0,n).join(""))},0),X2=Object.freeze(Object.defineProperty({__proto__:null,answers:W2,part1:Q2,part2:u2},Symbol.toStringTag,{value:"Module"})),J2=[["1351","8345"],["13","43"]],Y2=(L="")=>{const n=L.split(`
-`).map(o=>o.split("")),R=[-1,0,1];let t=0;return n.forEach((o,s)=>{o.forEach((r,e)=>{if(r!=="@")return;let i=0;R.forEach(l=>{n[s+l]&&R.forEach(a=>{if(a===0&&l===0)return;n[s+l][e+a]==="@"&&i++})}),i<4&&t++})}),t},Z2=L=>{const n=L.split(`
-`).map(s=>s.split("").map(r=>({ch:r,nabs:0}))),R=[-1,0,1],t=[[0,0]].slice(0,0);n.forEach((s,r)=>{s.forEach((e,i)=>{e.ch==="@"&&(t.push([i,r]),R.forEach(l=>{n[r+l]&&R.forEach(a=>{a===0&&l===0||n[r+l][i+a]?.ch==="@"&&e.nabs++})}))})});let o=0;for(;t.length>0;){const[s,r]=t.pop()||[-1,-1],e=n[r][s];e.ch==="@"&&(e.nabs>=4||(e.ch=".",o++,R.forEach(i=>{n[r+i]&&R.forEach(l=>{if(l===0&&i===0)return;const a=n[r+i][s+l];a?.ch==="@"&&(a.nabs--,a.nabs<4&&t.push([s+l,r+i]))})})))}return o},n3=Object.freeze(Object.defineProperty({__proto__:null,answers:J2,part1:Y2,part2:Z2},Symbol.toStringTag,{value:"Module"})),L3=[["640","365804144481581"],["3","14"]],R3=(L="")=>{const[n,R]=L.split(`
+(function(){const n=document.createElement("link").relList;if(n&&n.supports&&n.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))e(o);new MutationObserver(o=>{for(const s of o)if(s.type==="childList")for(const x of s.addedNodes)x.tagName==="LINK"&&x.rel==="modulepreload"&&e(x)}).observe(document,{childList:!0,subtree:!0});function R(o){const s={};return o.integrity&&(s.integrity=o.integrity),o.referrerPolicy&&(s.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?s.credentials="include":o.crossOrigin==="anonymous"?s.credentials="omit":s.credentials="same-origin",s}function e(o){if(o.ep)return;o.ep=!0;const s=R(o);fetch(o.href,s)}})();const j3=!1,_3=(L,n)=>L===n,Y={equals:_3};let e3=r3;const _=1,A=2,s3={owned:null,cleanups:null,context:null,owner:null};var m=null;let H=null,z3=null,p=null,d=null,w=null,U=0;function k3(L,n){const R=p,e=m,o=L.length===0,s=n===void 0?e:n,x=o?s3:{owned:null,cleanups:null,context:s?s.context:null,owner:s},t=o?L:()=>L(()=>Q(()=>E(x)));m=x,p=null;try{return M(t,!0)}finally{p=R,m=e}}function j(L,n){n=n?Object.assign({},Y,n):Y;const R={value:L,observers:null,observerSlots:null,comparator:n.equals||void 0},e=o=>(typeof o=="function"&&(o=o(R.value)),x3(R,o));return[S3.bind(R),e]}function z(L,n,R){const e=o3(L,n,!1,_);G(e)}function q3(L,n,R){e3=E3;const e=o3(L,n,!1,_);e.user=!0,w?w.push(e):G(e)}function Q(L){if(p===null)return L();const n=p;p=null;try{return L()}finally{p=n}}function S3(){if(this.sources&&this.state)if(this.state===_)G(this);else{const L=d;d=null,M(()=>I(this),!1),d=L}if(p){const L=this.observers?this.observers.length:0;p.sources?(p.sources.push(this),p.sourceSlots.push(L)):(p.sources=[this],p.sourceSlots=[L]),this.observers?(this.observers.push(p),this.observerSlots.push(p.sources.length-1)):(this.observers=[p],this.observerSlots=[p.sources.length-1])}return this.value}function x3(L,n,R){let e=L.value;return(!L.comparator||!L.comparator(e,n))&&(L.value=n,L.observers&&L.observers.length&&M(()=>{for(let o=0;o<L.observers.length;o+=1){const s=L.observers[o],x=H&&H.running;x&&H.disposed.has(s),(x?!s.tState:!s.state)&&(s.pure?d.push(s):w.push(s),s.observers&&i3(s)),x||(s.state=_)}if(d.length>1e6)throw d=[],new Error},!1)),n}function G(L){if(!L.fn)return;E(L);const n=U;$3(L,L.value,n)}function $3(L,n,R){let e;const o=m,s=p;p=m=L;try{e=L.fn(n)}catch(x){return L.pure&&(L.state=_,L.owned&&L.owned.forEach(E),L.owned=null),L.updatedAt=R+1,l3(x)}finally{p=s,m=o}(!L.updatedAt||L.updatedAt<=R)&&(L.updatedAt!=null&&"observers"in L?x3(L,e):L.value=e,L.updatedAt=R)}function o3(L,n,R,e=_,o){const s={fn:L,state:e,updatedAt:null,owned:null,sources:null,sourceSlots:null,cleanups:null,value:n,owner:m,context:m?m.context:null,pure:R};return m===null||m!==s3&&(m.owned?m.owned.push(s):m.owned=[s]),s}function C(L){if(L.state===0)return;if(L.state===A)return I(L);if(L.suspense&&Q(L.suspense.inFallback))return L.suspense.effects.push(L);const n=[L];for(;(L=L.owner)&&(!L.updatedAt||L.updatedAt<U);)L.state&&n.push(L);for(let R=n.length-1;R>=0;R--)if(L=n[R],L.state===_)G(L);else if(L.state===A){const e=d;d=null,M(()=>I(L,n[0]),!1),d=e}}function M(L,n){if(d)return L();let R=!1;n||(d=[]),w?R=!0:w=[],U++;try{const e=L();return O3(R),e}catch(e){R||(w=null),d=null,l3(e)}}function O3(L){if(d&&(r3(d),d=null),L)return;const n=w;w=null,n.length&&M(()=>e3(n),!1)}function r3(L){for(let n=0;n<L.length;n++)C(L[n])}function E3(L){let n,R=0;for(n=0;n<L.length;n++){const e=L[n];e.user?L[R++]=e:C(e)}for(n=0;n<R;n++)C(L[n])}function I(L,n){L.state=0;for(let R=0;R<L.sources.length;R+=1){const e=L.sources[R];if(e.sources){const o=e.state;o===_?e!==n&&(!e.updatedAt||e.updatedAt<U)&&C(e):o===A&&I(e,n)}}}function i3(L){for(let n=0;n<L.observers.length;n+=1){const R=L.observers[n];R.state||(R.state=A,R.pure?d.push(R):w.push(R),R.observers&&i3(R))}}function E(L){let n;if(L.sources)for(;L.sources.length;){const R=L.sources.pop(),e=L.sourceSlots.pop(),o=R.observers;if(o&&o.length){const s=o.pop(),x=R.observerSlots.pop();e<o.length&&(s.sourceSlots[x]=e,o[e]=s,R.observerSlots[e]=x)}}if(L.tOwned){for(n=L.tOwned.length-1;n>=0;n--)E(L.tOwned[n]);delete L.tOwned}if(L.owned){for(n=L.owned.length-1;n>=0;n--)E(L.owned[n]);L.owned=null}if(L.cleanups){for(n=L.cleanups.length-1;n>=0;n--)L.cleanups[n]();L.cleanups=null}L.state=0}function M3(L){return L instanceof Error?L:new Error(typeof L=="string"?L:"Unknown error",{cause:L})}function l3(L,n=m){throw M3(L)}function h(L,n){return Q(()=>L(n||{}))}function T3(L,n,R){let e=R.length,o=n.length,s=e,x=0,t=0,r=n[o-1].nextSibling,i=null;for(;x<o||t<s;){if(n[x]===R[t]){x++,t++;continue}for(;n[o-1]===R[s-1];)o--,s--;if(o===x){const l=s<e?t?R[t-1].nextSibling:R[s-t]:r;for(;t<s;)L.insertBefore(R[t++],l)}else if(s===t)for(;x<o;)(!i||!i.has(n[x]))&&n[x].remove(),x++;else if(n[x]===R[s-1]&&R[t]===n[o-1]){const l=n[--o].nextSibling;L.insertBefore(R[t++],n[x++].nextSibling),L.insertBefore(R[--s],l),n[o]=R[s]}else{if(!i){i=new Map;let a=t;for(;a<s;)i.set(R[a],a++)}const l=i.get(n[x]);if(l!=null)if(t<l&&l<s){let a=x,c=1,u;for(;++a<o&&a<s&&!((u=i.get(n[a]))==null||u!==l+c);)c++;if(c>l-t){const f=n[x];for(;t<l;)L.insertBefore(R[t++],f)}else L.replaceChild(R[t++],n[x++])}else x++;else n[x++].remove()}}}const Z="_$DX_DELEGATE";function N3(L,n,R,e={}){let o;return k3(s=>{o=s,n===document?L():y(n,L(),n.firstChild?null:void 0,R)},e.owner),()=>{o(),n.textContent=""}}function k(L,n,R,e){let o;const s=()=>{const t=document.createElement("template");return t.innerHTML=L,t.content.firstChild},x=()=>(o||(o=s())).cloneNode(!0);return x.cloneNode=x,x}function a3(L,n=window.document){const R=n[Z]||(n[Z]=new Set);for(let e=0,o=L.length;e<o;e++){const s=L[e];R.has(s)||(R.add(s),n.addEventListener(s,P3))}}function A3(L,n,R){R==null?L.removeAttribute(n):L.setAttribute(n,R)}function C3(L,n,R,e){Array.isArray(R)?(L[`$$${n}`]=R[0],L[`$$${n}Data`]=R[1]):L[`$$${n}`]=R}function I3(L,n,R={}){const e=Object.keys(n||{}),o=Object.keys(R);let s,x;for(s=0,x=o.length;s<x;s++){const t=o[s];!t||t==="undefined"||n[t]||(n3(L,t,!1),delete R[t])}for(s=0,x=e.length;s<x;s++){const t=e[s],r=!!n[t];!t||t==="undefined"||R[t]===r||!r||(n3(L,t,!0),R[t]=r)}return R}function y(L,n,R,e){if(R!==void 0&&!e&&(e=[]),typeof n!="function")return P(L,n,e,R);z(o=>P(L,n(),o,R),e)}function n3(L,n,R){const e=n.trim().split(/\s+/);for(let o=0,s=e.length;o<s;o++)L.classList.toggle(e[o],R)}function P3(L){let n=L.target;const R=`$$${L.type}`,e=L.target,o=L.currentTarget,s=r=>Object.defineProperty(L,"target",{configurable:!0,value:r}),x=()=>{const r=n[R];if(r&&!n.disabled){const i=n[`${R}Data`];if(i!==void 0?r.call(n,i,L):r.call(n,L),L.cancelBubble)return}return n.host&&typeof n.host!="string"&&!n.host._$host&&n.contains(L.target)&&s(n.host),!0},t=()=>{for(;x()&&(n=n._$host||n.parentNode||n.host););};if(Object.defineProperty(L,"currentTarget",{configurable:!0,get(){return n||document}}),L.composedPath){const r=L.composedPath();s(r[0]);for(let i=0;i<r.length-2&&(n=r[i],!!x());i++){if(n._$host){n=n._$host,t();break}if(n.parentNode===o)break}}else t();s(e)}function P(L,n,R,e,o){for(;typeof R=="function";)R=R();if(n===R)return R;const s=typeof n,x=e!==void 0;if(L=x&&R[0]&&R[0].parentNode||L,s==="string"||s==="number"){if(s==="number"&&(n=n.toString(),n===R))return R;if(x){let t=R[0];t&&t.nodeType===3?t.data!==n&&(t.data=n):t=document.createTextNode(n),R=q(L,R,e,t)}else R!==""&&typeof R=="string"?R=L.firstChild.data=n:R=L.textContent=n}else if(n==null||s==="boolean")R=q(L,R,e);else{if(s==="function")return z(()=>{let t=n();for(;typeof t=="function";)t=t();R=P(L,t,R,e)}),()=>R;if(Array.isArray(n)){const t=[],r=R&&Array.isArray(R);if(W(t,n,R,o))return z(()=>R=P(L,t,R,e,!0)),()=>R;if(t.length===0){if(R=q(L,R,e),x)return R}else r?R.length===0?L3(L,t,e):T3(L,R,t):(R&&q(L),L3(L,t));R=t}else if(n.nodeType){if(Array.isArray(R)){if(x)return R=q(L,R,e,n);q(L,R,null,n)}else R==null||R===""||!L.firstChild?L.appendChild(n):L.replaceChild(n,L.firstChild);R=n}}return R}function W(L,n,R,e){let o=!1;for(let s=0,x=n.length;s<x;s++){let t=n[s],r=R&&R[L.length],i;if(!(t==null||t===!0||t===!1))if((i=typeof t)=="object"&&t.nodeType)L.push(t);else if(Array.isArray(t))o=W(L,t,r)||o;else if(i==="function")if(e){for(;typeof t=="function";)t=t();o=W(L,Array.isArray(t)?t:[t],Array.isArray(r)?r:[r])||o}else L.push(t),o=!0;else{const l=String(t);r&&r.nodeType===3&&r.data===l?L.push(r):L.push(document.createTextNode(l))}}return o}function L3(L,n,R=null){for(let e=0,o=n.length;e<o;e++)L.insertBefore(n[e],R)}function q(L,n,R,e){if(R===void 0)return L.textContent="";const o=e||document.createTextNode("");if(n.length){let s=!1;for(let x=n.length-1;x>=0;x--){const t=n[x];if(o!==t){const r=t.parentNode===L;!s&&!x?r?L.replaceChild(o,t):L.insertBefore(o,R):r&&t.remove()}else s=!0}}else L.insertBefore(o,R);return[o]}const B3=[["1034","6166"],["3","6"]],D3=(L="")=>{let n=50;return L.split(`
+`).reduce((R,e)=>{const o=e[0]==="R"?1:-1,s=parseInt(e.slice(1),10);return n+=o*s,n%100===0&&R++,R},0)},U3=L=>{const n=(e=0,o=1)=>(e%o+o)%o;let R=50;return L.split(`
+`).reduce((e,o)=>{const s=o[0]==="R"?1:-1,x=parseInt(o.slice(1),10),t=R+s*x;return s>0?e+=Math.floor(t/100):(e-=Math.floor(t/100),n(R,100)===0&&e--,n(t,100)===0&&e++),R=n(t,100),e},0)},G3=Object.freeze(Object.defineProperty({__proto__:null,answers:B3,part1:D3,part2:U3},Symbol.toStringTag,{value:"Module"})),V3=[["12599655151","20942028255"],["1227775554","4174379265"]],K3=(L="")=>L.split(",").reduce((n,R)=>{const[e,o]=R.split("-").map(Number);for(let s=e;s<=o;s++){const x=s.toString();if(x.length%2!==0){s=10**x.length-1;continue}const t=x.slice(0,x.length/2),r=Number(t+t);if(r>o)break;r>=e&&(n+=r);const i=String(Number(t)+1);s=Number(i+i)-1}return n},0),H3=L=>L.split(",").reduce((n,R)=>{const[e,o]=R.split("-").map(Number);for(let s=e;s<=o;s++){const x=s.toString(),t=x.length;if(t<2)continue;const i=Array.from(Array(t-1),(l,a)=>a+1).filter(l=>t%l===0).flatMap(l=>{const a=x.slice(0,l),c=String(Number(a)+1);return[a.repeat(t/l),c.repeat(t/l)]}).map(Number).filter(l=>l>=s&&l<=o);if(i.length===0)break;s=Math.min(...i),n+=s}return n},0),F3=Object.freeze(Object.defineProperty({__proto__:null,answers:V3,part1:K3,part2:H3},Symbol.toStringTag,{value:"Module"})),W3=[["16973","168027167146027"],["357","3121910778619"]],Q3=(L="")=>c3(L,2),c3=(L,n=12)=>L.split(`
+`).reduce((R,e)=>{const o=[];let s=e.length-n;return e.split("").forEach(x=>{for(;s>0&&o.length>0&&o[o.length-1]<x;)o.pop(),s--;o.push(x)}),R+Number(o.slice(0,n).join(""))},0),X3=Object.freeze(Object.defineProperty({__proto__:null,answers:W3,part1:Q3,part2:c3},Symbol.toStringTag,{value:"Module"})),J3=[["1351","8345"],["13","43"]],Y3=(L="")=>{const n=L.split(`
+`).map(o=>o.split("")),R=[-1,0,1];let e=0;return n.forEach((o,s)=>{o.forEach((x,t)=>{if(x!=="@")return;let r=0;R.forEach(i=>{n[s+i]&&R.forEach(l=>{if(l===0&&i===0)return;n[s+i][t+l]==="@"&&r++})}),r<4&&e++})}),e},Z3=L=>{const n=L.split(`
+`).map(s=>s.split("").map(x=>({ch:x,nabs:0}))),R=[-1,0,1],e=[[0,0]].slice(0,0);n.forEach((s,x)=>{s.forEach((t,r)=>{t.ch==="@"&&(e.push([r,x]),R.forEach(i=>{n[x+i]&&R.forEach(l=>{l===0&&i===0||n[x+i][r+l]?.ch==="@"&&t.nabs++})}))})});let o=0;for(;e.length>0;){const[s,x]=e.pop()||[-1,-1],t=n[x][s];t.ch==="@"&&(t.nabs>=4||(t.ch=".",o++,R.forEach(r=>{n[x+r]&&R.forEach(i=>{if(i===0&&r===0)return;const l=n[x+r][s+i];l?.ch==="@"&&(l.nabs--,l.nabs<4&&e.push([s+i,x+r]))})})))}return o},n2=Object.freeze(Object.defineProperty({__proto__:null,answers:J3,part1:Y3,part2:Z3},Symbol.toStringTag,{value:"Module"})),L2=[["640","365804144481581"],["3","14"]],R2=(L="")=>{const[n,R]=L.split(`
 
 `).map(s=>s.split(`
-`)),t=n.map(s=>s.split("-").map(Number));return R.map(Number).reduce((s,r)=>{const e=t.some(([i,l])=>r>=i&&r<=l);return s+(e?1:0)},0)},t3=(L="")=>{const[n]=L.split(`
+`)),e=n.map(s=>s.split("-").map(Number));return R.map(Number).reduce((s,x)=>{const t=e.some(([r,i])=>x>=r&&x<=i);return s+(t?1:0)},0)},t2=(L="")=>{const[n]=L.split(`
 
-`).map(t=>t.split(`
-`)),R=n.map(t=>t.split("-").map(Number));for(;;){let t=!1;for(let o=0;o<R.length;o++)for(let s=o+1;s<R.length;s++){const[r,e]=R[o],[i,l]=R[s];e>=i&&l>=r&&(R[o]=[Math.min(r,i),Math.max(e,l)],R.splice(s,1),t=!0)}if(!t)break}return R.reduce((t,[o,s])=>t+(s-o+1),0)},e3=Object.freeze(Object.defineProperty({__proto__:null,answers:L3,part1:R3,part2:t3},Symbol.toStringTag,{value:"Module"})),s3=[["4648618073226","7329921182115"],["4277556","3263827"]],o3=(L="")=>{const n=L.split(`
-`).map(s=>s.trim().split(/\s+/)),R=n.pop()||["*"],t=n.map(s=>s.map(Number)),o=R.map(s=>s==="*"?1:0);return R.forEach((s,r)=>{t.forEach((e,i)=>{o[r]=s==="*"?o[r]*t[i][r]:o[r]+t[i][r]})}),o.reduce((s,r)=>s+r,0)},r3=(L="")=>{const n=L.split(`
-`),R=(n.pop()||"").trim().split(/\s+/),t=n.map(e=>e.split("")),s=t[0].map((e,i)=>t.map((l,a)=>t[a][i])).map(e=>e.join("").trim());let r=0;for(;R.length;){const e=R.pop()||"";let i=e==="*"?1:0;for(;;){const l=s.pop();if(!l)break;i=e==="*"?i*Number(l):i+Number(l)}r+=i}return r},i3=Object.freeze(Object.defineProperty({__proto__:null,answers:s3,part1:o3,part2:r3},Symbol.toStringTag,{value:"Module"})),l3=[["1518","25489586715621"],["21","40"]],a3=(L="")=>f2(L,!0),f2=(L="",n=!1)=>{const R=L.split(`
-`).map(r=>r.split("")).filter(r=>r.find(e=>e!=="."));let t=R[0].map(r=>r==="S"?1:0),o=t.slice(),s=0;return R.forEach((r,e)=>{e!==0&&(o=t.slice(),r.forEach((i,l)=>{t[l]&&i==="^"&&(s++,l>0&&(o[l-1]+=t[l]),l<r.length-1&&(o[l+1]+=t[l]),o[l]=0)}),t=o)}),n?s:t.reduce((r,e)=>r+e,0)},c3=Object.freeze(Object.defineProperty({__proto__:null,answers:l3,part1:a3,part2:f2},Symbol.toStringTag,{value:"Module"})),u3=[["32103","8133642976"],["40","25272"]],f3=(L="")=>{const n=L.split(`
-`).map(r=>r.split(",").map(Number)),t=n.length<100?10:1e3;n.sort((r,e)=>r[0]-e[0]);const o=p2((r,e)=>e[0]-r[0]);for(let r=0;r<n.length;r++){const[e,i,l]=n[r],a=Math.min(n.length,r+n.length/2);for(let c=r+1;c<a;c++){const[u,f,g]=n[c],[x,j,_]=[e-u,i-f,l-g],J=x*x+j*j+_*_;if(o.heap.length>=t){if(J>o.heap[0][0])continue;o.shift()}o.add([J,r,c])}}const s=[];for(let r=0;r<t;r++){const[e,i,l]=o.shift(),a=s.find(u=>u.has(i)),c=s.find(u=>u.has(l));if(a&&c){if(a===c)continue;for(const u of c)a.add(u);s.splice(s.indexOf(c),1)}else a?a.add(l):c?c.add(i):s.push(new Set([i,l]))}return s.sort((r,e)=>e.size-r.size),s.slice(0,3).reduce((r,e)=>r*e.size,1)},p3=(L="")=>{const n=L.split(`
-`).map(s=>s.split(",").map(Number)),R=8e3;n.sort((s,r)=>s[0]-r[0]);const t=p2((s,r)=>r[0]-s[0]);for(let s=0;s<n.length;s++){const[r,e,i]=n[s],l=Math.min(n.length,s+n.length/2);for(let a=s+1;a<l;a++){const[c,u,f]=n[a],[g,x,j]=[r-c,e-u,i-f],_=g*g+x*x+j*j;if(t.heap.length>=R){if(_>t.heap[0][0])continue;t.shift()}t.add([_,s,a])}}t.heap.sort((s,r)=>s[0]-r[0]);const o=[];for(let s=0;s<R;s++){const[r,e,i]=t.heap[s],l=o.find(c=>c.has(e)),a=o.find(c=>c.has(i));if(l&&a){if(l===a)continue;for(const c of a)l.add(c);o.splice(o.indexOf(a),1)}else l?l.add(i):a?a.add(e):o.push(new Set([e,i]));if(o.length===1&&o[0].size===n.length)return n[e][0]*n[i][0]}return-1},p2=L=>{const n=[],R=e=>{if(e===0)return;const i=e-1>>1;L(n[i],n[e])<=0||(r(n,e,i),R(i))},t=e=>{const i=e*2+1,l=i+1;let a=e;i<n.length&&L(n[i],n[a])<0&&(a=i),l<n.length&&L(n[l],n[a])<0&&(a=l),a!==e&&(r(n,e,a),t(a))},o=e=>{n.push(e),R(n.length-1)},s=()=>{const e=n[0];return n[0]=n[n.length-1],n.length--,t(0),e},r=(e,i,l)=>{const a=e[i];e[i]=e[l],e[l]=a};return{add:o,shift:s,heap:n}},d3=Object.freeze(Object.defineProperty({__proto__:null,answers:u3,part1:f3,part2:p3},Symbol.toStringTag,{value:"Module"})),g3=[["4750176210","1574684850"],["50","24"]],m3=(L="")=>{const n=L.split(`
-`).map(t=>t.split(",").map(Number));let R=0;for(let t=0;t<n.length;t++){const[o,s]=n[t];for(let r=t+1;r<n.length;r++){const[e,i]=n[r],l=Math.abs(o-e),a=Math.abs(s-i),c=(l+1)*(a+1);c>R&&(R=c)}}return R},y3=L=>{const n=L.split(`
-`).map(e=>e.split(",").map(Number)),R=[],t=[];n.forEach(([e,i],l)=>{const[a,c]=n[(l+1)%n.length];i===c&&R.push([i,Math.min(e,a),Math.max(e,a)]),e===a&&t.push([e,Math.min(i,c),Math.max(i,c)])}),R.sort((e,i)=>e[0]-i[0]),t.sort((e,i)=>e[0]-i[0]);const o=(e=0,i=0,l=0,a=0)=>{for(let c=0;c<t.length;c++){const[u,f,g]=t[c];if(!(u<=e)){if(u>=i)break;if(l<g&&a>f)return!0}}for(let c=0;c<R.length;c++){const[u,f,g]=R[c];if(!(u<=l)){if(u>=a)break;if(e<g&&i>f)return!0}}return!1},s=(e=0,i=0)=>{const l=[0,0];for(let a=0;a<t.length;a++){const[c,u,f]=t[a];e!==c&&(i<=u||i>=f||(l[e<c?0:1]+=1))}return l.every(a=>a%2===1)};let r=0;for(let e=0;e<n.length;e++){const[i,l]=n[e];for(let a=e+1;a<n.length;a++){const[c,u]=n[a],f=(Math.abs(i-c)+1)*(Math.abs(l-u)+1);if(f<=r)continue;const g=Math.min(i,c),x=Math.max(i,c),j=Math.min(l,u),_=Math.max(l,u);o(g,x,j,_)||s(i+c>>1,l+u>>1)&&(r=f)}}return r},b3=Object.freeze(Object.defineProperty({__proto__:null,answers:g3,part1:m3,part2:y3},Symbol.toStringTag,{value:"Module"})),h3=[["488","?"],["7","33"]],v3=(L="")=>{const n=L.split(`
-`).map(t=>{const o=t.split("[")[1].split("]")[0],s=t.split("(").map(r=>r.split(")")[0]).slice(1).map(r=>r.split(",").map(Number));return{target:o,buts:s}}),R=(t,o)=>{const s=".".repeat(t.length);if(t===s)return 0;const r=new Set(s);let e=[s],i=0;for(;e.length;){i++;const l=[];for(;e.length;){const a=e.pop()?.split("")||["."];for(const c of o){const u=a.slice();c.forEach(g=>{u[g]=u[g]==="."?"#":"."});const f=u.join("");if(f===t)return i;r.has(f)||(r.add(f),l.push(f))}}e=l}return-1};return n.reduce((t,{target:o,buts:s})=>t+R(o,s),0)},w3=(L="")=>-1,x3=Object.freeze(Object.defineProperty({__proto__:null,answers:h3,part1:v3,part2:w3},Symbol.toStringTag,{value:"Module"})),j3=[["500","287039700129600"],["5","-1"],["-1","2"]],O=(L="",n="you",R="out")=>{const t={};if(L.split(`
-`).forEach(r=>{const[e,i]=r.split(": ");t[e]||(t[e]={name:e,next:[],prev:[],data:{}});for(const l of i.split(" "))t[l]||(t[l]={name:l,next:[],prev:[],data:{}}),t[e].next.push(t[l]),t[l].prev.push(t[e])}),!t[n]||!t[R])return-1;const o=(r,e,i)=>{Object.values(t).forEach(a=>a.data.visited=!1);const l=[t[r]];for(;l.length;){const a=l.shift()||"";if(!a||a.data.visited)continue;a.data.visited=!0,i(a);const c=e===1?a.next:a.prev;l.push(...c)}};Object.values(t).forEach(r=>r.data.ct=0),o(n,1,r=>r.data.ct+=1),o(R,-1,r=>r.data.ct+=1),t[R].data.paths=1;const s=(r,e)=>e.data.ct<2?r:(e.data.paths>0||(e.data.paths=e.next.reduce(s,0)),r+e.data.paths);return s(0,t[n])},_3=(L,n="svr",R="out")=>{const t=["fft","dac"];let o=O(L,...t);return o===-1&&(t.reverse(),o=O(L,...t)),O(L,n,t[0])*o*O(L,t[1],R)},z3=Object.freeze(Object.defineProperty({__proto__:null,answers:j3,part1:O,part2:_3},Symbol.toStringTag,{value:"Module"})),k3=Object.freeze(Object.defineProperty({__proto__:null},Symbol.toStringTag,{value:"Module"})),q3=`L68
+`).map(e=>e.split(`
+`)),R=n.map(e=>e.split("-").map(Number));for(;;){let e=!1;for(let o=0;o<R.length;o++)for(let s=o+1;s<R.length;s++){const[x,t]=R[o],[r,i]=R[s];t>=r&&i>=x&&(R[o]=[Math.min(x,r),Math.max(t,i)],R.splice(s,1),e=!0)}if(!e)break}return R.reduce((e,[o,s])=>e+(s-o+1),0)},e2=Object.freeze(Object.defineProperty({__proto__:null,answers:L2,part1:R2,part2:t2},Symbol.toStringTag,{value:"Module"})),s2=[["4648618073226","7329921182115"],["4277556","3263827"]],x2=(L="")=>{const n=L.split(`
+`).map(s=>s.trim().split(/\s+/)),R=n.pop()||["*"],e=n.map(s=>s.map(Number)),o=R.map(s=>s==="*"?1:0);return R.forEach((s,x)=>{e.forEach((t,r)=>{o[x]=s==="*"?o[x]*e[r][x]:o[x]+e[r][x]})}),o.reduce((s,x)=>s+x,0)},o2=(L="")=>{const n=L.split(`
+`),R=(n.pop()||"").trim().split(/\s+/),e=n.map(t=>t.split("")),s=e[0].map((t,r)=>e.map((i,l)=>e[l][r])).map(t=>t.join("").trim());let x=0;for(;R.length;){const t=R.pop()||"";let r=t==="*"?1:0;for(;;){const i=s.pop();if(!i)break;r=t==="*"?r*Number(i):r+Number(i)}x+=r}return x},r2=Object.freeze(Object.defineProperty({__proto__:null,answers:s2,part1:x2,part2:o2},Symbol.toStringTag,{value:"Module"})),i2=[["1518","25489586715621"],["21","40"]],l2=(L="")=>u3(L,!0),u3=(L="",n=!1)=>{const R=L.split(`
+`).map(x=>x.split("")).filter(x=>x.find(t=>t!=="."));let e=R[0].map(x=>x==="S"?1:0),o=e.slice(),s=0;return R.forEach((x,t)=>{t!==0&&(o=e.slice(),x.forEach((r,i)=>{e[i]&&r==="^"&&(s++,i>0&&(o[i-1]+=e[i]),i<x.length-1&&(o[i+1]+=e[i]),o[i]=0)}),e=o)}),n?s:e.reduce((x,t)=>x+t,0)},a2=Object.freeze(Object.defineProperty({__proto__:null,answers:i2,part1:l2,part2:u3},Symbol.toStringTag,{value:"Module"})),c2=[["32103","8133642976"],["40","25272"]],u2=(L="")=>{const n=L.split(`
+`).map(x=>x.split(",").map(Number)),e=n.length<100?10:1e3;n.sort((x,t)=>x[0]-t[0]);const o=f3((x,t)=>t[0]-x[0]);for(let x=0;x<n.length;x++){const[t,r,i]=n[x],l=Math.min(n.length,x+n.length/2);for(let a=x+1;a<l;a++){const[c,u,f]=n[a],[g,v,b]=[t-c,r-u,i-f],N=g*g+v*v+b*b;if(o.heap.length>=e){if(N>o.heap[0][0])continue;o.shift()}o.add([N,x,a])}}const s=[];for(let x=0;x<e;x++){const[t,r,i]=o.shift(),l=s.find(c=>c.has(r)),a=s.find(c=>c.has(i));if(l&&a){if(l===a)continue;for(const c of a)l.add(c);s.splice(s.indexOf(a),1)}else l?l.add(i):a?a.add(r):s.push(new Set([r,i]))}return s.sort((x,t)=>t.size-x.size),s.slice(0,3).reduce((x,t)=>x*t.size,1)},f2=(L="")=>{const n=L.split(`
+`).map(s=>s.split(",").map(Number)),R=8e3;n.sort((s,x)=>s[0]-x[0]);const e=f3((s,x)=>x[0]-s[0]);for(let s=0;s<n.length;s++){const[x,t,r]=n[s],i=Math.min(n.length,s+n.length/2);for(let l=s+1;l<i;l++){const[a,c,u]=n[l],[f,g,v]=[x-a,t-c,r-u],b=f*f+g*g+v*v;if(e.heap.length>=R){if(b>e.heap[0][0])continue;e.shift()}e.add([b,s,l])}}e.heap.sort((s,x)=>s[0]-x[0]);const o=[];for(let s=0;s<R;s++){const[x,t,r]=e.heap[s],i=o.find(a=>a.has(t)),l=o.find(a=>a.has(r));if(i&&l){if(i===l)continue;for(const a of l)i.add(a);o.splice(o.indexOf(l),1)}else i?i.add(r):l?l.add(t):o.push(new Set([t,r]));if(o.length===1&&o[0].size===n.length)return n[t][0]*n[r][0]}return-1},f3=L=>{const n=[],R=t=>{if(t===0)return;const r=t-1>>1;L(n[r],n[t])<=0||(x(n,t,r),R(r))},e=t=>{const r=t*2+1,i=r+1;let l=t;r<n.length&&L(n[r],n[l])<0&&(l=r),i<n.length&&L(n[i],n[l])<0&&(l=i),l!==t&&(x(n,t,l),e(l))},o=t=>{n.push(t),R(n.length-1)},s=()=>{const t=n[0];return n[0]=n[n.length-1],n.length--,e(0),t},x=(t,r,i)=>{const l=t[r];t[r]=t[i],t[i]=l};return{add:o,shift:s,heap:n}},p2=Object.freeze(Object.defineProperty({__proto__:null,answers:c2,part1:u2,part2:f2},Symbol.toStringTag,{value:"Module"})),d2=[["4750176210","1574684850"],["50","24"]],m2=(L="")=>{const n=L.split(`
+`).map(e=>e.split(",").map(Number));let R=0;for(let e=0;e<n.length;e++){const[o,s]=n[e];for(let x=e+1;x<n.length;x++){const[t,r]=n[x],i=Math.abs(o-t),l=Math.abs(s-r),a=(i+1)*(l+1);a>R&&(R=a)}}return R},g2=L=>{const n=L.split(`
+`).map(t=>t.split(",").map(Number)),R=[],e=[];n.forEach(([t,r],i)=>{const[l,a]=n[(i+1)%n.length];r===a&&R.push([r,Math.min(t,l),Math.max(t,l)]),t===l&&e.push([t,Math.min(r,a),Math.max(r,a)])}),R.sort((t,r)=>t[0]-r[0]),e.sort((t,r)=>t[0]-r[0]);const o=(t=0,r=0,i=0,l=0)=>{for(let a=0;a<e.length;a++){const[c,u,f]=e[a];if(!(c<=t)){if(c>=r)break;if(i<f&&l>u)return!0}}for(let a=0;a<R.length;a++){const[c,u,f]=R[a];if(!(c<=i)){if(c>=l)break;if(t<f&&r>u)return!0}}return!1},s=(t=0,r=0)=>{const i=[0,0];for(let l=0;l<e.length;l++){const[a,c,u]=e[l];t!==a&&(r<=c||r>=u||(i[t<a?0:1]+=1))}return i.every(l=>l%2===1)};let x=0;for(let t=0;t<n.length;t++){const[r,i]=n[t];for(let l=t+1;l<n.length;l++){const[a,c]=n[l],u=(Math.abs(r-a)+1)*(Math.abs(i-c)+1);if(u<=x)continue;const f=Math.min(r,a),g=Math.max(r,a),v=Math.min(i,c),b=Math.max(i,c);o(f,g,v,b)||s(r+a>>1,i+c>>1)&&(x=u)}}return x},y2=Object.freeze(Object.defineProperty({__proto__:null,answers:d2,part1:m2,part2:g2},Symbol.toStringTag,{value:"Module"})),h2=[["488","18771"],["7","33"]],v2=(L="")=>{const n=L.split(`
+`).map(o=>{const s=(/\[(.+)\]/.exec(o)?.[1]||"").split("").map(t=>t==="#"?1:0),x=o.split("(").slice(1).map(t=>t.split(")")[0]).map(t=>t.split(",").map(Number));return{target:s,buts:x}}),R=(o,s)=>s.forEach(x=>o[x]++),e=(o,s,x=0)=>{const t=x+1<s.length,r=t?e(o,s,x+1):1/0;R(o,s[x]);const i=o.every(a=>a%2===0)?1:1/0,l=t?1+e(o,s,x+1):1/0;return R(o,s[x]),Math.min(r,i,l)};return n.reduce((o,{target:s,buts:x})=>o+e(s,x),0)},b2=(L="")=>{const n=L.split(`
+`).map(x=>{const t=(/\{(.+)\}/.exec(x)?.[1]||"").split(",").map(Number),r=x.split("(").slice(1).map(i=>i.split(")")[0]).map(i=>i.split(",").map(Number));return{target:t,buts:r}}),R=({target:x,buts:t})=>{const r=x.map((l,a)=>t.filter(c=>c.includes(a))),i=r.findIndex(l=>l.length===1);if(i>=0){const l=r[i][0],a=x[i];return l.forEach(c=>x[c]-=a),t.splice(t.indexOf(l),1),a+R({target:x,buts:t})}for(let l=0;l<r.length;l++){const a=r[l],c=a.map(f=>Math.min(...f.map(g=>x[g]))),u=c.reduce((f,g)=>f+g,0);for(let f=0;f<a.length;f++){const g=a[f],v=u-c[f];if(x[l]>v){const b=x[l]-v;return g.forEach(N=>x[N]-=b),b+R({target:x,buts:t})}}}return e={},o(x,t)};let e={};const o=(x,t)=>{if(x.every(i=>i===0))return 0;const r=x.join(",");return e[r]!==void 0?e[r]:e[r]=s(x,t)},s=(x,t,r=0)=>{const i=[];if(x.map(a=>a%2).every(a=>a===0)){const a=x.map(c=>c/2);i.push(2*o(a,t))}return r>=t.length?Math.min(...i,1/0):(i.push(s(x,t,r+1)),t[r].forEach(a=>x[a]--),x.every(a=>a===0)&&i.push(1),x.every(a=>a>=0)&&i.push(1+s(x,t,r+1)),t[r].forEach(a=>x[a]++),Math.min(...i))};return n.reduce((x,t)=>x+R(t),0)},w2=Object.freeze(Object.defineProperty({__proto__:null,answers:h2,part1:v2,part2:b2},Symbol.toStringTag,{value:"Module"})),j2=[["500","287039700129600"],["5","-1"],["-1","2"]],O=(L="",n="you",R="out")=>{const e={};if(L.split(`
+`).forEach(x=>{const[t,r]=x.split(": ");e[t]||(e[t]={name:t,next:[],prev:[],data:{}});for(const i of r.split(" "))e[i]||(e[i]={name:i,next:[],prev:[],data:{}}),e[t].next.push(e[i]),e[i].prev.push(e[t])}),!e[n]||!e[R])return-1;const o=(x,t,r)=>{Object.values(e).forEach(l=>l.data.visited=!1);const i=[e[x]];for(;i.length;){const l=i.shift()||"";if(!l||l.data.visited)continue;l.data.visited=!0,r(l);const a=t===1?l.next:l.prev;i.push(...a)}};Object.values(e).forEach(x=>x.data.ct=0),o(n,1,x=>x.data.ct+=1),o(R,-1,x=>x.data.ct+=1),e[R].data.paths=1;const s=(x,t)=>t.data.ct<2?x:(t.data.paths>0||(t.data.paths=t.next.reduce(s,0)),x+t.data.paths);return s(0,e[n])},_2=(L,n="svr",R="out")=>{const e=["fft","dac"];let o=O(L,...e);return o===-1&&(e.reverse(),o=O(L,...e)),O(L,n,e[0])*o*O(L,e[1],R)},z2=Object.freeze(Object.defineProperty({__proto__:null,answers:j2,part1:O,part2:_2},Symbol.toStringTag,{value:"Module"})),k2=[["403","1"],["2","1"]],q2=(L="")=>{const n=L.split(`
+`),e=Array.from(Array(6),(s,x)=>n.slice(x*5+1,x*5+4)).map(s=>s.join("").split("#").length-1);return n.slice(30).map(s=>{const[x,t]=s.split(":"),r=x.split("x").map(Number),i=t.trim().split(" ").map(Number),l=i.map((c,u)=>c*e[u]).reduce((c,u)=>c+u,0),a=r[0]*r[1]/l;return{loc:r,counts:i,tot:l,ratio:a}}).filter(s=>s.ratio>1.2).length},S2=()=>1,$2=Object.freeze(Object.defineProperty({__proto__:null,answers:k2,part1:q2,part2:S2},Symbol.toStringTag,{value:"Module"})),O2=`L68
 L30
 R48
 L5
@@ -27,7 +29,7 @@ L55
 L1
 L99
 R14
-L82`,S3=`R9
+L82`,E2=`R9
 L8
 L26
 R45
@@ -4212,12 +4214,12 @@ R49
 L12
 L20
 L25
-R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
+R16`,M2=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 1698522-1698528,446443-446449,38593856-38593862,565653-565659,
-824824821-824824827,2121212118-2121212124`,O3="3335355312-3335478020,62597156-62638027,94888325-95016472,4653-6357,54-79,1-19,314-423,472-650,217886-298699,58843645-58909745,2799-3721,150748-178674,9084373-9176707,1744-2691,17039821-17193560,2140045-2264792,743-1030,6666577818-6666739950,22946-32222,58933-81008,714665437-714803123,9972438-10023331,120068-142180,101-120,726684-913526,7575737649-7575766026,8200-11903,81-96,540949-687222,35704-54213,991404-1009392,335082-425865,196-268,3278941-3383621,915593-991111,32-47,431725-452205",E3=`987654321111111
+824824821-824824827,2121212118-2121212124`,T2="3335355312-3335478020,62597156-62638027,94888325-95016472,4653-6357,54-79,1-19,314-423,472-650,217886-298699,58843645-58909745,2799-3721,150748-178674,9084373-9176707,1744-2691,17039821-17193560,2140045-2264792,743-1030,6666577818-6666739950,22946-32222,58933-81008,714665437-714803123,9972438-10023331,120068-142180,101-120,726684-913526,7575737649-7575766026,8200-11903,81-96,540949-687222,35704-54213,991404-1009392,335082-425865,196-268,3278941-3383621,915593-991111,32-47,431725-452205",N2=`987654321111111
 811111111111119
 234234234234278
-818181911112111`,M3=`2412122322321222252222221622332222221521261431723112634211232223232132154222214222211332229222231222
+818181911112111`,A2=`2412122322321222252222221622332222221521261431723112634211232223232132154222214222211332229222231222
 2465412223443523142221321262346323634242443342334242423242224362522642253213243122355223222254312232
 3332242442321436631424453283363222444423355334373183244397472932323244521266474444834444476564344644
 5533778667855399367659688956396486549458366658763989334992855699859653338632354754294593558359588565
@@ -4416,7 +4418,7 @@ R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 4235224232323232123333423222242122322212222423133224223322112222222222222433223222231333342122112224
 8417424333342443624824422362314223134336413224433144262533233559248235249334362332333442333242522562
 5443335343234432453532334333333443434242514335441344423544443453434444344255444341442234743244242342
-2221235222332215222222222212722222334222723221322222522222122222423212222222122124353332123442222223`,T3=`..@@.@@@@.
+2221235222332215222222222212722222334222723221322222522222122222423212222222122124353332123442222223`,C2=`..@@.@@@@.
 @@@.@.@.@@
 @@@@@.@.@@
 @.@@@@..@.
@@ -4425,7 +4427,7 @@ R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 .@.@.@.@@@
 @.@@@.@@@@
 .@@@@@@@@.
-@.@.@@@.@.`,C3=`@@@@@@@@.@.@@@@.@@@@@@@@..@..@@@@.@.@.@..@@.@@@@@.@@.@@@@@@@@.....@.@.@..@@@.@@@@@@@.@@......@.@@@@...@.@@.@.@...@@@.@....@.@@@@..@@@.@@
+@.@.@@@.@.`,I2=`@@@@@@@@.@.@@@@.@@@@@@@@..@..@@@@.@.@.@..@@.@@@@@.@@.@@@@@@@@.....@.@.@..@@@.@@@@@@@.@@......@.@@@@...@.@@.@.@...@@@.@....@.@@@@..@@@.@@
 @..@.@@@@@@@.@@@.@@@@@@.@@@@@@.@...@....@.@.@.@....@@@...@..@..@@@..@@@@@@@@@@.@..@.@..@.@.@@@.@.@@@.@@.@@@...@@.@@@.@@@@.@@.@.@@@@.@@.@
 @.@@.@.@..@@@..@.@@@@@.@.@@.@@.@.@@...@.@.@.@@@@.@@@.@@@@@@@@@@@@.@@..@@.@@@@@@@..@@.@.@@@.@@..@@@@@@@.@@@.@..@@@@@@.@@@@..@@.@.@@..@@.@
 @@..@@@@@..@@@@@..@@@.@@.@@.@@@@@@@.@@.@@.@@..@.@@.@..@.@@...@@@@@@@@.@@@.@@@.@@@@@@.@@@.@..@..@..@.@@.@.@@@@.@@@.....@@..@@...@@@.@@.@@
@@ -4560,7 +4562,7 @@ R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 @@@.@@@@@@@@@@.@@.@@..@...@.@..@.@...@@.@..@@@@@..@.@@.@@@@@@@@...@@@@.@.@.@@@..@@.@...@@.@@@@.@@@@@@@@@..@..@.@.@.@.@@.@..@@...@.@.@...
 .@@@@@@@..@.@..@@@.@@@@@..@@.@@.@@@.@@@@@@@.@@@@@@@@..@@@@.@@.@@.@.@@..@@@@.@@@@.@@@@@..@@@@@@@...@@@@.@@.@@@@.@@@..@@@@@@..@@@@..@..@@@
 .@..@@@@@@.@....@@.@@@@@..@@@@..@@.@.@@@@...@@@@@@.@@@.@.@..@@@@.@@@@@...@@@@@@.@..@.@@.@.@@.@...@..@@@@@.@@@@@@.@@..@..@@@@@@@@@..@.@.@
-@@@@@@@@@@@@.....@..@@@@@.@..@@.@.@.@.@@@.@.@@..@..@@.@@@@..@.@@@@@..@@@@@@..@.@@.@@.@@@@@@@@.@....@.@@@@@.@...@.@@@.@.@.@.@@@@@..@@@@@@`,A3=`3-5
+@@@@@@@@@@@@.....@..@@@@@.@..@@.@.@.@.@@@.@.@@..@..@@.@@@@..@.@@@@@..@@@@@@..@.@@.@@.@@@@@@@@.@....@.@@@@@.@...@.@@@.@.@.@.@@@@@..@@@@@@`,P2=`3-5
 10-14
 16-20
 12-18
@@ -4570,7 +4572,7 @@ R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 8
 11
 17
-32`,N3=`101012613040912-105113606231378
+32`,B2=`101012613040912-105113606231378
 112873707283-2588072976190
 143005819408722-145401547845947
 384013134608808-390143577258709
@@ -5770,14 +5772,14 @@ R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 100513845410474
 433971256957957
 311407025087900
-421796250398427`,P3=`123 328  51 64 
+421796250398427`,D2=`123 328  51 64 
  45 64  387 23 
   6 98  215 314
-*   +   *   +  `,I3=`919 534 157 2  79 97 34  8932 5   51  6 289  18 939 34  187 51  9   23 66   6  14 68  6 2111 284 629 179 322 4  43 6232 852  468 498 84 88   29 133 189 9   8    7 7  37     8 6   8    3178 572  46 29 94  799 3   592 8   682  65 154 64  4  124 52 91 343 517 42 32 748 13 7   465 878 92 93 74  49 82  97 9562 96 845 857 67 26 76 5729 88 891 612 27 519  37 1359 4   95 9295 43 145 711 127  569 246 87 617 79 46  6 88 57 91 34 51 936 946   9 611 89  4 526 32 72 96  82 324 36 72 11 6462 168 225 75  6 288 75 247  1  9 16 6   523 43 78  3 23 72  9  27   34 757 62  98 32 9151 48  6 28 5432 36 56   83  25  2  1 193 5     9 2     39 93 6968 81 73 3185 5  28 4343 72 886 9   3544 96 3    4 31 416 928 14  18  3 7616 439 816 238 94 28 96 978 6  39  32 29 91 5  691 436 354 84   66  776 773 6  76 2137 312   6 37 1298 76   2 69 68 24 688 62 51 81  26  8546 89  77 93 68 928 9738 541 355 9379 46 88   3191  8 16 84  32   31 431 39 284  9 46 283 9942 54 84   429 887 435 37 86 95 58 51   17   38 591 19   4 16 464 289 345 512 32  353 683 13    55 12   93 358 43 41  28 7   67 35 9985 4144 819  11 751 6547 675  12 5331  8 484  94 97 35 948 127 12 758 4   68 447 891 329 563  99 4662   9 12 72 544  4 99  793 4   489   8   32 3  81  29 4   88 813 363 157 84  2757 949 8493 8586 38  22 37 976 55 253 896 22 9632 6  413 82   1 23 7   6 312 23   674 954 943 393 27 2  97 749  6 17 73 21 51  872  71 231 174 25  489 64 98 25  9  1 8    455   4 142  228 8  18 63 5  71  19 7  151 12  86 11 6     2 1  93  39 15  3    525 58  2  64 6  12 966 179 8  53 325 64 2  17 8329 633 77 8    44    7 298 89 74  1 127 913  6 92 46  18  63 794 647 31 4    2 779 4271 499 653  5 97 312 4  5383 32 28 18 19 62 9  95 2   33 4266 936   2 9  934 689  25 412 51 97 1435 434  59   91 698 97   479 71   34 7     4 968 4461 86 55 948 518 181 3    7 41 248 9742 1   38 2139 713 512 671 4   31 119 4  45   47 31 334 27 3844  39 27 16  44 663 41 25  1 989 512 55   24 17  68 219 181  92 76  96 438 863 747 12 95 67 26 73   21  33 37 733 723 56   8932 382 786 61 9927 2   63 6    37 82 85 894 431 755   29 4  47 722  96 323 7   57 318 77 59 52  7465 76  28 16 9  328 97  735 38 45 829 6  792 9  29   23 584  654 3984 5   13 6   931 7363  13   1 4   7 254    1 743 59  916  6 632  586    3 15 63 324 76 347 22 358 751 21 6156 55 248 64  7128  3 7177 754 822 4752 348 278 1692 8872 79 8459 77 89 359 7  216 592  475 16  728   1 567 722 45   9   5 7687 265 931 35 7235 52 46  24 242  559  76 698 4  71  4 83   7 915 8635 538 737 281 258 4116 294 51  54 99 163 158 423 68 412  81 79  38 1973 3799 12 14   8 12 78  64 85 86 468 69 35  79 171 5296   3   5  172  9  6 823 39 2824 93 242 94  3 792  625  71  5 96     1 138 4    568 51 98 35   5 423 3657   83 11   5  921 54 448   9 98 643  2 747 91 54 63 385 4632 4   62  53 47  9 727 4118 596 89 58  28 64 5919 73 2   32 297 2  94 42 38 98 775 81 28  766 41 495 345 5    6491 45 727 471 6276 51   415 81 8817 92   8 466 65 54  2  976   3 1657  3 16 1  19 98  3 5598 63 393   8 551 686 93 47  7 229 915 1649 468  9  194 74 32 6431   36 397 58   472 474  1 84 83 67 8   75 589 558 98 38 49  54 248 17 99 27 88   3255 27 95 69  3337 3968 48   72 931 184 517 57 957 3   7 89 43  39   38 39  1   32  78 3  812 516 76 724 12 97 455  12 314 27 436 878 369 8  1741 5  36   21 18 69 77 1861  94 23 55 7632 2233 54 39 8  1964 13  41 729 442 5263  88 68 396 24 912 162 74  342 91   85 1496 47 32   6 77  45  7 4  445 5  589   3 53 79 669 54 48  5  58  181 9582 49   88  4 592 2  923 13 84   65 428  6 5611 139 85 79  3 87  85  75 444 942  2  1   19  2 66 56  5 4379 51 6792   15  568  7  5 33 83 72  4238 14 744 4367 619 255 6618 452 249 84 24 1    395 5   9  75 65 91  1  6 4   2629 2   549 34 85 3421 19 819 888 76 99 965 444 7545 61 1    23 166 73
+*   +   *   +  `,U2=`919 534 157 2  79 97 34  8932 5   51  6 289  18 939 34  187 51  9   23 66   6  14 68  6 2111 284 629 179 322 4  43 6232 852  468 498 84 88   29 133 189 9   8    7 7  37     8 6   8    3178 572  46 29 94  799 3   592 8   682  65 154 64  4  124 52 91 343 517 42 32 748 13 7   465 878 92 93 74  49 82  97 9562 96 845 857 67 26 76 5729 88 891 612 27 519  37 1359 4   95 9295 43 145 711 127  569 246 87 617 79 46  6 88 57 91 34 51 936 946   9 611 89  4 526 32 72 96  82 324 36 72 11 6462 168 225 75  6 288 75 247  1  9 16 6   523 43 78  3 23 72  9  27   34 757 62  98 32 9151 48  6 28 5432 36 56   83  25  2  1 193 5     9 2     39 93 6968 81 73 3185 5  28 4343 72 886 9   3544 96 3    4 31 416 928 14  18  3 7616 439 816 238 94 28 96 978 6  39  32 29 91 5  691 436 354 84   66  776 773 6  76 2137 312   6 37 1298 76   2 69 68 24 688 62 51 81  26  8546 89  77 93 68 928 9738 541 355 9379 46 88   3191  8 16 84  32   31 431 39 284  9 46 283 9942 54 84   429 887 435 37 86 95 58 51   17   38 591 19   4 16 464 289 345 512 32  353 683 13    55 12   93 358 43 41  28 7   67 35 9985 4144 819  11 751 6547 675  12 5331  8 484  94 97 35 948 127 12 758 4   68 447 891 329 563  99 4662   9 12 72 544  4 99  793 4   489   8   32 3  81  29 4   88 813 363 157 84  2757 949 8493 8586 38  22 37 976 55 253 896 22 9632 6  413 82   1 23 7   6 312 23   674 954 943 393 27 2  97 749  6 17 73 21 51  872  71 231 174 25  489 64 98 25  9  1 8    455   4 142  228 8  18 63 5  71  19 7  151 12  86 11 6     2 1  93  39 15  3    525 58  2  64 6  12 966 179 8  53 325 64 2  17 8329 633 77 8    44    7 298 89 74  1 127 913  6 92 46  18  63 794 647 31 4    2 779 4271 499 653  5 97 312 4  5383 32 28 18 19 62 9  95 2   33 4266 936   2 9  934 689  25 412 51 97 1435 434  59   91 698 97   479 71   34 7     4 968 4461 86 55 948 518 181 3    7 41 248 9742 1   38 2139 713 512 671 4   31 119 4  45   47 31 334 27 3844  39 27 16  44 663 41 25  1 989 512 55   24 17  68 219 181  92 76  96 438 863 747 12 95 67 26 73   21  33 37 733 723 56   8932 382 786 61 9927 2   63 6    37 82 85 894 431 755   29 4  47 722  96 323 7   57 318 77 59 52  7465 76  28 16 9  328 97  735 38 45 829 6  792 9  29   23 584  654 3984 5   13 6   931 7363  13   1 4   7 254    1 743 59  916  6 632  586    3 15 63 324 76 347 22 358 751 21 6156 55 248 64  7128  3 7177 754 822 4752 348 278 1692 8872 79 8459 77 89 359 7  216 592  475 16  728   1 567 722 45   9   5 7687 265 931 35 7235 52 46  24 242  559  76 698 4  71  4 83   7 915 8635 538 737 281 258 4116 294 51  54 99 163 158 423 68 412  81 79  38 1973 3799 12 14   8 12 78  64 85 86 468 69 35  79 171 5296   3   5  172  9  6 823 39 2824 93 242 94  3 792  625  71  5 96     1 138 4    568 51 98 35   5 423 3657   83 11   5  921 54 448   9 98 643  2 747 91 54 63 385 4632 4   62  53 47  9 727 4118 596 89 58  28 64 5919 73 2   32 297 2  94 42 38 98 775 81 28  766 41 495 345 5    6491 45 727 471 6276 51   415 81 8817 92   8 466 65 54  2  976   3 1657  3 16 1  19 98  3 5598 63 393   8 551 686 93 47  7 229 915 1649 468  9  194 74 32 6431   36 397 58   472 474  1 84 83 67 8   75 589 558 98 38 49  54 248 17 99 27 88   3255 27 95 69  3337 3968 48   72 931 184 517 57 957 3   7 89 43  39   38 39  1   32  78 3  812 516 76 724 12 97 455  12 314 27 436 878 369 8  1741 5  36   21 18 69 77 1861  94 23 55 7632 2233 54 39 8  1964 13  41 729 442 5263  88 68 396 24 912 162 74  342 91   85 1496 47 32   6 77  45  7 4  445 5  589   3 53 79 669 54 48  5  58  181 9582 49   88  4 592 2  923 13 84   65 428  6 5611 139 85 79  3 87  85  75 444 942  2  1   19  2 66 56  5 4379 51 6792   15  568  7  5 33 83 72  4238 14 744 4367 619 255 6618 452 249 84 24 1    395 5   9  75 65 91  1  6 4   2629 2   549 34 85 3421 19 819 888 76 99 965 444 7545 61 1    23 166 73
  81 324 95  3  14 48 98  6635 447 19 78 446 336 86  62  379 42  145 65 33  99 214 47 38 6297 524 991 928 911 1  69  157 5436 385 133 81 329 181 969 699 35 36  278 6  16   253 5   9744 1247 324 214 12 842 395 26  381 4   492  52 693 661 7  935 18 5  614 969 62 85 718 27 4   178 533 69 17 38  32 58 649  397 27 244 529 21 69 96 5123 41 539 235 74 343  95 2155 34  79 5875 29 288  51 319 6489 974 22 152 94 85 64 57 33 28 15  1 996 2214  8 572 68  2  22 77 21 576 94 955 67 42 91  483 463 988 47 74 287  1 496 74  3  2 77   97 32 96  4 58 824 42 587  75 863 75 696 23 1856 92  7 79 1374 32 2233 21  47  9 53 663 77  478 95  4979 31 4668 27 17  894 31 86  957 19 712 77  7664 25 83 224 19  92 531 323 85 45 6292 953 45  419  9 18 51 314 3  11  83 62 99 7  978 279 367 1   913  591 161 1  82 9621 874   8 47 2923 99  83 41 48 15 173 36 94 844 827 5554 25  26 24 58 178 688  595 773 6295 54 636  7284 57 86 23  9248 92 969 62 586 99 99 853 7744 71 317  624 559 353  5 76 55 34 56  487   54 823 43 346  8 985 638 459 233 49 9936 134 61   243 1673 61 636 88 75 966 87  23 25 519  5888 717 788 129 5965 1534 31 5824  5 465  81 54 16 365 411 79 478 36  82 137 556 55  397 111 7688  35 57 91 322 26 87  173 12  695 533 5279 7  68  95 566 98 272 759 253 934 3731 614 2267 8175 12 615 79  82 63 582 521 27 9847 1  345 88  31 37 15  7 754 5824  12 198 446 273 75 49 62 883 15 88 83 51 95  436  23 934 812 58  345 91 63 32  6  1 45   471   1 727  212 91 95 76 6  37 819 4  857 55 936 66 57    1 11 25  92 889 46   948 84  29 76 15 69 433 847 85 31 652 83 84 54 4519 722 64 89 8592   78 122 79  1  2 272 29  51 26 26  44  17 276 439 75 3    3 381  814 422 664  5 32 362 91 7855 25 68 13 61  2 81 51 45 189 8449 627  61 1  835 195 344 623 98 92 8141 423  93  379 328 7367 873 6662 54 793  85 318 2211 49 25 891 962 834 1   83 52 399  679 42  34 9819 638 429 154 38  18 757 3  97  433 15 983 99 1499  27 42 89  92 191 62 41  7 422 854 83  434 923 73 652 862 151 532 47 357 999 343 18 69 74 98 13 8576 659 94 736 748 5585 3551 389 434 97 9324 6    8 54   61 88 77 29  822 362  647 48 99 178 137 513 87  17 518 43 33 69  8958 34  71 93 2  119 75  49  48 12 878 78 846 99 63   78 991  445 9138 666 33 395 149 8957 396 725 55  2 854   43 932 426 33  44 163  453  817 33 87 39  56 158 64 141 895 13 4469 74 932 97  3943 45 3174 171 578 9314 191  22 1342 3992 31 2253 23 57 441 11 984 711 2457 46  879  45 221 21  52  23   3 5147 941 399 19 4395 93 47 352 165 1946  71 548 32 16 89 76  51 211 3715  84 943 374 281 1627 394 49  97 91 52   44 118 12 541 152 64  13 1524 6293 64 41  64 99 49 147 54 84 748 16 97  85 572 1142   2 537 4252 45  8 663 28 4474 73 854 48 82 177 9631 876  4 1944 252 735 92  8753 11 63 59 739 138 1553   35 27   8  419 37 971  32 68  53  7 356 66 67 17 676 2622 99  28  13 98 88 412 4822 652 27 81  11 27 3282 83 96  41 987 17 19 73 56 75 189 61 18 5849 87 252 191 798  5888 98 419 776 4532 75   497 84 4185 55 747 359 69 388 71 757  78  412  4 79 5  88 57  9 1524 59 126  79 389 179 87 15  2 92  999 7914 583  7  971 55 79 1783  271 564 9178 796 164  1 77 16 74 69  21 893 859 14 55 656 97 336 8  36 42 72   1255 88 39 62  2957 32   341 283 274 159 254 63 891 79 86 86 75  79 4367 278 86  96 549 5  785 383 6  117 87 66 195  63  32 51 351 958 736 6  4632 1  475  6  79 86 51 3381  85 51 39  139 5468 71 18 1  5972 291 99 615 223  592 246 79 768 21  85 645 772 153 243  48 6567 63 89 638 34 938 76 9  843 3  6422 25 15 83 991 53 483 4  31  838 9515 5563 67 33 574 92 822 91 12   16  37 59 7772 764 74 65  5 65  23  71 522 436 84 88 2977 84 17 36  8 6675 52 1823  988 1353  4  3 82 54 185 7948 71 297 8799 698 923 1543 758 294 19 85 323  356 54  63 38 28 14  7  5 128 1733 855  11 85 24 294  21 116 817 67 96 877 997 2433  3 49   61 335 83
   9 71  44  45 64 39 758  934 927 4  47 783 165 35  32 1187 362 166 85 36 466 753 66 28 1562  66 848 63   22 44 48   56 2262 652 95  41 476 359 542 779 91 17  139 52 881 5568 11  7389 9574 415 966 92 213 956 72  976 926 565  19 491 398 55 967 27 3  863 3   46 15 24  41 99  392 48  52 66 269 86 52 418  755 36 778 987 13 72 26 15   62 767  25 85  31 169 6832 663 74 661  54 27   24 582 2672 997 18 399 18 48 73 33 66 84 64  8 392 1922 54   1 43 36  25 87 22 922 64 354 5  58 85  966 479 69  14 86 433  3 312 49 75  5 16    4 73 14 41 47 137 51 855 729 982 62 456 48 4249 65 15 26  591 16 8236 62 865 34 47 117 67  344 954 9292 26 3764 57 95   38 27 14  795 52 252 178 484  39 12 651 81  86 55  277 63 34  554 199 16  447  9 58 23 68  2  889 27 97 51 3  849 182  51 6   866 8972 326 83 51 829  697 941  4 872  93 546  7 66 74 781 16 19 815 141 2519 11  66 41 68 482 989   15 672  516 27 7225    2 93 43 691 9189 66  71 69 112 97 64 22  5852 44 5163 989 331 549  4 75 56 83 721 228  185 472 94 332  8 646   1   5 784 1  3969 95  2716 223 2659 96 634 95 96 412 34 616 88 311   626 714 878 447 9475 1421 19 421  42  62 342 89 52 828 76   8 11  462 96  56 414 83  742 711 4695  98 62 89 899 38 889 594 415  31 255 4766 6  27  41 967 9  429 546  27 954 2142 128 2246 428  64 564 44  39 6    4  38 45 7244 6  198 352 62 95 89  2 42  5581   8 28   34 265 67 44 74 524 15  8 24 71 44 5122 492 938 358 853 494 31 83 42 46  3 293  331   1 717  816 56  6 79 9  37 553 39 756 78 547 79 597  39 57 78 983 114 677 6843 57  92 76 26 21 23  358 53 55 73  74 58 44 1465 897 99 78 3738 8923 829  1  3 63  98 9   43 69 87  87 377 196 568 67 951 59   4  678 544 455 44 88 286 13 1529 4  26 31 48  9 21 63 61 916  767 957 521 61 24  73  747 858 17 74 4816 333  67  718 856 4921 866 7589 49 296 792 36    65 94 65  25 943 713 2   53 37 442  845 545 64 2387 883 363 829 512 92 932 82 83 5935 46 165 65 6491 573 32 619  9 452 45 32 84 726 334 45  313 297 33 964 346 223 299 48  66  74 328 63 44 19 43 58 6394 852 71 52  219 2677 7773 679 72   6 4767 338  9 115  35 23 67 55  376  94 3858 27 82 226 211 961 85  87 376 97 47 679  326 487 17 1  3  488 719 84  58 63 76  47 24  94 6258 38 8714 457  656 169 31 813 58  538  272 949 37 37 331 9961 839 324 72  84  83 7488 3925 72 79 44  45  28 14 66  252 1  659  83 945 776 5389 62 45   456  19 9778 515  76 9661 2295 21 972  24 6  382 42 37  623 9958 86  68   31 359 72  16 289 255 6974 78  64   5 7993 25 58 672 158 7496 745 565 93 81 38 12 839 471 2324  91 422 772  24 187  715 26 852 5  28   72 186 5  525 819 537 6  533  557  29 7   34 86 36 473 34 35 948 43 51 792 561 6544  22 118 7161 66  2 845 85 1648 54 116 19 82 467 8636 842 78 7578 773 347 252 2917 63 49 86 117 191 3936 9617 6   43 4791 23 268 463 71  71 29 388 91 39 78 737 594  732 38  72 43 83  89  637 255 92 435 26 22 2826 14 226 69 21  15 16 82 64 51  87 59 53 8114 68 74  518 1867 9384 66 336 689 336  512  759 75 4725 79 695 277 42 396 71 888 679   37 96 86 57 69 13  8 9949 13   7  32 78  394 2  84 77 2   72  6764 1416 47 854 17 59 5924 8762 352 1546 94  221  8 81 33 67 24  53 54  294 68 59 256 81 868 5  89 57 1818 5435  4 54 456  647 58   188 872 829 793 795 92  22 11 19 55 75 637 9952 799 151 69 571 64 98  29  1  938 79 48 796 551  52 15 697 923 956 42 2753 45 9925 2  46 28 18 1432  42  4 58   82 5948 83 18 32  944 741 6  927 541  237 754 67 631 29  15 376 398  16 9149  2 3888 34 17 892 55 916 22 22 893 48 8989 15 3  99 189 68 368 91 29 5537 7982 3745 24 82 983 53 478 92 42  586  36 38 319  121 36  2 14 95  97  25 49  882 74 39 7198 66  9 94  6 9834 35   44 9164 4896  1 48 18 29 423 4926 34 38  3781 719 947 14   868 825 69 84 3713 78  12  42 97 13 84 77 74 171 1388 936  34 3  93 469  7  893 727 54 38 335 483 122   3 741  43  15 66
   2 51  48  39 91 71 574   77 138 5  98  56 664 1   62 7586 353 311  6 93 727 391 78 58 4149   2 3   6     7 88 37   92 7664  63 99  39 717 537 653 231 38 93 2387 42 874 3248 238 5641 85    76 437 75 161 676 353 5   374 154 656  99 834 67 717 4  2    2 5    4 85 46   9 441 597 22  6   5 671 58 52 791   43  3   4 349 45 79 52 9    29 24   86  6   2 874  484 766 17 59    7 43    6 894 7524  47 69 969 54 67 16 7  74 7  71  5 24  5126 49   6 85 62   9 75 37 273 29 36  4  29 95   94 544 5   56 27   5  2 41  77 47  6 429   9  5 61 68 9  766 91 695 577 895 73 181 44  598 41 27 43    3 1  5675 33 555 18 15 745 821 384 642 7927  4 4943 23 44    1 32  5   68 57 8   739 1    68 15 241 74   2 8   835 82 26   27  11 8   43   6  3 64 36  77 954 61  7 34 13  71 69   15 2  3254 4877 21  54 89 78   94  193  8 59   33 329  2 72 65 87  15  2 685 729 5    716 75 27 88   7 615    3 992    7  4 3225    5 54 57 559 4319 81   4 13 1   38 37 7   4618 24 8855 265  14 416  5 95 7  63 229 889 7483 799 62 311  4 378   5   5  55 5  7126 6   3666 962 8123 1   96 16 3  698 56 447  9 861    82 54  268 26   965 4913 19 1    21  27 646 92 72 342 45   4 35  734 75  87 9   61   49 716 393  114 37 85 293 59 682 238 522  63 198 8836 18 51 432 413 9  635 361  81 451 26    27   76 22   71 776 77   4 9    7   8  3  138 55 61  229 17 28 41 45 19  4922   4 64   22 15  9  81  5 9   33  5 82 74 47 9153 475 161  13 211 734 26 52 8  67 94 3278 2   119 91  1751 86  2 64 51 45 843 91  73 1  422 31 515 521 46 28 653 212 423 5451 581 98  1 17 67 15  71  93 98 4   5  53  4   39 165 81 51 6419 8913 962  6  1 94  84 9   19 98  4 688 358 885  37 12 525 18   1    6 249 226 97 34 78  83 386  4   5  8  1  1 43 41 68 586  338 926 312 52 6   24  313 318 95 87 499  88  362 9275 788 8633 62  6751 56 532 657 45    63 46 53  71 59  881 24 674 64   3   78 537 93 88   139   6  95 535 6   64 64 66 7688  3 379 82 2    556 58 479  7 914 22 85 91  45 12  33 7581 966 31 664  84 775 569 11   9   4  15 65  1 34  4 71 4648 956 32 79    3 3934 6494  15 7    9  261 664  3 131 798 16 53 5    31   8 2124 44 23  64 124  16 334 16 557  7 88 856  876 179 57 3  98  64 768 6    1 73 12  74 68  86 7462  7 7348   3  292 222 2  614 79  199  917 243 25 93  98 1124 476 112 6   85   6 2217 1425 23 16 76  95   1 96 81   94 9  4     2 147 939  151 62 97   86   41   78 171   2 3     479 11 411  32 6  882 45 77   31 3514 671 54  513   5 94  57 863 611  799 8   4    3 679  25 63 859 83  7781 444 266 83 16 38 85 341 888   96   9 724 184  73 73   5   5  413 7  58   14 622 4  672 371 143 1  42   8    99 9  363  1 61 464 19  5 644 81 82 153 552 24   211 315 8371 31 73 484 1  3475 36  91 81 31 99  9117 165 93 1923 157  32 767 5523 68 81 5  584 918 185  7689 5  857 6917 27 27  989 51  72 88 888 83 55 25 936 4    862 72 469 26 19   2  555  89  4 795 74 6  7     1 554 78 85  33 78 2  42 36   2 55 94 4381 6  82  739 8794 446  34 248 873 57   2227 384 3   659  3 531 993 31 468 36 835 553    9 78  6 44 63 62 28 8366  6   8 276 63   25 3  9  47 8   89  411  9232 33 133 21 64   64 4973 819 3841 1   271 91 98 78 51 927 46 71  334 92 84 473 58  68 5  89 55 9963   45  7 2  993   81 84   385 119  38  73 86  55  55 78 79 3  82 413 5867 491 237 69 814 27 22  7   3  554 51  3  48 594   9  4  71 78  443 53 352  72 1927 9  16 78 67 761  585  3 12   63 628   2 94 85  468 567 4  27    8   62 671 73  71 59   3 991 149   9 2225  1  851 79 27 578 39 249 93 25  23 42 9836 26 3  36 884 66 543 45 46 1287 25   8142  1 65 64  42 95  68 9  2835   8 77 4      8 28  9 82 758 48 164 5   81  18 55 6349 17  3 54 58   71  3   35 2494 5438 15 72 18 17 399 28   56 56  725  71   53 52   16  121 33 5  5671 3   834 33 2  72 98 56 82 261 4    119   5 4   3 9    2  9   76  31 9  61  12  725   4 878 447   3 11
-+   *   +   *  +  +  +   +    *   *  +  +   *   *   +  +    +   +   +  +  +   +   +  *  +    *   +   +   *   *  +  +    +    *   *   +  +   *   +   *   +  +  +    *  +   +    +   +    +    +   *   +  *   +   *   *   *   *   +   +   *   +  *   *  +  *   *   *  *  *   +  *   +   *   +  +  *   *  *  +   +    *  *   +   *  *  *  +    *  *   *   *  +   *   +    +   *  +    *  *   +   *   +    *   *  *   *  *  *  *  +  +  *  *  *   +    *  +   *  *  +   *  +  *   *  +   +  *  *  +    *   +   +  *  +   +  *   *  +  *  *   *   +  +  +  *  *   *  *   *   *   *  *   *  +    *  *  +  +    +  +    +  +   *  +  *   *   *   *   +    *  +    *  *  +    *  +  +    +  +   +   +    *  +  *   *  +   +   *   *  *  +    *   *   *   +  +  +  +   +  *   *  *  *  +  +   +   +   +  +    +    *   *  +  +    *   *   +  +    *  +   *  *  *  +   +  *  *   +   +    *   +  *  +  *   +    +   *   +    *  +    +    +  +  +   +    +  +   +  *   *  *  +   +    +  +    +   *   *   *  *  +  *  +   +   +    *   +  *   +  +   *   +   *   +  +    *   +    *   +    *  *   *  *  *   +  *   *  +    +    +   *   +   +    +    *  +    +  *   *   *  *  +   *   *  *   *   +  *   *   *   *   *   +    *   +  +  *   *  *   +   *   *   *   +    +  +  *   *   +  +   *   *   *   +    +   +    +    *  +   +  +   +  +   *   +  +    *  *   *   *  +  +  +  +   +    *   +   *   *   *  *  +  +   *  +  *  *  +  +    +   *   *   *   +   +  +  *  *  *  +    *   *   *   +    +  +  *  +  +  +   +  *   +  +   +  *   *   *  *  *   *   *   +    *   *  *  *  *  *   +   *  *  *   *  *  *  +    *   *  *  +    +    *   *  +  *  *   *   *  *  *  +   +   +   *   +  +   *  *   +    +   +   *  *  +   +  +    *  *  *  *  *  +  *  *  +   +    *   +   *  +   +   *   *   *  *  +    +   +   +    *   +    +   +    *  *   *   +   +    *  *  +   *   +   *  *   *  *   +    *   *  +    *   *   +   *   +  +   *  *  +    *  *   +  +    +   *  *   *  *   *  *  *  *   *   *  +    *   *  *   +   +   *   +  *   *   +   *  +  *  *  *  +    +   *  +   +   +    +    +   *   +  +    *   +  *   *   +  *  *   +   +   +    *  +  *   *   *   +   +  +   *  *  +   +    *   *  *  +  +   +   +   *  *  +   +  *   *  +    *  +    *   +    *   *  +   *   +    +   *   *  +  +   +    +   +   +   +  *   +    +    *  +  *   *  +   *  +   +   *  +    *  +   *   +    +  +    +   *   +    *   +   +    +    *  +    *  *  +   *  *   +   +    *   *   *   +   +   *  *   +   +    +   *   *  +    *  *  *   *   +    *   *   +  +  +  *  *   *   +    *   *   *   +   +    *   *  +   +  *   *   *   *  *   +   +   +  +    +    +  +  +   *  *  *   *  +  +   +  *  +   *   +    *   *   +    +  +  +   *  +    *  *   *  +  +   +    *   *  +    *   +   *   +    *  *  +  *   *   +    +    *  +   +    +  *   *   *  *   *  +   +  *  +  +   +    +   *  +   +  *  *   +    *   *  +   +  +  +    *  +   *  +   +  *  +  *  *  *   *  *  +    *  *   *   +    +    +  *   +   +    +    *   *  +    +  +   *   +  *   +  *   +   +    *  *  *  *  +  *  +    +  *   *   +   *   +  *  *  *   +   +    +    *  +   +  +  +    +    *   +    *   +   *  *  +  +  +   *  *   *   *  +  *   *  *   *  *  *  +    +    +  *  +   +    +    *   *   *   *   +   *  *   +  +  +  +  *   +    *   *   *  *   *  *   *   +  *   *  *  +   *   *   *  *   *   *   *  +    *  +    +  +  *  +  +    +   *  *  +    +    +  +  +  +    *   *  +   *   +    *   *  +   *  *   +   *   +   +    *  +    *  +  +   +  *   *  *  *   *  +    *  +  *  *   *  *   *  *  +    +    +    +  +  *   *  +   +  +  +    *   *  +    *   *  *  *  *   *  *   *   +   *  *  +    *  *  *  +  +    +  +    +    +    *  *  *  +  *   +    *  *   +    *   *   +    *   *   +  *  +    +   *   +  +  +  *  +  *  +   +    +   *   +  +  +    +  *   *   +  *  +   *   +    *  *   +   *   * `,D3=`.......S.......
++   *   +   *  +  +  +   +    *   *  +  +   *   *   +  +    +   +   +  +  +   +   +  *  +    *   +   +   *   *  +  +    +    *   *   +  +   *   +   *   +  +  +    *  +   +    +   +    +    +   *   +  *   +   *   *   *   *   +   +   *   +  *   *  +  *   *   *  *  *   +  *   +   *   +  +  *   *  *  +   +    *  *   +   *  *  *  +    *  *   *   *  +   *   +    +   *  +    *  *   +   *   +    *   *  *   *  *  *  *  +  +  *  *  *   +    *  +   *  *  +   *  +  *   *  +   +  *  *  +    *   +   +  *  +   +  *   *  +  *  *   *   +  +  +  *  *   *  *   *   *   *  *   *  +    *  *  +  +    +  +    +  +   *  +  *   *   *   *   +    *  +    *  *  +    *  +  +    +  +   +   +    *  +  *   *  +   +   *   *  *  +    *   *   *   +  +  +  +   +  *   *  *  *  +  +   +   +   +  +    +    *   *  +  +    *   *   +  +    *  +   *  *  *  +   +  *  *   +   +    *   +  *  +  *   +    +   *   +    *  +    +    +  +  +   +    +  +   +  *   *  *  +   +    +  +    +   *   *   *  *  +  *  +   +   +    *   +  *   +  +   *   +   *   +  +    *   +    *   +    *  *   *  *  *   +  *   *  +    +    +   *   +   +    +    *  +    +  *   *   *  *  +   *   *  *   *   +  *   *   *   *   *   +    *   +  +  *   *  *   +   *   *   *   +    +  +  *   *   +  +   *   *   *   +    +   +    +    *  +   +  +   +  +   *   +  +    *  *   *   *  +  +  +  +   +    *   +   *   *   *  *  +  +   *  +  *  *  +  +    +   *   *   *   +   +  +  *  *  *  +    *   *   *   +    +  +  *  +  +  +   +  *   +  +   +  *   *   *  *  *   *   *   +    *   *  *  *  *  *   +   *  *  *   *  *  *  +    *   *  *  +    +    *   *  +  *  *   *   *  *  *  +   +   +   *   +  +   *  *   +    +   +   *  *  +   +  +    *  *  *  *  *  +  *  *  +   +    *   +   *  +   +   *   *   *  *  +    +   +   +    *   +    +   +    *  *   *   +   +    *  *  +   *   +   *  *   *  *   +    *   *  +    *   *   +   *   +  +   *  *  +    *  *   +  +    +   *  *   *  *   *  *  *  *   *   *  +    *   *  *   +   +   *   +  *   *   +   *  +  *  *  *  +    +   *  +   +   +    +    +   *   +  +    *   +  *   *   +  *  *   +   +   +    *  +  *   *   *   +   +  +   *  *  +   +    *   *  *  +  +   +   +   *  *  +   +  *   *  +    *  +    *   +    *   *  +   *   +    +   *   *  +  +   +    +   +   +   +  *   +    +    *  +  *   *  +   *  +   +   *  +    *  +   *   +    +  +    +   *   +    *   +   +    +    *  +    *  *  +   *  *   +   +    *   *   *   +   +   *  *   +   +    +   *   *  +    *  *  *   *   +    *   *   +  +  +  *  *   *   +    *   *   *   +   +    *   *  +   +  *   *   *   *  *   +   +   +  +    +    +  +  +   *  *  *   *  +  +   +  *  +   *   +    *   *   +    +  +  +   *  +    *  *   *  +  +   +    *   *  +    *   +   *   +    *  *  +  *   *   +    +    *  +   +    +  *   *   *  *   *  +   +  *  +  +   +    +   *  +   +  *  *   +    *   *  +   +  +  +    *  +   *  +   +  *  +  *  *  *   *  *  +    *  *   *   +    +    +  *   +   +    +    *   *  +    +  +   *   +  *   +  *   +   +    *  *  *  *  +  *  +    +  *   *   +   *   +  *  *  *   +   +    +    *  +   +  +  +    +    *   +    *   +   *  *  +  +  +   *  *   *   *  +  *   *  *   *  *  *  +    +    +  *  +   +    +    *   *   *   *   +   *  *   +  +  +  +  *   +    *   *   *  *   *  *   *   +  *   *  *  +   *   *   *  *   *   *   *  +    *  +    +  +  *  +  +    +   *  *  +    +    +  +  +  +    *   *  +   *   +    *   *  +   *  *   +   *   +   +    *  +    *  +  +   +  *   *  *  *   *  +    *  +  *  *   *  *   *  *  +    +    +    +  +  *   *  +   +  +  +    *   *  +    *   *  *  *  *   *  *   *   +   *  *  +    *  *  *  +  +    +  +    +    +    *  *  *  +  *   +    *  *   +    *   *   +    *   *   +  *  +    +   *   +  +  +  *  +  *  +   +    +   *   +  +  +    +  *   *   +  *  +   *   +    *  *   +   *   * `,G2=`.......S.......
 ...............
 .......^.......
 ...............
@@ -5792,7 +5794,7 @@ R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 ..^...^.....^..
 ...............
 .^.^.^.^.^...^.
-...............`,B3=`......................................................................S......................................................................
+...............`,V2=`......................................................................S......................................................................
 .............................................................................................................................................
 ......................................................................^......................................................................
 .............................................................................................................................................
@@ -5933,7 +5935,7 @@ R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 ..^.......^.......^.^.^...^.^.^.^.^.^.......^...^.^...^.^...^.^.^...^.^.....^...^.^.^.^.^...^...^...^.^.^.^.........^.^...^.^.^.^.^.^...^.^..
 .............................................................................................................................................
 .^.^.^.^.^.^.^.^.........^.........^...^.^.^.^...^...^.....^.......^...^.........^.^.^.^.^.^.^.^.^.^...^.^.^.^.......^.^.^...^.^.^.^.^.^...^.
-.............................................................................................................................................`,U3=`162,817,812
+.............................................................................................................................................`,K2=`162,817,812
 57,618,57
 906,360,560
 592,479,940
@@ -5952,7 +5954,7 @@ R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 941,993,340
 862,61,35
 984,92,344
-425,690,689`,G3=`76200,69285,28154
+425,690,689`,H2=`76200,69285,28154
 80994,76238,75528
 87714,42939,90758
 39904,26096,27477
@@ -6951,14 +6953,14 @@ R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 28764,96890,2104
 69630,68629,72754
 20013,94303,454
-27109,71211,1089`,K3=`7,1
+27109,71211,1089`,F2=`7,1
 11,1
 11,7
 9,7
 9,5
 2,5
 2,3
-7,3`,V3=`97889,50122
+7,3`,W2=`97889,50122
 97889,51343
 98146,51343
 98146,52576
@@ -7453,9 +7455,9 @@ R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 98359,47671
 98359,48896
 98432,48896
-98432,50122`,H3=`[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
+98432,50122`,Q2=`[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
 [...#.] (0,2,3,4) (2,3) (0,4) (0,1,2) (1,2,3,4) {7,5,12,7,2}
-[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}`,F3=`[...#...] (0,2,3,6) (0,1,4,6) (1,3,4,5) (1,2,4,6) (0,2,3,4,5) (2,3,6) (1,2) (2,3,4,5,6) {37,24,84,71,44,32,71}
+[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}`,X2=`[...#...] (0,2,3,6) (0,1,4,6) (1,3,4,5) (1,2,4,6) (0,2,3,4,5) (2,3,6) (1,2) (2,3,4,5,6) {37,24,84,71,44,32,71}
 [...##.] (0,3,4) (0,1,2,5) (0,1,3,4,5) (3,4) {53,34,17,42,42,34}
 [###.] (1,3) (0,1,2) {4,13,4,9}
 [.#.....] (0,1,6) (0,2,4) (1,3,4,6) (0,1,3,5) (4,5) {219,37,194,30,211,23,19}
@@ -7631,7 +7633,7 @@ R16`,$3=`11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
 [##.#.] (0,2,3,4) (0,2) (0,1,2,3) (0,1,4) {53,29,33,14,25}
 [#####] (1,3,4) (0,2,3,4) (0,2) {36,15,36,31,31}
 [..###] (0,2,4) (1,2,4) (0,3) {13,5,9,9,9}
-[.#..] (0,2) (1,2,3) (0,3) (1,2) (0,1,3) {29,14,18,21}`,W3=`svr: aaa bbb
+[.#..] (0,2) (1,2,3) (0,3) (1,2) (0,1,3) {29,14,18,21}`,J2=`svr: aaa bbb
 aaa: fft
 fft: ccc
 bbb: tty
@@ -7643,7 +7645,7 @@ eee: dac
 dac: fff
 fff: ggg hhh
 ggg: out
-hhh: out`,Q3=`aaa: you hhh
+hhh: out`,Y2=`aaa: you hhh
 you: bbb ccc
 bbb: ddd eee
 ccc: ddd eee fff
@@ -7652,7 +7654,7 @@ eee: out
 fff: out
 ggg: out
 hhh: ccc fff iii
-iii: out`,X3=`etv: dfj
+iii: out`,Z2=`etv: dfj
 vzz: sjr
 uyy: vxy
 dkh: plc
@@ -8263,6 +8265,1067 @@ ege: fvy bgb tle
 sai: mlw
 twe: afy mko dfj
 iua: pzd pkp
-ywl: krr tam`,J3="",Y3="",Z3=Object.assign({"../advent/day01/solution.ts":G2,"../advent/day02/solution.ts":F2,"../advent/day03/solution.ts":X2,"../advent/day04/solution.ts":n3,"../advent/day05/solution.ts":e3,"../advent/day06/solution.ts":i3,"../advent/day07/solution.ts":c3,"../advent/day08/solution.ts":d3,"../advent/day09/solution.ts":b3,"../advent/day10/solution.ts":x3,"../advent/day11/solution.ts":z3,"../advent/day12/solution.ts":k3}),n4=Object.assign({"../advent/day01/input-test.md":q3,"../advent/day01/input.md":S3,"../advent/day02/input-test.md":$3,"../advent/day02/input.md":O3,"../advent/day03/input-test.md":E3,"../advent/day03/input.md":M3,"../advent/day04/input-test.md":T3,"../advent/day04/input.md":C3,"../advent/day05/input-test.md":A3,"../advent/day05/input.md":N3,"../advent/day06/input-test.md":P3,"../advent/day06/input.md":I3,"../advent/day07/input-test.md":D3,"../advent/day07/input.md":B3,"../advent/day08/input-test.md":U3,"../advent/day08/input.md":G3,"../advent/day09/input-test.md":K3,"../advent/day09/input.md":V3,"../advent/day10/input-test.md":H3,"../advent/day10/input.md":F3,"../advent/day11/input-test-p2.md":W3,"../advent/day11/input-test.md":Q3,"../advent/day11/input.md":X3,"../advent/day12/input-test.md":J3,"../advent/day12/input.md":Y3}),L4=Object.freeze(Object.defineProperty({__proto__:null,inputMods:n4,solutionMods:Z3},Symbol.toStringTag,{value:"Module"})),d2=L=>parseInt(L.split("day")[1]||"1",10),R4=(L,n)=>{const R=(L.match(/input-?(.+)\.md$/)||[])[1]||"Real";return{day:d2(L),name:R,raw:n}},t4=(L,n)=>{const R=!!(n.part1||n.part2),t=n.part1||(()=>"-"),o=n.part2||(()=>"-"),s=n.answers||[["",""]];return{day:d2(L),part1:t,part2:o,answers:s,hasSolution:R}},[Q,e4]=v([]),[S,s4]=v([]),[G,g2]=v(1),[I,m2]=v(0),[y2,b2]=v(""),[o4,r4]=v({value:"",time:0,knownGood:!1}),[i4,l4]=v({value:"",time:0,knownGood:!1}),[h2,D]=v(!1),[v2,a4]=v(!0),H=()=>Q().filter(L=>L.day===G()),w2=()=>S().find(L=>L.day===G()),$=(L,n="",R=0,t=!1)=>{L===1&&r4({value:n,time:R,knownGood:t}),L===2&&l4({value:n,time:R,knownGood:t})},X=()=>[$(1),$(2)],c4=()=>{q2(()=>{if(I()>=H().length)return m2(H().length-1);const L=H()[I()],n=w2();if(!L||!n)return X();b2(L.raw)})},T=async()=>{const L=w2(),n=y2();if(!L||!n)return X();const R=L.answers[I()]||["",""];$(1),$(2),setTimeout(R2,0,1,L.part1,n,R[0]),await u4(10),setTimeout(R2,5,2,L.part2,n,R[1])},u4=L=>new Promise(n=>setTimeout(n,L)),R2=async(L,n,R,t)=>{if(h2())return;D(!0);const{output:o,dt:s}=await x2(n,R,v2());$(L,o,s,o===t),D(!1)},x2=async(L,n,R)=>{const t=performance.now();return{output:(()=>{if(!R)return String(L(n));try{return String(L(n))}catch(s){return`Error: ${s}`}})(),dt:performance.now()-t}},f4=async()=>{if(h2())return;D(!0),X();const L=[],n=["",""],R=[0,0],t=[!0,!0];for(let o=0;o<S().length;o++){const s=S()[o],r=Q().filter(e=>e.day===o+1)[0].raw;for(let e=0;e<2;e++){const{output:i,dt:l}=await x2(e===0?s.part1:s.part2,r,!0);L.push({dt:l,name:`Day ${s.day} part ${e+1}`}),R[e]+=l;const a=i===s.answers[0][e];t[e]&&=a,n[e]+=a?"★":"-",o===S().length-1&&(n[e]+=" done!"),$(e+1,n[e],R[e],t[e]),await new Promise(c=>setTimeout(c,0))}}L.sort((o,s)=>o.dt-s.dt),console.table(L.map(({name:o,dt:s})=>({name:o,ms:Math.round(s*10)/10}))),D(!1)},p4=L=>{e4(Object.keys(L.inputMods).map(n=>R4(n,L.inputMods[n])).sort((n,R)=>n.name.localeCompare(R.name))),s4(Object.keys(L.solutionMods).map(n=>t4(n,L.solutionMods[n])).filter(n=>n.hasSolution).sort((n,R)=>n.day-R.day)),T()};p4(L4);g2(S().at(-1)?.day||1);setTimeout(T,0);var d4=k("<button type=button>");const K=L=>{const n=()=>({...L.classes,button:!0,toggled:L.isToggled});return(()=>{var R=d4();return N2(R,"click",L.onClick),y(R,()=>L.label),z(t=>P2(R,n(),t)),R})()};c2(["click"]);var g4=k("<div class=catch-area>Catch errors");const m4=()=>(()=>{var L=g4();return L.firstChild,y(L,b(K,{label:"x",classes:{"input-toggle":!0,"catch-button":!0},get isToggled(){return v2()},onClick:()=>a4(n=>!n)}),null),L})(),y4=()=>S().map(L=>b(K,{get label(){return L.day.toString().padStart(2,"0")},get isToggled(){return L.day===G()},onClick:()=>{g2(L.day),T()}}));var b4=k("<textarea rows=14>");const h4=L=>(()=>{var n=b4();return n.$$input=R=>{L.onUpdate(R.target.value),T()},z(()=>n.value=L.value),n})(),v4=()=>b(h4,{get value(){return y2()},onUpdate:b2});c2(["input"]);var w4=k("<div class=label style=align-self:flex-start><h4>Input:</h4><br>");const x4=()=>{const L=()=>Q().filter(n=>n.day===G()).map((n,R)=>({label:n.name,isToggled:R===I(),onClick:()=>{m2(R),T()},classes:{"input-toggle":!0}}));return(()=>{var n=w4(),R=n.firstChild;return R.nextSibling,y(n,()=>L().map(t=>b(K,t)),null),n})()};var j4=k("<div class=label><h4>Part <!>:</h4><div class=time>(<!>ms)"),_4=k("<textarea class=output disabled>");const z4=(L="")=>{const n=L.split(`
-`).length;return Math.min(n,Math.max(n,1,10))},t2=({part:L=1})=>{const n=L===1?o4:i4;return[(()=>{var R=j4(),t=R.firstChild,o=t.firstChild,s=o.nextSibling;s.nextSibling;var r=t.nextSibling,e=r.firstChild,i=e.nextSibling;return i.nextSibling,y(t,L,s),y(r,()=>n().time.toFixed(0),i),R})(),(()=>{var R=_4();return z(t=>{var o=!!n().knownGood,s=z4(n().value);return o!==t.e&&R.classList.toggle("correct-answer",t.e=o),s!==t.t&&A2(R,"rows",t.t=s),t},{e:void 0,t:void 0}),z(()=>R.value=n().value),R})()]},k4=()=>b(K,{label:"Run all",classes:{"input-toggle":!1,"run-all-button":!0},isToggled:!1,onClick:()=>f4()});var q4=k("<main><header><h2>Advent 2025</h2></header><article class=layout><div class=label><h4>Days:</h4></div><div><br></div><div>");const S4=()=>(c4(),(()=>{var L=q4(),n=L.firstChild,R=n.nextSibling,t=R.firstChild,o=t.nextSibling,s=o.firstChild,r=o.nextSibling;return y(o,b(y4,{}),s),y(o,b(k4,{}),null),y(R,b(t2,{part:1}),r),y(R,b(t2,{part:2}),r),y(R,b(x4,{}),r),y(R,b(v4,{}),r),y(R,b(m4,{}),null),L})()),$4=document.getElementById("root");C2(S4,$4);
-//# sourceMappingURL=index-BZmNDK-y.js.map
+ywl: krr tam`,n4=`0:
+###
+##.
+##.
+
+1:
+###
+##.
+.##
+
+2:
+.##
+###
+##.
+
+3:
+##.
+###
+##.
+
+4:
+###
+#..
+###
+
+5:
+###
+.#.
+###
+
+4x4: 0 0 0 0 2 0
+12x5: 1 0 1 0 2 2
+12x5: 1 0 1 0 3 2`,L4=`0:
+.##
+##.
+###
+
+1:
+##.
+##.
+###
+
+2:
+###
+#..
+###
+
+3:
+##.
+.##
+..#
+
+4:
+#..
+##.
+###
+
+5:
+###
+.#.
+###
+
+47x39: 64 44 38 43 38 53
+43x46: 55 51 38 49 56 56
+43x45: 30 41 37 40 37 25
+35x43: 27 22 32 22 29 22
+39x41: 37 31 45 45 44 46
+50x41: 57 56 52 58 58 37
+47x39: 30 25 39 27 37 36
+48x45: 33 32 41 39 46 49
+47x48: 59 57 53 61 64 55
+38x44: 29 36 18 22 29 34
+46x44: 60 57 50 39 53 49
+47x43: 45 60 51 49 48 57
+36x42: 36 46 46 36 32 35
+45x37: 42 42 38 48 49 40
+43x41: 25 31 25 30 33 37
+37x38: 36 33 40 33 44 31
+49x40: 31 36 27 37 33 44
+46x43: 30 36 34 36 33 40
+38x38: 20 16 34 24 27 23
+42x38: 27 30 29 34 24 24
+43x38: 45 36 41 37 41 50
+49x36: 42 51 37 48 43 51
+38x46: 50 43 36 51 45 46
+40x41: 31 45 46 45 53 35
+40x50: 60 46 44 58 52 50
+35x41: 31 24 21 21 22 24
+44x40: 29 33 40 29 26 24
+42x36: 35 39 52 37 42 28
+45x45: 38 36 26 47 39 38
+46x36: 39 38 45 43 40 50
+36x36: 35 34 29 35 32 35
+43x45: 44 63 40 45 44 60
+44x47: 58 51 48 45 58 57
+44x40: 36 47 54 49 43 43
+37x45: 48 53 42 40 24 46
+40x40: 46 36 39 46 49 33
+41x36: 38 49 35 33 37 34
+38x42: 38 44 42 47 45 32
+37x43: 37 43 36 48 40 43
+36x37: 33 35 46 35 32 24
+40x47: 49 42 51 58 46 46
+49x38: 52 47 45 58 51 37
+49x42: 36 40 43 32 36 36
+47x38: 46 45 47 40 57 40
+47x48: 66 66 54 54 48 57
+44x50: 61 59 51 61 48 59
+38x42: 34 44 40 38 47 43
+41x45: 51 50 44 45 52 42
+40x40: 40 40 37 47 39 45
+49x45: 43 29 38 41 44 45
+45x39: 41 59 52 34 43 38
+39x45: 42 48 47 40 45 47
+45x35: 25 32 23 26 37 22
+42x48: 54 40 49 54 64 52
+39x43: 43 47 45 40 39 43
+46x48: 54 60 52 53 70 52
+48x39: 38 29 32 31 32 46
+41x47: 30 33 36 27 29 39
+46x44: 55 45 45 48 63 56
+39x43: 50 46 35 41 46 40
+38x37: 24 24 23 29 25 19
+48x47: 33 41 49 47 36 34
+45x44: 27 37 46 33 35 32
+41x48: 27 36 34 40 37 34
+36x39: 40 42 35 35 35 29
+37x37: 34 26 20 24 20 19
+37x39: 29 18 30 24 23 31
+35x40: 33 39 37 44 22 41
+46x41: 37 53 50 53 56 44
+50x38: 29 31 30 30 35 37
+39x39: 29 18 31 30 31 29
+41x36: 38 42 30 38 35 44
+44x36: 34 31 27 17 25 34
+42x35: 35 51 42 25 31 38
+38x42: 21 29 28 33 30 27
+36x48: 43 44 44 44 51 41
+36x47: 43 44 45 48 43 39
+37x42: 58 30 41 34 41 34
+42x42: 39 32 26 29 34 35
+48x37: 24 29 34 35 37 33
+38x41: 24 27 31 30 27 16
+46x49: 58 71 47 57 58 56
+48x35: 40 47 50 45 28 47
+49x50: 56 72 74 49 67 56
+37x39: 32 29 42 28 47 43
+43x35: 31 51 37 40 36 37
+38x39: 49 36 44 46 26 28
+50x40: 43 34 26 26 37 42
+45x43: 41 50 57 53 58 41
+39x39: 37 32 54 43 30 38
+40x44: 26 28 36 34 24 33
+47x49: 34 36 47 35 40 48
+48x39: 36 36 42 32 29 32
+48x40: 53 46 49 55 54 41
+39x45: 48 47 53 41 44 36
+35x48: 24 29 29 37 28 28
+41x36: 34 26 48 33 46 40
+36x43: 32 27 34 31 26 17
+48x41: 53 50 55 40 57 46
+42x39: 33 47 52 40 37 42
+36x41: 35 40 31 34 42 45
+42x44: 47 62 53 31 33 52
+48x42: 42 51 58 51 49 59
+43x36: 44 43 31 38 46 37
+39x50: 38 27 35 32 41 34
+47x49: 58 54 55 59 63 66
+43x50: 57 60 56 51 57 49
+43x38: 32 44 41 50 49 39
+44x38: 55 37 35 38 56 37
+42x39: 41 41 41 37 49 43
+41x38: 31 31 22 22 24 25
+44x39: 40 49 51 36 37 48
+49x50: 61 73 61 55 63 62
+49x43: 38 44 40 42 29 31
+44x41: 26 36 21 43 22 34
+50x46: 59 58 72 47 61 54
+35x49: 41 38 39 55 42 52
+48x43: 61 50 45 63 47 54
+46x35: 35 23 24 35 23 25
+44x39: 32 32 22 27 32 36
+41x41: 32 21 30 25 33 27
+40x37: 42 36 34 47 33 38
+40x36: 41 44 24 34 30 47
+36x47: 55 45 35 39 47 39
+49x49: 58 68 52 64 73 57
+36x49: 59 47 32 48 42 44
+35x35: 20 28 18 15 19 21
+45x43: 52 48 61 52 39 45
+49x43: 49 50 67 51 50 56
+47x44: 58 38 51 45 60 65
+48x42: 45 68 46 41 56 52
+44x40: 34 42 21 25 24 36
+45x44: 40 68 50 53 39 54
+50x50: 46 42 37 45 46 39
+45x35: 36 43 43 46 45 32
+49x48: 34 43 48 41 43 46
+42x36: 32 21 28 14 39 34
+50x35: 39 47 43 40 51 49
+39x37: 31 30 16 23 30 26
+41x49: 43 55 56 56 54 47
+45x48: 51 64 52 57 49 59
+44x48: 42 52 70 58 53 51
+46x41: 41 57 43 42 50 56
+50x47: 58 61 60 52 65 64
+35x48: 46 45 38 36 52 41
+41x44: 42 45 44 56 49 45
+44x43: 33 35 39 28 33 27
+43x38: 36 39 32 53 49 47
+44x35: 46 37 43 33 52 26
+37x45: 31 27 35 23 35 28
+41x48: 57 56 51 52 48 39
+40x43: 41 44 53 38 36 50
+50x43: 55 53 57 49 68 49
+47x36: 46 43 41 47 39 45
+45x40: 27 44 39 23 31 31
+36x37: 22 26 25 22 26 23
+36x42: 42 34 40 47 38 34
+46x38: 51 39 54 45 36 43
+36x40: 36 38 34 39 41 35
+35x46: 42 45 46 32 45 36
+43x49: 61 44 50 49 53 66
+49x43: 25 32 46 45 44 31
+35x45: 43 36 41 50 32 42
+39x35: 30 42 35 30 42 31
+45x45: 44 56 46 67 52 51
+41x41: 34 36 45 46 45 54
+38x43: 36 42 38 53 35 50
+43x37: 42 48 40 41 32 41
+45x48: 47 66 48 55 52 64
+45x48: 60 64 47 53 49 58
+46x36: 40 38 51 47 40 40
+48x38: 37 45 41 62 45 55
+35x35: 19 16 16 24 20 25
+37x47: 45 40 48 40 48 46
+41x40: 36 22 27 35 27 22
+46x41: 48 55 50 39 50 46
+43x35: 19 29 18 27 30 30
+39x38: 37 35 47 40 33 36
+46x35: 38 42 39 40 43 46
+40x39: 30 21 30 21 29 38
+48x40: 53 40 51 47 56 49
+42x44: 51 45 37 59 54 43
+38x45: 37 53 43 37 47 45
+40x41: 24 23 33 33 26 30
+37x49: 50 50 42 44 42 50
+35x40: 38 39 35 41 27 36
+36x42: 27 26 29 33 24 28
+48x49: 37 50 42 39 49 38
+44x35: 20 26 26 24 28 30
+41x41: 31 33 26 28 24 26
+48x44: 61 51 55 54 61 44
+38x42: 39 22 25 27 31 23
+45x44: 30 25 48 42 34 30
+44x40: 53 43 41 45 51 39
+41x35: 18 22 22 27 31 22
+40x39: 31 30 29 29 22 28
+37x50: 53 34 51 51 49 48
+43x44: 30 31 34 36 37 28
+38x36: 26 20 16 28 28 25
+39x38: 36 33 41 41 37 41
+45x40: 22 33 28 32 44 35
+38x48: 25 35 31 33 33 35
+45x48: 47 35 48 36 38 35
+36x36: 27 39 29 37 41 29
+35x50: 37 24 29 27 28 30
+39x46: 43 43 50 51 48 43
+44x49: 59 57 56 43 52 61
+36x48: 53 44 42 38 42 45
+46x36: 31 24 40 30 25 30
+47x46: 47 52 54 61 66 56
+42x41: 24 28 31 25 36 37
+47x49: 45 29 36 44 41 45
+44x48: 58 49 56 44 59 57
+48x35: 49 42 41 35 39 50
+45x45: 39 34 43 36 35 37
+36x36: 24 26 31 35 40 45
+48x48: 50 52 66 57 66 64
+36x47: 44 30 57 32 49 46
+50x41: 51 42 49 58 50 67
+35x38: 38 26 43 30 29 37
+49x35: 46 37 54 38 41 46
+44x50: 61 69 61 41 53 49
+37x49: 48 43 37 40 51 59
+47x42: 47 44 55 58 58 45
+35x40: 36 36 29 44 35 38
+38x39: 30 31 44 36 41 46
+48x40: 39 35 57 48 60 58
+50x41: 57 61 60 55 50 33
+43x39: 26 31 34 29 27 34
+36x49: 42 56 45 51 37 41
+46x39: 52 47 33 53 45 48
+45x40: 27 36 44 23 29 35
+50x50: 49 43 38 44 43 39
+39x45: 34 24 33 37 38 29
+35x48: 55 45 34 46 45 35
+38x46: 25 28 36 33 30 28
+36x38: 32 34 43 36 35 31
+36x46: 31 54 40 46 49 37
+44x50: 48 44 40 29 25 38
+47x45: 43 41 35 35 39 31
+35x45: 22 31 35 24 21 31
+43x45: 51 44 62 44 54 42
+42x43: 32 34 33 29 38 30
+47x49: 68 61 51 54 57 62
+50x38: 52 47 40 46 56 52
+48x37: 25 33 40 35 30 29
+45x35: 42 38 44 44 35 40
+39x48: 52 55 46 44 47 43
+43x49: 61 45 51 60 52 57
+45x40: 45 47 54 32 44 51
+46x38: 37 49 37 35 43 65
+42x49: 68 51 45 55 43 54
+44x44: 27 40 39 28 25 37
+39x36: 30 26 26 20 25 28
+46x47: 45 35 40 31 41 32
+42x39: 47 45 29 51 44 39
+40x50: 49 45 49 57 55 55
+46x43: 52 52 42 58 60 44
+50x36: 52 52 37 42 47 46
+35x47: 35 37 48 35 48 49
+48x47: 41 41 45 33 37 43
+46x47: 36 40 34 47 26 41
+41x47: 54 54 60 39 43 43
+46x42: 35 32 29 43 34 36
+45x36: 43 40 42 40 34 49
+35x37: 34 27 26 47 44 27
+37x49: 58 45 54 36 45 38
+47x44: 33 23 41 39 42 31
+41x36: 43 40 34 36 32 41
+35x41: 19 26 28 31 19 19
+48x46: 44 39 39 42 38 38
+39x47: 32 29 39 33 27 35
+49x42: 34 44 26 42 42 36
+48x47: 37 36 44 41 35 47
+46x43: 24 29 36 40 41 40
+45x45: 56 47 54 57 44 54
+35x50: 31 23 28 32 26 35
+39x49: 35 46 30 32 31 33
+47x35: 20 28 21 31 33 31
+41x49: 48 56 57 54 50 45
+44x44: 52 53 52 36 54 48
+46x49: 50 42 32 39 37 39
+45x47: 59 60 46 53 58 50
+50x42: 53 46 57 62 49 58
+47x48: 42 45 30 49 33 41
+42x41: 30 28 30 34 29 31
+42x38: 40 50 40 45 34 37
+47x37: 34 28 33 31 25 28
+46x37: 36 24 31 31 24 34
+42x48: 40 51 31 30 36 36
+41x35: 43 37 25 31 49 36
+43x43: 40 35 37 22 29 33
+43x43: 41 33 36 27 27 32
+35x43: 28 23 24 31 28 20
+42x50: 51 63 54 45 54 54
+41x44: 23 36 31 26 31 34
+43x40: 45 40 45 52 49 37
+47x37: 48 40 43 47 49 42
+46x47: 59 60 54 49 55 54
+36x46: 28 32 40 25 30 24
+45x48: 54 66 64 42 57 46
+48x49: 46 36 35 49 44 45
+46x38: 38 46 50 53 48 37
+38x37: 25 19 29 24 21 26
+35x48: 38 48 46 50 39 39
+44x38: 30 27 28 24 28 30
+50x39: 41 26 49 31 33 28
+37x47: 32 49 51 47 55 36
+44x49: 52 67 58 59 47 49
+38x40: 30 39 29 48 47 45
+46x44: 42 27 32 36 37 35
+46x42: 38 29 36 34 44 28
+50x37: 45 53 38 57 51 44
+50x50: 53 70 72 61 51 75
+36x46: 34 31 33 29 29 24
+47x47: 55 61 47 57 56 64
+44x41: 39 51 42 47 46 53
+41x50: 30 31 42 32 44 29
+45x43: 55 53 34 59 45 54
+48x43: 58 36 58 77 56 40
+47x37: 45 47 46 48 40 42
+38x45: 41 46 38 45 47 47
+40x48: 43 40 27 35 30 32
+47x35: 57 39 43 49 39 28
+41x38: 22 22 32 33 24 23
+47x35: 23 28 32 22 24 35
+43x46: 64 49 49 55 38 49
+41x43: 29 25 34 25 33 36
+49x35: 39 34 16 31 33 23
+35x45: 32 26 24 21 36 25
+36x50: 52 40 47 44 42 51
+35x40: 20 30 23 25 23 22
+44x40: 55 54 39 44 40 38
+43x36: 32 50 36 42 38 41
+47x44: 56 49 45 57 56 57
+44x43: 26 42 38 33 31 26
+41x39: 48 39 39 35 44 40
+38x46: 39 54 45 52 44 37
+37x35: 21 26 20 25 19 20
+39x36: 40 41 26 32 36 40
+40x40: 30 25 33 33 26 21
+45x35: 39 40 34 42 40 48
+47x42: 55 50 58 51 57 34
+45x35: 34 48 37 56 34 37
+44x38: 40 36 45 44 45 48
+38x48: 44 47 53 48 38 50
+38x36: 36 35 35 34 33 37
+45x41: 43 51 47 45 45 52
+36x36: 21 32 22 21 24 23
+47x35: 43 43 43 48 42 36
+37x35: 38 34 22 27 41 37
+36x47: 28 30 35 29 33 24
+39x39: 32 28 28 29 21 31
+44x44: 44 55 49 59 51 43
+38x35: 37 35 35 31 27 38
+48x45: 41 37 39 36 46 41
+44x49: 49 54 54 59 55 62
+37x47: 45 53 43 41 47 38
+46x37: 32 24 34 26 33 30
+47x42: 39 40 35 28 34 34
+47x39: 47 50 37 47 58 45
+43x41: 38 42 53 48 36 54
+40x42: 45 47 47 39 40 39
+41x36: 34 30 47 41 42 35
+43x39: 37 47 54 43 34 42
+50x45: 49 63 67 56 58 53
+40x37: 36 47 41 33 27 41
+46x43: 34 39 24 30 37 46
+48x39: 50 49 49 45 46 48
+37x41: 26 32 22 26 20 30
+39x35: 24 25 23 30 19 21
+37x43: 27 24 23 34 33 27
+35x35: 27 32 39 32 33 26
+42x42: 33 35 25 36 34 32
+49x39: 55 49 55 47 37 49
+48x36: 23 39 35 31 31 32
+44x38: 22 36 28 23 34 24
+40x47: 49 51 46 41 46 54
+50x40: 60 67 45 42 42 48
+44x47: 35 43 28 25 37 42
+42x39: 51 34 33 42 53 41
+47x49: 38 44 36 40 33 48
+42x44: 46 52 43 48 50 46
+42x46: 45 45 44 45 56 62
+47x42: 59 58 40 61 44 44
+44x37: 33 24 23 32 20 35
+38x38: 39 38 36 31 47 31
+40x46: 43 38 42 49 63 51
+44x50: 54 61 56 58 49 60
+48x36: 31 30 29 30 40 31
+36x46: 22 28 40 31 40 19
+46x37: 34 24 31 25 30 36
+40x43: 24 26 35 36 33 28
+44x41: 35 31 29 33 25 28
+48x37: 34 30 30 23 39 36
+44x48: 58 61 60 37 44 59
+36x40: 42 38 35 40 39 29
+49x46: 55 68 48 62 62 54
+49x37: 51 57 41 46 38 45
+40x44: 42 46 40 49 51 45
+40x37: 28 27 27 21 30 22
+46x43: 48 59 49 44 54 49
+47x50: 68 71 60 56 50 54
+38x42: 56 39 39 36 39 35
+49x36: 29 22 32 35 38 35
+36x42: 34 29 26 31 17 31
+36x42: 46 31 45 36 39 35
+47x43: 46 34 33 26 37 34
+42x42: 46 37 48 41 43 55
+36x42: 43 41 34 32 39 42
+49x41: 55 55 56 58 51 36
+40x36: 41 34 37 38 35 37
+43x42: 41 51 51 52 35 48
+46x39: 28 35 36 30 34 31
+45x39: 39 27 26 30 37 36
+37x41: 28 24 28 30 17 28
+44x39: 32 29 25 32 32 31
+49x37: 43 53 40 55 49 42
+43x43: 39 47 53 43 52 50
+39x49: 28 53 27 38 30 31
+38x39: 21 28 24 27 35 21
+35x44: 25 33 24 27 19 25
+47x49: 57 48 75 69 56 52
+50x35: 32 25 28 24 32 34
+38x37: 18 32 18 23 26 27
+37x44: 22 29 27 29 32 28
+50x50: 57 69 68 69 63 60
+40x45: 43 51 42 51 56 37
+44x37: 40 34 53 45 43 37
+43x43: 41 33 23 29 34 35
+41x37: 31 29 30 28 18 20
+43x49: 58 56 50 44 63 52
+45x39: 34 32 27 33 35 33
+49x49: 55 72 59 77 54 56
+50x47: 29 34 46 50 46 34
+41x47: 50 50 48 49 52 48
+45x50: 56 52 76 49 50 60
+47x36: 42 52 37 38 50 41
+42x36: 26 21 27 28 37 28
+46x43: 50 54 41 44 67 49
+36x46: 40 47 41 36 42 47
+49x36: 60 35 41 40 50 45
+35x49: 35 27 30 25 32 26
+39x41: 29 28 22 27 31 32
+35x46: 31 24 28 29 25 28
+40x47: 51 54 37 44 54 49
+45x49: 37 32 43 39 41 48
+50x36: 44 39 50 44 50 50
+46x43: 37 35 35 39 32 32
+42x41: 44 55 42 41 50 33
+50x44: 44 44 38 32 29 37
+41x43: 35 47 38 45 49 58
+44x36: 30 32 27 29 31 19
+43x45: 54 58 43 52 46 45
+38x43: 31 31 39 21 20 25
+35x48: 34 60 39 39 46 40
+41x38: 27 25 35 20 20 29
+45x36: 61 41 40 46 37 25
+36x43: 24 21 26 35 29 33
+35x49: 29 30 32 22 34 29
+44x39: 47 39 46 44 41 47
+46x45: 53 60 49 49 48 58
+40x41: 25 24 32 28 35 25
+39x44: 27 35 27 28 33 31
+42x50: 45 34 25 34 48 37
+35x48: 29 25 32 34 28 28
+50x48: 43 44 41 44 42 41
+35x49: 50 39 46 34 43 49
+47x47: 30 40 42 38 39 36
+48x50: 59 56 68 58 66 62
+43x49: 63 52 63 42 54 47
+43x48: 42 40 30 44 33 35
+45x43: 33 39 34 28 33 42
+41x43: 54 41 43 39 46 47
+41x50: 39 31 32 44 30 32
+37x35: 40 30 38 25 24 39
+49x36: 49 39 44 54 52 37
+45x44: 32 36 31 36 38 36
+40x37: 28 32 25 19 25 26
+36x35: 27 28 33 38 33 37
+49x40: 46 52 47 54 51 53
+46x46: 47 66 49 45 60 57
+49x42: 49 45 62 61 51 51
+39x36: 19 28 26 28 31 24
+48x43: 55 47 50 58 58 52
+49x44: 36 38 33 34 35 48
+35x41: 22 26 32 15 21 26
+42x49: 52 50 52 47 66 50
+46x38: 33 38 59 50 46 45
+42x37: 34 35 49 41 43 38
+46x37: 41 32 39 48 70 37
+46x41: 38 49 54 48 54 48
+39x36: 26 23 29 21 27 29
+38x38: 37 39 35 36 43 33
+39x41: 35 27 25 22 32 28
+49x37: 29 29 37 41 35 21
+45x50: 55 49 56 64 69 57
+46x35: 52 35 40 38 54 30
+49x37: 37 36 22 30 32 34
+47x38: 46 42 42 47 44 54
+38x37: 38 32 35 31 36 43
+36x44: 41 46 45 28 44 37
+40x49: 44 51 58 57 52 42
+45x38: 40 27 31 28 24 30
+36x47: 41 51 44 37 39 46
+49x49: 45 33 40 40 47 50
+40x39: 37 40 41 40 37 45
+35x43: 42 33 45 45 34 34
+45x45: 60 49 55 52 60 37
+47x50: 30 44 38 42 53 32
+49x44: 55 58 49 57 58 56
+45x48: 69 45 59 47 55 55
+37x37: 24 18 31 29 20 22
+45x48: 65 52 51 52 58 54
+40x50: 52 58 45 51 58 45
+40x47: 44 45 60 54 46 42
+43x39: 44 40 54 44 46 31
+40x40: 43 31 44 42 44 43
+45x35: 43 41 37 37 43 41
+35x38: 36 36 32 24 42 33
+42x35: 25 19 41 23 20 25
+40x45: 32 31 34 33 27 37
+48x42: 57 46 40 50 65 54
+44x41: 43 49 50 46 48 42
+42x48: 41 43 35 30 35 39
+41x36: 21 27 21 30 30 26
+35x48: 36 28 27 29 26 30
+38x50: 47 51 41 56 52 48
+37x36: 32 32 34 37 48 25
+41x35: 39 46 46 35 26 27
+47x39: 39 37 41 47 73 49
+46x35: 47 44 39 48 34 37
+44x42: 45 51 54 36 51 45
+38x43: 22 33 34 23 25 31
+42x47: 52 61 55 48 41 45
+40x40: 45 43 39 37 45 37
+50x37: 22 43 36 29 22 39
+37x45: 42 54 35 49 40 38
+35x41: 38 36 25 40 43 41
+47x48: 62 53 53 54 57 67
+36x44: 46 45 42 45 31 35
+50x45: 73 53 38 65 53 66
+47x47: 40 34 35 39 33 44
+39x46: 46 40 37 49 51 55
+40x44: 38 51 53 40 41 46
+48x42: 40 48 68 60 54 43
+47x35: 41 44 44 36 37 49
+35x46: 39 49 38 51 36 37
+42x42: 39 46 39 48 43 57
+48x41: 56 41 52 52 55 48
+39x48: 52 46 49 48 47 46
+41x44: 55 48 44 53 47 33
+39x38: 28 18 23 31 34 22
+50x40: 33 35 40 33 31 36
+49x46: 54 53 52 68 65 59
+41x50: 58 59 69 45 49 33
+41x48: 32 33 36 33 36 38
+39x47: 25 31 33 35 46 24
+40x36: 30 31 22 29 23 20
+50x45: 38 45 35 42 41 39
+43x43: 35 29 26 40 35 30
+36x42: 30 24 25 26 27 36
+50x44: 52 54 58 54 64 57
+50x36: 31 32 35 27 25 42
+44x44: 47 52 42 61 53 47
+40x41: 45 49 44 32 37 42
+48x37: 36 35 31 24 34 31
+41x50: 37 32 30 24 36 49
+42x38: 37 36 50 42 40 41
+50x49: 36 52 46 39 44 39
+44x48: 57 61 59 50 46 50
+45x38: 43 42 41 48 47 44
+47x42: 36 34 42 40 30 27
+35x44: 20 21 24 32 26 31
+47x44: 32 44 36 31 29 37
+41x42: 47 42 44 35 55 41
+46x37: 43 42 41 46 44 47
+40x42: 50 44 44 38 40 41
+38x44: 36 44 46 53 48 34
+46x38: 34 32 25 29 28 31
+50x41: 51 43 52 55 57 59
+48x35: 23 21 36 26 39 31
+50x41: 40 28 38 37 38 26
+49x43: 59 51 58 58 43 55
+35x36: 25 30 32 41 29 39
+43x50: 60 46 65 56 61 44
+46x39: 34 37 28 35 29 31
+38x47: 31 34 26 31 24 33
+45x45: 63 55 50 53 37 52
+36x39: 39 31 32 40 32 43
+46x47: 55 49 57 53 61 58
+46x45: 41 43 37 32 35 36
+44x48: 40 36 42 33 32 41
+41x38: 38 44 46 38 38 35
+43x35: 42 31 43 37 30 47
+41x50: 39 26 41 32 35 34
+35x39: 34 33 44 31 34 33
+47x39: 35 41 33 27 31 27
+40x36: 15 33 34 23 19 31
+40x45: 39 48 53 38 53 45
+38x36: 38 31 32 32 35 42
+41x46: 28 30 29 35 38 35
+46x39: 42 55 45 34 40 56
+47x47: 33 39 42 35 32 44
+50x50: 55 65 66 75 63 64
+48x50: 38 42 52 47 43 34
+46x39: 50 38 53 37 47 49
+36x40: 27 27 27 31 21 23
+46x37: 33 30 27 28 30 31
+47x36: 53 44 43 47 32 41
+49x45: 59 60 49 57 65 51
+43x50: 43 66 55 56 61 51
+50x39: 53 49 49 57 47 47
+47x45: 46 63 51 50 58 57
+49x41: 51 45 50 56 67 44
+39x48: 56 47 52 35 51 44
+35x35: 19 26 27 39 38 43
+37x49: 42 44 50 55 42 48
+40x48: 54 48 43 48 53 50
+41x46: 36 33 31 37 29 29
+41x46: 48 53 37 57 48 50
+42x45: 39 55 42 53 66 40
+46x45: 58 41 48 57 69 49
+41x50: 58 46 61 55 57 40
+46x36: 30 35 34 27 27 26
+37x35: 36 32 28 27 41 35
+37x48: 40 43 55 36 48 49
+38x43: 34 24 26 23 36 24
+48x42: 49 32 49 31 29 33
+36x44: 26 22 27 32 32 28
+38x45: 35 40 42 52 45 52
+44x36: 36 53 39 39 43 34
+48x35: 39 52 43 42 41 41
+49x40: 49 51 45 61 45 53
+50x45: 46 46 73 58 62 62
+45x37: 49 36 46 38 43 43
+44x35: 31 44 48 40 36 38
+42x48: 47 41 41 39 23 32
+42x35: 37 41 31 41 34 43
+39x38: 25 21 27 31 28 24
+47x42: 41 37 37 26 38 31
+41x50: 41 67 48 57 46 57
+37x42: 41 42 37 48 35 38
+41x37: 40 36 31 47 39 43
+43x41: 25 26 31 33 36 30
+38x40: 44 30 38 37 42 43
+44x44: 26 38 22 31 46 32
+38x42: 37 38 39 48 35 50
+41x37: 37 49 33 38 35 41
+48x47: 57 58 48 61 70 56
+38x44: 42 37 49 36 46 46
+35x42: 29 26 30 23 24 22
+46x45: 38 34 53 36 30 34
+44x46: 31 36 42 27 38 36
+36x46: 44 40 49 36 42 42
+43x35: 28 33 32 20 21 20
+38x35: 36 33 38 25 31 39
+38x50: 47 39 63 45 52 46
+38x47: 55 41 41 45 48 45
+38x43: 39 40 48 41 46 38
+36x38: 40 24 36 37 39 36
+48x35: 23 33 37 30 22 30
+50x41: 29 38 34 42 30 34
+38x38: 48 30 39 35 37 33
+47x48: 40 45 35 41 41 37
+42x37: 33 44 41 35 48 38
+40x39: 24 23 30 24 34 33
+36x38: 29 20 34 16 23 22
+38x49: 52 42 46 57 44 48
+40x41: 37 37 40 38 46 54
+45x44: 47 28 36 36 24 38
+35x36: 28 40 27 32 31 36
+48x41: 23 37 39 37 33 38
+38x43: 40 42 45 34 46 43
+38x36: 37 45 33 25 36 32
+36x39: 28 29 22 31 14 31
+49x47: 49 66 56 63 62 60
+46x41: 31 35 32 34 27 35
+43x39: 53 55 38 30 45 34
+40x42: 45 49 43 35 46 39
+50x36: 47 43 47 38 48 52
+42x38: 44 39 39 38 48 38
+38x41: 50 40 38 35 37 38
+38x45: 33 30 33 25 33 25
+48x46: 39 37 48 39 38 39
+37x47: 47 50 39 34 46 49
+40x37: 20 20 30 32 28 25
+47x42: 46 58 45 60 45 52
+39x37: 30 27 33 26 19 21
+35x37: 36 38 33 32 32 28
+47x46: 40 38 33 33 40 41
+49x48: 34 44 41 47 39 50
+38x40: 40 34 36 37 35 51
+44x50: 52 67 47 50 65 57
+40x35: 33 30 27 56 32 43
+35x41: 38 46 29 35 53 22
+44x43: 57 53 55 51 41 34
+41x43: 50 37 31 51 52 53
+47x49: 48 58 46 61 59 83
+45x47: 65 68 52 49 47 42
+40x36: 36 33 37 39 34 43
+38x49: 38 45 58 49 48 49
+50x35: 26 32 34 26 33 25
+39x35: 25 26 19 23 30 20
+44x48: 33 49 32 43 36 30
+49x40: 51 60 45 44 50 50
+44x35: 37 40 35 39 54 34
+48x39: 53 35 33 31 24 32
+36x36: 16 28 24 23 23 29
+40x43: 21 31 29 33 40 28
+37x44: 59 34 34 39 49 36
+39x40: 27 29 26 36 23 28
+37x44: 24 25 30 37 31 21
+43x36: 26 26 27 37 27 24
+49x42: 55 43 53 59 48 60
+45x50: 38 44 45 36 37 40
+49x40: 66 46 41 57 46 47
+37x45: 50 30 41 57 38 44
+44x35: 35 47 39 43 39 35
+43x46: 42 59 41 49 49 64
+36x49: 28 31 40 22 38 32
+35x48: 31 29 29 27 30 29
+47x35: 25 29 31 32 19 28
+42x50: 52 52 61 55 49 54
+47x48: 44 47 38 35 38 38
+45x38: 35 27 29 31 31 26
+36x45: 41 46 49 39 35 38
+44x36: 21 22 34 34 23 33
+35x48: 32 45 45 54 44 42
+44x38: 26 25 26 36 29 26
+47x40: 32 27 34 28 25 49
+35x35: 38 30 24 32 32 33
+49x44: 51 28 43 39 33 30
+45x41: 51 46 56 51 54 28
+48x46: 54 63 61 60 64 40
+40x46: 46 47 39 64 47 45
+37x40: 41 34 46 32 44 30
+40x44: 37 29 32 29 31 23
+37x48: 46 41 45 58 46 41
+47x46: 51 58 52 66 57 52
+40x50: 44 47 48 61 60 52
+44x45: 30 41 38 35 29 37
+42x47: 44 44 60 57 51 50
+50x43: 48 34 26 34 38 43
+48x41: 58 53 47 56 39 50
+47x38: 31 27 25 27 34 35
+50x47: 44 43 46 36 36 35
+45x41: 43 43 46 48 58 48
+40x43: 38 56 44 43 47 37
+41x35: 30 30 42 39 38 43
+37x42: 39 40 37 41 43 40
+43x45: 31 32 38 42 33 33
+49x45: 61 45 55 60 68 53
+36x47: 43 36 48 40 46 47
+43x46: 52 58 47 51 40 55
+40x44: 44 45 47 46 42 47
+38x47: 32 36 24 30 21 36
+43x38: 28 32 31 30 27 19
+41x43: 46 44 49 46 46 41
+43x50: 50 53 48 61 63 59
+42x40: 43 42 38 42 53 42
+38x47: 37 52 52 40 42 50
+35x35: 38 26 31 34 34 27
+48x46: 43 45 45 42 28 36
+46x44: 51 52 50 62 56 44
+40x36: 34 48 32 37 38 33
+41x48: 42 24 33 34 30 44
+41x49: 30 41 21 34 45 37
+47x43: 46 60 48 46 61 50
+47x45: 47 50 60 58 50 61
+48x49: 62 53 54 69 62 65
+47x35: 52 45 44 44 35 33
+49x44: 33 28 44 38 42 39
+37x41: 40 37 37 28 42 47
+43x39: 52 42 42 37 38 45
+40x46: 44 53 37 54 52 46
+50x39: 45 54 47 44 53 56
+44x47: 46 59 58 47 54 53
+48x45: 45 51 68 53 64 52
+43x42: 45 54 45 48 49 38
+40x46: 36 31 35 31 33 29
+37x38: 24 24 26 24 17 29
+45x48: 46 50 43 41 24 36
+43x43: 38 31 24 39 28 36
+35x35: 22 11 23 22 20 22
+35x46: 42 43 32 40 37 53
+38x50: 47 61 50 41 39 51
+45x38: 33 29 28 30 26 34
+49x46: 41 36 35 52 40 36
+44x50: 50 35 39 37 33 29
+42x42: 34 31 31 36 29 34
+45x41: 32 29 43 35 29 26
+43x36: 37 40 40 34 48 39
+41x42: 47 39 48 43 44 44
+49x35: 46 50 46 48 28 45
+37x49: 56 35 32 55 50 54
+48x50: 68 58 58 57 67 61
+38x39: 35 42 35 36 40 40
+46x45: 48 61 49 55 50 56
+41x45: 41 31 44 28 22 29
+46x50: 62 53 67 54 60 57
+46x42: 49 54 57 45 42 48
+47x41: 55 39 55 42 53 51
+36x41: 32 48 34 35 35 42
+39x37: 23 21 28 27 20 36
+50x42: 48 60 63 47 51 52
+41x46: 50 44 55 48 52 42
+47x40: 33 35 34 27 32 34
+46x48: 56 62 53 62 52 56
+44x40: 35 49 49 45 52 42
+35x47: 38 39 45 56 41 38
+47x41: 38 27 37 36 25 31
+48x40: 30 51 33 29 31 34
+50x41: 39 44 61 47 67 58
+45x37: 41 50 42 26 45 48
+41x35: 34 40 43 36 38 30
+45x37: 40 42 40 41 50 44
+40x38: 32 35 45 41 34 47
+40x45: 46 44 52 43 43 48
+46x48: 63 53 51 48 67 57
+49x37: 31 56 40 39 53 59
+40x36: 45 29 47 29 39 31
+36x43: 46 33 41 33 44 40
+48x48: 41 45 41 36 42 50
+45x36: 29 27 31 36 27 29
+40x38: 23 30 26 24 28 25
+35x46: 26 35 30 32 19 23
+36x37: 38 34 35 34 27 36
+45x45: 38 23 41 43 44 36
+36x42: 37 48 31 37 42 38
+47x38: 57 40 50 51 36 41
+45x43: 48 57 51 45 59 38
+39x48: 31 30 35 41 38 33
+35x40: 37 29 40 31 42 36
+45x40: 43 19 36 28 31 38
+50x47: 42 40 32 42 41 42
+43x42: 40 56 39 49 47 48
+35x45: 37 42 36 52 40 39
+35x48: 43 52 33 51 42 40
+50x36: 44 30 28 25 34 30
+39x39: 38 40 41 32 37 44
+37x43: 36 34 54 43 35 43
+40x49: 59 43 46 46 52 55
+37x48: 19 36 33 38 31 35
+37x40: 46 35 29 46 29 44
+37x37: 37 35 39 37 33 30
+43x43: 37 38 35 24 26 36
+45x49: 36 31 37 42 54 40
+38x46: 41 45 53 42 43 44
+46x44: 35 36 31 27 43 37
+39x50: 27 46 36 35 33 31
+42x43: 38 33 30 24 41 30
+43x37: 49 50 35 33 42 34
+42x43: 25 33 38 39 31 30
+36x40: 35 33 43 33 46 32
+39x43: 50 32 49 46 41 41
+37x47: 34 55 43 37 41 55
+47x49: 54 67 74 62 49 48
+39x49: 34 30 35 28 42 38
+43x43: 51 45 53 42 38 53
+41x36: 27 26 30 29 19 25
+41x48: 34 34 40 28 32 39
+38x48: 43 38 51 55 37 58
+49x45: 56 66 66 66 41 45
+40x49: 51 57 55 46 53 39
+45x46: 58 58 45 50 46 60
+42x47: 62 53 44 42 55 46
+50x45: 46 37 39 31 41 45
+39x45: 44 46 54 42 48 36
+36x44: 37 41 42 40 48 37
+48x35: 26 25 39 25 33 28
+36x49: 39 34 37 28 31 22
+49x41: 34 28 32 42 43 28
+35x35: 23 20 15 21 25 16
+43x46: 58 37 51 53 41 64
+35x36: 20 28 18 23 22 21
+47x49: 69 54 71 55 49 54
+35x47: 25 47 54 45 41 42
+42x47: 30 34 37 43 39 27
+38x48: 43 44 48 56 50 43
+35x42: 27 25 27 27 24 23
+40x42: 32 35 26 24 33 32
+38x45: 50 46 41 31 47 45
+36x48: 55 42 50 35 41 40
+39x46: 48 40 45 56 51 40
+41x48: 39 47 53 49 54 61
+50x48: 62 67 64 69 57 52
+45x38: 26 27 44 34 24 25
+47x40: 46 56 59 40 53 34
+44x39: 28 36 36 29 32 20
+48x43: 35 42 39 39 38 31
+46x39: 27 27 35 34 35 37
+37x41: 23 47 41 38 49 37
+41x40: 49 43 37 45 54 27
+38x45: 46 27 51 50 43 48
+47x50: 66 54 71 53 48 66
+38x37: 29 40 42 38 36 32
+45x50: 52 55 55 67 56 64
+50x45: 70 70 48 57 55 46
+44x37: 26 24 25 38 22 32
+46x48: 56 63 61 44 48 63
+48x42: 42 43 49 61 52 66
+48x41: 27 35 37 30 43 35
+37x46: 30 32 23 22 38 35
+43x48: 39 64 63 44 51 54
+36x44: 45 43 36 44 40 37
+44x39: 56 30 54 48 48 30
+46x49: 47 63 63 68 52 56
+42x39: 28 25 32 41 22 34
+41x43: 54 39 33 50 46 51
+42x37: 41 50 46 34 34 32
+45x41: 55 52 44 46 49 38
+45x47: 48 69 49 42 59 56
+40x37: 24 23 32 30 23 24
+37x41: 31 38 36 46 40 45
+40x49: 60 42 52 47 44 55
+36x47: 41 39 41 42 43 54
+49x46: 40 38 34 41 42 45
+36x37: 29 37 33 47 27 35
+41x49: 55 59 52 46 52 44
+50x41: 35 30 43 29 39 31
+49x49: 60 66 61 59 69 55
+50x50: 42 43 48 42 36 45
+50x48: 42 46 45 43 43 37
+43x35: 22 27 28 22 29 26
+46x44: 32 34 41 40 31 32
+36x38: 38 25 12 21 24 23
+47x46: 45 40 35 33 31 41
+41x42: 54 31 38 49 48 47
+43x37: 42 42 45 42 39 35
+44x38: 31 24 22 29 36 26
+40x43: 28 33 36 19 35 30
+46x40: 42 23 34 30 35 30
+49x39: 55 50 50 51 42 46
+41x46: 32 39 40 35 24 24
+43x42: 24 39 34 37 31 31
+50x48: 44 46 44 51 26 44
+35x44: 24 19 23 24 32 31
+49x43: 54 51 45 65 56 57
+45x48: 35 34 43 42 47 38
+48x47: 30 54 39 47 35 34
+37x45: 30 25 33 32 22 37
+45x49: 58 55 56 53 54 62
+45x45: 63 46 44 62 41 57
+37x43: 38 33 47 43 50 36
+45x45: 55 51 65 50 42 47
+48x46: 43 33 46 38 38 42
+39x41: 40 35 47 46 37 42
+43x39: 37 30 30 20 34 30
+49x46: 37 46 37 43 36 41
+44x43: 43 50 58 45 39 54
+35x36: 37 33 34 22 31 34
+39x37: 35 36 31 47 44 33
+37x48: 31 52 54 45 44 47
+44x40: 32 28 30 22 36 33
+38x38: 23 24 23 25 25 23
+38x43: 31 23 28 24 30 31
+36x35: 28 31 36 34 28 37
+36x38: 25 25 14 27 27 26
+48x41: 44 55 48 52 62 44
+35x50: 26 18 28 42 27 34
+41x49: 60 47 54 57 44 48
+35x45: 27 22 30 29 28 28
+47x35: 34 39 44 55 49 37
+44x42: 38 37 25 33 38 24
+45x43: 33 30 39 37 31 39
+44x50: 33 37 44 37 33 40
+38x35: 38 31 36 42 34 26
+36x36: 30 30 32 34 35 39
+40x39: 39 42 37 38 29 53
+40x45: 40 32 34 33 26 30
+50x48: 42 46 43 43 43 39
+43x37: 31 39 45 50 36 46
+50x41: 37 28 37 27 37 41
+49x35: 42 39 53 44 44 42
+43x40: 42 22 24 28 34 32
+40x45: 49 43 46 55 34 51
+44x49: 43 41 35 38 34 33
+35x48: 31 29 29 29 27 30
+43x50: 63 53 58 56 54 47
+46x43: 30 40 34 41 33 31
+35x38: 35 35 38 35 27 34
+42x41: 42 29 31 33 23 23
+45x38: 51 45 42 43 43 39
+42x36: 28 47 42 40 44 33
+35x45: 46 44 40 37 43 32
+49x42: 66 43 52 55 48 53
+49x48: 55 56 57 60 59 75
+47x40: 48 52 50 46 43 49
+50x41: 35 32 33 22 39 46
+40x45: 51 46 41 45 47 47
+47x47: 50 36 32 33 29 45
+40x45: 32 30 41 27 37 28
+49x39: 46 44 44 60 40 62
+48x35: 20 46 28 26 25 30
+45x39: 41 43 50 39 48 48
+38x40: 22 33 24 27 23 27
+35x46: 22 32 17 30 28 35
+50x40: 34 36 31 39 32 35
+44x46: 34 32 40 30 40 34`,R4=Object.assign({"../advent/day01/solution.ts":G3,"../advent/day02/solution.ts":F3,"../advent/day03/solution.ts":X3,"../advent/day04/solution.ts":n2,"../advent/day05/solution.ts":e2,"../advent/day06/solution.ts":r2,"../advent/day07/solution.ts":a2,"../advent/day08/solution.ts":p2,"../advent/day09/solution.ts":y2,"../advent/day10/solution.ts":w2,"../advent/day11/solution.ts":z2,"../advent/day12/solution.ts":$2}),t4=Object.assign({"../advent/day01/input-test.md":O2,"../advent/day01/input.md":E2,"../advent/day02/input-test.md":M2,"../advent/day02/input.md":T2,"../advent/day03/input-test.md":N2,"../advent/day03/input.md":A2,"../advent/day04/input-test.md":C2,"../advent/day04/input.md":I2,"../advent/day05/input-test.md":P2,"../advent/day05/input.md":B2,"../advent/day06/input-test.md":D2,"../advent/day06/input.md":U2,"../advent/day07/input-test.md":G2,"../advent/day07/input.md":V2,"../advent/day08/input-test.md":K2,"../advent/day08/input.md":H2,"../advent/day09/input-test.md":F2,"../advent/day09/input.md":W2,"../advent/day10/input-test.md":Q2,"../advent/day10/input.md":X2,"../advent/day11/input-test-p2.md":J2,"../advent/day11/input-test.md":Y2,"../advent/day11/input.md":Z2,"../advent/day12/input-test.md":n4,"../advent/day12/input.md":L4}),e4=Object.freeze(Object.defineProperty({__proto__:null,inputMods:t4,solutionMods:R4},Symbol.toStringTag,{value:"Module"})),p3=L=>parseInt(L.split("day")[1]||"1",10),s4=(L,n)=>{const R=(L.match(/input-?(.+)\.md$/)||[])[1]||"Real";return{day:p3(L),name:R,raw:n}},x4=(L,n)=>{const R=!!(n.part1||n.part2),e=n.part1||(()=>"-"),o=n.part2||(()=>"-"),s=n.answers||[["",""]];return{day:p3(L),part1:e,part2:o,answers:s,hasSolution:R}},[X,o4]=j([]),[S,r4]=j([]),[V,d3]=j(1),[B,m3]=j(0),[g3,y3]=j(""),[i4,l4]=j({value:"",time:0,knownGood:!1}),[a4,c4]=j({value:"",time:0,knownGood:!1}),[h3,D]=j(!1),[v3,u4]=j(!0),F=()=>X().filter(L=>L.day===V()),b3=()=>S().find(L=>L.day===V()),$=(L,n="",R=0,e=!1)=>{L===1&&l4({value:n,time:R,knownGood:e}),L===2&&c4({value:n,time:R,knownGood:e})},J=()=>[$(1),$(2)],f4=()=>{q3(()=>{if(B()>=F().length)return m3(F().length-1);const L=F()[B()],n=b3();if(!L||!n)return J();y3(L.raw)})},T=async()=>{const L=b3(),n=g3();if(!L||!n)return J();const R=L.answers[B()]||["",""];$(1),$(2),setTimeout(R3,0,1,L.part1,n,R[0]),await p4(10),setTimeout(R3,5,2,L.part2,n,R[1])},p4=L=>new Promise(n=>setTimeout(n,L)),R3=async(L,n,R,e)=>{if(h3())return;D(!0);const{output:o,dt:s}=await w3(n,R,v3());$(L,o,s,o===e),D(!1)},w3=async(L,n,R)=>{const e=performance.now();return{output:(()=>{if(!R)return String(L(n));try{return String(L(n))}catch(s){return`Error: ${s}`}})(),dt:performance.now()-e}},d4=async()=>{if(h3())return;D(!0),J();const L=[],n=["",""],R=[0,0],e=[!0,!0];for(let o=0;o<S().length;o++){const s=S()[o],x=X().filter(t=>t.day===o+1)[0].raw;for(let t=0;t<2;t++){const{output:r,dt:i}=await w3(t===0?s.part1:s.part2,x,!0);L.push({dt:i,name:`Day ${s.day} part ${t+1}`}),R[t]+=i;const l=r===s.answers[0][t];e[t]&&=l,n[t]+=l?"★":"-",o===S().length-1&&(n[t]+=" done!"),$(t+1,n[t],R[t],e[t]),await new Promise(a=>setTimeout(a,0))}}L.sort((o,s)=>o.dt-s.dt),console.table(L.map(({name:o,dt:s})=>({name:o,ms:Math.round(s*10)/10}))),D(!1)},m4=L=>{o4(Object.keys(L.inputMods).map(n=>s4(n,L.inputMods[n])).sort((n,R)=>n.name.localeCompare(R.name))),r4(Object.keys(L.solutionMods).map(n=>x4(n,L.solutionMods[n])).filter(n=>n.hasSolution).sort((n,R)=>n.day-R.day)),T()};m4(e4);d3(S().at(-1)?.day||1);setTimeout(T,0);var g4=k("<button type=button>");const K=L=>{const n=()=>({...L.classes,button:!0,toggled:L.isToggled});return(()=>{var R=g4();return C3(R,"click",L.onClick),y(R,()=>L.label),z(e=>I3(R,n(),e)),R})()};a3(["click"]);var y4=k("<div class=catch-area>Catch errors");const h4=()=>(()=>{var L=y4();return L.firstChild,y(L,h(K,{label:"x",classes:{"input-toggle":!0,"catch-button":!0},get isToggled(){return v3()},onClick:()=>u4(n=>!n)}),null),L})(),v4=()=>S().map(L=>h(K,{get label(){return L.day.toString().padStart(2,"0")},get isToggled(){return L.day===V()},onClick:()=>{d3(L.day),T()}}));var b4=k("<textarea rows=14>");const w4=L=>(()=>{var n=b4();return n.$$input=R=>{L.onUpdate(R.target.value),T()},z(()=>n.value=L.value),n})(),j4=()=>h(w4,{get value(){return g3()},onUpdate:y3});a3(["input"]);var _4=k("<div class=label style=align-self:flex-start><h4>Input:</h4><br>");const z4=()=>{const L=()=>X().filter(n=>n.day===V()).map((n,R)=>({label:n.name,isToggled:R===B(),onClick:()=>{m3(R),T()},classes:{"input-toggle":!0}}));return(()=>{var n=_4(),R=n.firstChild;return R.nextSibling,y(n,()=>L().map(e=>h(K,e)),null),n})()};var k4=k("<div class=label><h4>Part <!>:</h4><div class=time>(<!>ms)"),q4=k("<textarea class=output disabled>");const S4=(L="")=>{const n=L.split(`
+`).length;return Math.min(n,Math.max(n,1,10))},t3=({part:L=1})=>{const n=L===1?i4:a4;return[(()=>{var R=k4(),e=R.firstChild,o=e.firstChild,s=o.nextSibling;s.nextSibling;var x=e.nextSibling,t=x.firstChild,r=t.nextSibling;return r.nextSibling,y(e,L,s),y(x,()=>n().time.toFixed(0),r),R})(),(()=>{var R=q4();return z(e=>{var o=!!n().knownGood,s=S4(n().value);return o!==e.e&&R.classList.toggle("correct-answer",e.e=o),s!==e.t&&A3(R,"rows",e.t=s),e},{e:void 0,t:void 0}),z(()=>R.value=n().value),R})()]},$4=()=>h(K,{label:"Run all",classes:{"input-toggle":!1,"run-all-button":!0},isToggled:!1,onClick:()=>d4()});var O4=k("<main><header><h2>Advent 2025</h2></header><article class=layout><div class=label><h4>Days:</h4></div><div><br></div><div>");const E4=()=>(f4(),(()=>{var L=O4(),n=L.firstChild,R=n.nextSibling,e=R.firstChild,o=e.nextSibling,s=o.firstChild,x=o.nextSibling;return y(o,h(v4,{}),s),y(o,h($4,{}),null),y(R,h(t3,{part:1}),x),y(R,h(t3,{part:2}),x),y(R,h(z4,{}),x),y(R,h(j4,{}),x),y(R,h(h4,{}),null),L})()),M4=document.getElementById("root");N3(E4,M4);
+//# sourceMappingURL=index-CgC5B3fA.js.map
